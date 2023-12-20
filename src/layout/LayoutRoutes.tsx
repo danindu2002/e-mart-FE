@@ -10,7 +10,8 @@ import Profile from "../views/admin/profile/AdminProfile";
 import AddEditProduct from "../components/forms/AddEditProduct";
 import ManageCategory from "../views/admin/category/ManageCategory";
 import AddEditProductStepper from "../views/admin/products/AddEditProducts";
-import ViewProductDetails from "../views/admin/products/ViewProductDetails";
+import ViewProductDetails from "../components/forms/ViewProductDetails";
+import ViewProduct from "../views/admin/products/ViewProduct";
 
 export default function LayoutRoutes() {
   return (
@@ -24,13 +25,13 @@ export default function LayoutRoutes() {
       <Route path="/products/add-product" element={<AddEditProductStepper />} />
       <Route
         path="/products/view-product/:productId"
-        element={<ViewProductDetails />}
+        element={<ViewProduct />}
       />
       <Route
         path="/products/update-product/:productId"
         element={<AddEditProductStepper />}
       />
-       <Route
+      <Route
         path="/products/view-product/:productId"
         element={<ViewProductDetails />}
       />

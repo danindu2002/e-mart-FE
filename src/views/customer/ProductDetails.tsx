@@ -129,8 +129,6 @@ export default function ProductDetails() {
     }
   };
 
-  // const imageArray: any[] = [ProductImage2, ProductImage];
-
   const imageArray = productImages.map(
     (imageObject) => imageObject.decodedImage
   );

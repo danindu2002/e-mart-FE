@@ -3,27 +3,19 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormHelperText,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
   Typography,
-  styled,
 } from "@mui/material";
 import React, { useLayoutEffect, useState } from "react";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import axios from "../../../api/apiConfig";
-import AddProductDetails from "./AddProductDetails";
 import AddDocuments from "./AddDocuments";
+import AddProductDetails from "./AddProductDetails";
 import AddProductPhotos from "./AddProductPhotos";
 
 const steps = ["Add Product Details", "Add Documents", "Add Product Photos"];
@@ -36,7 +28,7 @@ export default function AddEditProduct() {
   const { productId } = useParams();
   editProduct = Boolean(productId);
   const [activeStep, setActiveStep] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
