@@ -10,7 +10,6 @@ import Profile from "../views/admin/profile/AdminProfile";
 import AddEditProduct from "../components/forms/AddEditProduct";
 import ManageCategory from "../views/admin/category/ManageCategory";
 import AddEditProductStepper from "../views/admin/products/AddEditProducts";
-import ViewProduct from "../views/admin/products/ViewProduct";
 import ViewProductDetails from "../views/admin/products/ViewProductDetails";
 
 export default function LayoutRoutes() {

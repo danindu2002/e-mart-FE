@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import { Context } from "../../App";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
-const imageArray = [ProductImage, ProductImage2];
+const imageArray: any[] = [ProductImage, ProductImage2];
 
 export default function ProductDetails() {
   const [product, setProduct] = useState<any>(null);
