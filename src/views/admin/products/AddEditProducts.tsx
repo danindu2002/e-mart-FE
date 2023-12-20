@@ -153,7 +153,7 @@ export default function AddEditProduct() {
         for (const file of selectedImages) {
           const uploadImage = await readFileAsBase64(file);
           let data = {
-            imageName: file?.name,
+            imageName: file?.name.replace(/\.pdf$/, ""),
             imagePath: uploadImage,
             productId: addedProductId,
           };

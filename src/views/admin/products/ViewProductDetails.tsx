@@ -20,20 +20,37 @@ import TopBar from "../../customer/TopBar";
 import ImageSlider from "../../../components/cards/ImageSlider";
 import { toast } from "react-toastify";
 import { Context } from "../../../App";
+import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import DataTable from "../../../components/tables/DataTable";
+import ActionButton from "../../../components/buttons/ActionButton";
 
 const imageArray = [ProductImage, ProductImage2];
 
 export default function ProductDetails() {
   const [product, setProduct] = useState<any>(null);
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
   const { productId } = useParams();
   const [count, setCount] = useState<number>(1);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const { setCartProducts } = useContext(Context);
   let navigate = useNavigate();
 
   const storedUserData = sessionStorage.getItem("loggedUserData");
   const parsedUserData = JSON.parse(storedUserData as string);
+
+  const handleChangePage = (product: any, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (product: any) => {
+    setRowsPerPage(+product.target.value);
+    setPage(0);
+  };
 
   const fetchProduct = async () => {
     try {
@@ -48,8 +65,21 @@ export default function ProductDetails() {
     }
   };
 
+  const fetchDocumentDetails = async () => {
+    try {
+      const response = await axios.get(
+        `/documents/all-documents?productId=${productId}`
+      );
+      console.log("documents:", response.data.responseList);
+      setDocuments(response.data.responseList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchProduct();
+    fetchDocumentDetails();
   }, [productId]);
 
   const addToCartHandler = async () => {
@@ -79,6 +109,49 @@ export default function ProductDetails() {
     } finally {
     }
   };
+
+  const handleDeleteClick = (document: any) => {
+    console.log(document);
+    setSelectedDocument(document);
+    setOpenDelete(true);
+  };
+
+  const handleDeleteDialog = () => {
+    deleteDocument(selectedDocument?.documentId);
+    setOpenDelete(false);
+  };
+
+  const deleteDocument = async (documentId: any) => {
+    try {
+      const response = await axios.delete(
+        `/documents/?documentId=${documentId}`
+      );
+      console.log(response);
+      toast.success(response.data.description);
+      fetchDocumentDetails();
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.response.data.description);
+    }
+  };
+
+  const renderActions = (document: any) => (
+    <Box>
+      <ActionButton
+        title="Delete Document"
+        onClick={() => handleDeleteClick(document)}
+        icon={<DeleteIcon />}
+      />
+    </Box>
+  );
+
+  const tableHeaders = [
+    "#",
+    "Document Name",
+    "Document Type",
+    "Product Name",
+    "Product Code",
+  ];
 
   return (
     <Box sx={{ backgroundColor: "#fff", pb: 2 }}>
@@ -146,6 +219,23 @@ export default function ProductDetails() {
             </Card>
           </Grid>
         </Grid>
+        <Typography
+          component="div"
+          variant="h6"
+          sx={{ fontWeight: "bold", mt: 3 }}
+        >
+          Document Details
+        </Typography>
+        <DataTable
+          data={documents}
+          columns={tableHeaders}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          count={documents.length}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          renderActions={renderActions}
+        />
       </Container>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
