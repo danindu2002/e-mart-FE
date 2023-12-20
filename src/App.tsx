@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./App.scss";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import { theme } from "./theme";
-import MainLayout from "./layout/MainLayout";
+import { createContext, useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createContext } from "react";
+import "./App.scss";
 import { AuthProvider } from "./contexts/AuthContext";
+import MainLayout from "./layout/MainLayout";
+import { theme } from "./theme";
 
 const Toast = (
   <ToastContainer

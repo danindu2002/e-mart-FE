@@ -34,7 +34,7 @@ export default function TopBar() {
   const [categoryMenu, setCategoryMenu] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
-  const isScreenMd = useMediaQuery("(max-width:1000px)");
+  const isScreenMd = useMediaQuery("(max-width:1020px)");
   const isScreenSm = useMediaQuery("(max-width:600px)");
   const { cartProducts, setSearchTerm, setSelectedCategory } =
     useContext(Context);
@@ -209,6 +209,7 @@ export default function TopBar() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 color: "#555",
+                minWidth: "5px",
               }}
               onClick={() => navigate("/user/cart")}
             >
