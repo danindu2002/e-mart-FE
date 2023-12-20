@@ -91,6 +91,7 @@ export default function ProductDetails() {
       return null;
     }
   };
+
   useEffect(() => {
     fetchProduct();
     fetchProductImages();
@@ -137,6 +138,12 @@ export default function ProductDetails() {
 
   return (
     <Box sx={{ backgroundColor: "#fff " }}>
+      {productImages.length > 0 && (
+        <img
+          src="blob:http://localhost:3000/25a5402a-1f24-4691-8070-0957b495f972"
+          alt="test"
+        />
+      )}
       <Container maxWidth="lg" sx={{ mt: 13 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

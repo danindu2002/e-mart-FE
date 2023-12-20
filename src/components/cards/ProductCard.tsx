@@ -3,8 +3,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import noPreview from "../../assets/images/no-preview.jpg";
 import { CardActionArea, Divider, Rating } from "@mui/material";
-import ProductImage from "../../assets/images/white-background.jpg";
 import axios from "../../api/apiConfig";
 import { useEffect, useState } from "react";
 
@@ -64,19 +64,17 @@ export default function ProductCard({
   return (
     <Card
       sx={{
-        maxWidth: 230,
         m: 2,
-        maxHeight: 400,
+        width: 230,
+        height: 360,
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
       }}
     >
       <CardActionArea>
         <CardMedia
           component="img"
-          height="auto"
-          image={
-            image && image.length > 0 ? image[0].decodedImage : ProductImage
-          }
+          height="230"
+          image={image && image.length > 0 ? image[0].decodedImage : noPreview}
           alt="product image"
         />
         <Divider />

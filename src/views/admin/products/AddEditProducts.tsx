@@ -149,15 +149,16 @@ export default function AddEditProduct() {
       }
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else if (activeStep === 2) {
+      console.log(selectedImages);
       if (selectedImages.length > 0) {
         for (const file of selectedImages) {
           const uploadImage = await readFileAsBase64(file);
           let data = {
             imageName: file?.name.replace(/\.pdf$/, ""),
-            imagePath: uploadImage,
+            image: uploadImage,
             productId: addedProductId,
           };
-          console.log(data);
+          console.log("image data", data);
           axios
             .post("/images/", data)
             .then((response) => {
@@ -233,7 +234,6 @@ export default function AddEditProduct() {
           console.log(error);
           toast.error(error.response.data.description);
         });
-      navigate("/admin/products");
     } else {
       // Add Product
       console.log(data);
