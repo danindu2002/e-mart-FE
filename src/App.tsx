@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createContext } from "react";
-import { AuthProvider } from "./layout/Auth";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const Toast = (
   <ToastContainer
