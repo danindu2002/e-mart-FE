@@ -22,9 +22,7 @@ const AddDocuments = ({ handleFileChange, selectedFiles }: any) => {
         mt: 2,
       }}
     >
-      <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-        Upload Document
-      </Typography>
+      <Typography variant="h6">Upload Document</Typography>
       <Box
         sx={{
           backgroundColor: "#f0f0f0",
@@ -35,6 +33,9 @@ const AddDocuments = ({ handleFileChange, selectedFiles }: any) => {
           alignItems: "center",
         }}
       >
+        <Typography variant="body2" sx={{ mb: "10px" }}>
+          Click to upload your Document
+        </Typography>
         <label htmlFor="file-input">
           <Button
             color="primary"
@@ -54,9 +55,18 @@ const AddDocuments = ({ handleFileChange, selectedFiles }: any) => {
             />
           </Button>
         </label>
-        <Typography variant="body2" sx={{ marginTop: "10px" }}>
-          Click to upload your Document
-        </Typography>
+        {selectedFiles.length > 0 && (
+          <Box sx={{ marginLeft: "15px", flex: 1 }}>
+            <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
+              Selected Files:
+            </Typography>
+            {selectedFiles.map((file: any, index: any) => (
+              <ListItem key={index} sx={{ p: 0, m: 0 }}>
+                <ListItemText primary={file.name} />
+              </ListItem>
+            ))}
+          </Box>
+        )}
       </Box>
     </Box>
   );
