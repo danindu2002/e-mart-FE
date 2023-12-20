@@ -1,74 +1,165 @@
-import React from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import { Box, Button, Typography } from "@mui/material";
+import axios from "../../../api/apiConfig";
+import { useEffect, useState } from "react";
+import ActionButton from "../../../components/buttons/ActionButton";
+import { toast } from "react-toastify";
+import DataTable from "../../../components/tables/DataTable";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 
-const AddDocuments = ({ handleFileChange, selectedFiles }: any) => {
+const AddDocuments = ({ handleFileChange, productId }: any) => {
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(() => {
+    fetchDocumentDetails();
+  }, []);
+
+  const handleChangePage = (product: any, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (product: any) => {
+    setRowsPerPage(+product.target.value);
+    setPage(0);
+  };
+
+  const fetchDocumentDetails = async () => {
+    try {
+      const response = await axios.get(
+        `/documents/all-documents?productId=${productId}`
+      );
+      console.log("documents:", response.data.responseList);
+      setDocuments(response.data.responseList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteClick = (document: any) => {
+    console.log(document);
+    setSelectedDocument(document);
+    setOpenDelete(true);
+  };
+
+  const handleDeleteDialog = () => {
+    deleteDocument(selectedDocument?.documentId);
+    setOpenDelete(false);
+  };
+
+  const deleteDocument = async (documentId: any) => {
+    try {
+      const response = await axios.delete(
+        `/documents/?documentId=${documentId}`
+      );
+      console.log(response);
+      toast.success(response.data.description);
+      fetchDocumentDetails();
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.response.data.description);
+    }
+  };
+
+  const renderActions = (document: any) => (
+    <Box>
+      <ActionButton
+        title="Delete Document"
+        onClick={() => handleDeleteClick(document)}
+        icon={<DeleteIcon />}
+      />
+    </Box>
+  );
+
+  const tableHeaders = [
+    "#",
+    "Document Name",
+    "Document Type",
+    "Product Name",
+    "Product Code",
+  ];
+
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f0f0f0",
-        padding: "20px",
-        borderRadius: "8px",
-        textAlign: "center",
-        mt: 2,
-      }}
-    >
-      <Typography variant="h6">Upload Document</Typography>
+    <>
       <Box
         sx={{
           backgroundColor: "#f0f0f0",
           padding: "20px",
           borderRadius: "8px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          textAlign: "center",
+          mt: 2,
         }}
       >
-        <Typography variant="body2" sx={{ mb: "10px" }}>
-          Click to upload your Document
-        </Typography>
-        <label htmlFor="file-input">
-          <Button
-            color="primary"
-            variant="contained"
-            component="label"
-            startIcon={<NoteAddIcon />}
-            sx={{ marginBottom: "15px" }}
-          >
-            Add Documents
-            <input
-              id="file-input"
-              type="file"
-              accept="application/pdf"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              multiple
-            />
-          </Button>
-        </label>
-        {selectedFiles.length > 0 && (
-          <Box sx={{ marginLeft: "15px", flex: 1 }}>
-            <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
-              Selected Files:
-            </Typography>
-            {selectedFiles.map((file: any, index: any) => (
-              <ListItem key={index} sx={{ p: 0, m: 0 }}>
-                <ListItemText primary={file.name} />
-              </ListItem>
-            ))}
-          </Box>
-        )}
+        <Typography variant="h6">Upload Document</Typography>
+        <Box
+          sx={{
+            backgroundColor: "#f0f0f0",
+            padding: "20px",
+            borderRadius: "8px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="body2" sx={{ mb: "10px" }}>
+            Click to upload your Document
+          </Typography>
+          <label htmlFor="file-input">
+            <Button
+              color="primary"
+              variant="contained"
+              component="label"
+              startIcon={<NoteAddIcon />}
+              sx={{ marginBottom: "15px" }}
+            >
+              Add Documents
+              <input
+                id="file-input"
+                type="file"
+                accept="application/pdf"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+                multiple
+              />
+            </Button>
+          </label>
+        </Box>
       </Box>
-    </Box>
+      {documents.length > 0 && (
+        <>
+          <Typography
+            sx={{
+              mt: 2,
+              fontSize: "18px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Uploaded Documents
+          </Typography>
+          <DataTable
+            data={documents}
+            columns={tableHeaders}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            count={documents.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            renderActions={renderActions}
+            noDataMessage="No Documents Available"
+          />
+        </>
+      )}
+      <DeleteDialog
+        open={openDelete}
+        handleClose={() => setOpenDelete(false)}
+        handleDelete={handleDeleteDialog}
+      />
+    </>
   );
 };
 

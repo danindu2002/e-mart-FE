@@ -53,14 +53,6 @@ export default function ProductDetails() {
     setPage(0);
   };
 
-  const increment = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-
-  const decrement = () => {
-    setCount((prevCount) => Math.max(1, prevCount - 1));
-  };
-
   const fetchDocumentDetails = async () => {
     try {
       const response = await axios.get(
@@ -228,11 +220,6 @@ export default function ProductDetails() {
         onClick={() => handleViewDocument(document)}
         icon={<VisibilityIcon />}
       />
-      {/* <ActionButton
-        title="Delete Document"
-        onClick={() => handleDeleteClick(document)}
-        icon={<DeleteIcon />}
-      /> */}
     </Box>
   );
 

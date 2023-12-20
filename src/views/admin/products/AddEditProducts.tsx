@@ -117,57 +117,68 @@ export default function AddEditProduct() {
 
   const handleNext = async () => {
     if (activeStep === 1) {
-      if (selectedFiles.length > 0) {
-        for (const file of selectedFiles) {
-          const uploadDocument = await readFileAsBase64(file);
-          let data = {
-            documentName: file?.name,
-            documentDescription: file?.type,
-            document: uploadDocument,
-            productId: addedProductId,
-          };
-          console.log(data);
-          axios
-            .post("/documents/", data)
-            .then((response) => {
-              console.log(response);
-              toast.success(response.data.description);
-            })
-            .catch((error) => {
-              console.log(error);
-              toast.error(error.response.data.description);
-            });
-        }
-      }
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else if (activeStep === 2) {
-      console.log(selectedImages);
-      if (selectedImages.length > 0) {
-        for (const file of selectedImages) {
-          const uploadImage = await readFileAsBase64(file);
-          let data = {
-            imageName: file?.name.replace(/\.pdf$/, ""),
-            image: uploadImage,
-            productId: addedProductId,
-          };
-          console.log("image data", data);
-          axios
-            .post("/images/", data)
-            .then((response) => {
-              console.log(response);
-              toast.success(response.data.description);
-            })
-            .catch((error) => {
-              console.log(error);
-              toast.error(error.response.data.description);
-            });
-        }
-        setSelectedFiles([]);
-        setSelectedImages([]);
-        navigate("/admin/products");
-      }
+      navigate("/admin/products");
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+  };
+
+  const handleDocumentChange = async (event: any) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const uploadDocument = await readFileAsBase64(file);
+        let data = {
+          documentName: file?.name.replace(/\.pdf$/, ""),
+          documentDescription: file?.type,
+          document: uploadDocument,
+          productId: addedProductId,
+        };
+        console.log(data);
+        axios
+          .post("/documents/", data)
+          .then((response) => {
+            console.log(response);
+            toast.success(response.data.description);
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(error.response.data.description);
+          });
+      }
+      setSelectedFiles(files);
+    } else {
+      console.log("No files uploaded");
+    }
+  };
+
+  const handleImageChange = async (event: any) => {
+    const files: any = event.target.files;
+    console.log(files);
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const uploadImage = await readFileAsBase64(file);
+        let data = {
+          imageName: file?.name,
+          image: uploadImage,
+          productId: addedProductId,
+        };
+        console.log("image data", data);
+        axios
+          .post("/images/", data)
+          .then((response) => {
+            console.log(response);
+            toast.success(response.data.description);
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(error.response.data.description);
+          });
+      }
+    } else {
+      console.log("No files uploaded");
     }
   };
 
@@ -185,24 +196,6 @@ export default function AddEditProduct() {
 
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
-  };
-
-  const handleDocumentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files: FileList | null = event.target.files;
-    if (files && files.length > 0) {
-      setSelectedFiles(Array.from(files));
-    } else {
-      console.log("No files uploaded");
-    }
-  };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files: FileList | null = event.target.files;
-    if (files && files.length > 0) {
-      setSelectedImages(Array.from(files));
-    } else {
-      console.log("No files uploaded");
-    }
   };
 
   const submitHandler = (data: any) => {
@@ -269,11 +262,16 @@ export default function AddEditProduct() {
         return (
           <AddDocuments
             handleFileChange={handleDocumentChange}
-            selectedFiles={selectedFiles}
+            productId={addedProductId}
           />
         );
       case 2:
-        return <AddProductPhotos handleFileChange={handleImageChange} />;
+        return (
+          <AddProductPhotos
+            handleFileChange={handleImageChange}
+            productId={addedProductId}
+          />
+        );
       default:
         return "Unknown step";
     }
