@@ -15,6 +15,7 @@ import {
   InputAdornment,
   IconButton,
   Badge,
+  useMediaQuery,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -33,14 +34,10 @@ export default function TopBar() {
   const [categoryMenu, setCategoryMenu] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
-  const {
-    cartProducts,
-    setCartProducts,
-    searchTerm,
-    setSearchTerm,
-    selectedCategory,
-    setSelectedCategory,
-  } = useContext(Context);
+  const isScreenMd = useMediaQuery("(max-width:1000px)");
+  const isScreenSm = useMediaQuery("(max-width:600px)");
+  const { cartProducts, setSearchTerm, setSelectedCategory } =
+    useContext(Context);
 
   const handleCategoryMenuClick = (event: any) => {
     setCategoryMenu(event.currentTarget);
@@ -120,13 +117,13 @@ export default function TopBar() {
             <img
               src={logo}
               alt="logo"
-              width={"120px"}
+              width={isScreenSm ? "80px" : "120px"}
               onClick={() => navigate("/user/")}
               style={{ cursor: "pointer" }}
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ display: isScreenSm ? "none" : "block" }}>
             <Button
               type="button"
               onClick={handleCategoryMenuClick}
@@ -158,7 +155,7 @@ export default function TopBar() {
                   },
                 }}
               >
-                Browse Categories
+                {isScreenMd ? "Categories" : "Browse Categories"}
               </Typography>
             </Button>
             <Menu
@@ -211,7 +208,6 @@ export default function TopBar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                minWidth: "80px",
                 color: "#555",
               }}
               onClick={() => navigate("/user/cart")}
@@ -219,18 +215,21 @@ export default function TopBar() {
               <Badge badgeContent={cartProducts} color="info">
                 <ShoppingCartIcon sx={{ height: 30, width: 30 }} />
               </Badge>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                  ml: 1.2,
-                }}
-              >
-                <Typography variant="body1">Cart</Typography>
-              </Box>
+              {!isScreenSm && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                    ml: 1.2,
+                  }}
+                >
+                  <Typography variant="body1">Cart</Typography>
+                </Box>
+              )}
             </Button>
           </Grid>
+
           <Grid item>
             <Avatar
               src={`data:image/png;base64,${profilePhoto}`}

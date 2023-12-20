@@ -66,6 +66,10 @@ export default function LoginPage() {
   });
 
   const loginHandler = async (data: any) => {
+    if (data.password) {
+      // Encode the 'password' using Base64
+      data.password = btoa(data.password);
+    }
     try {
       let url = `/users/authenticate-users?email=${data.email}&password=${data.password}`;
       const response = await axios.post(url);

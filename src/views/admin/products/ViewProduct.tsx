@@ -228,11 +228,11 @@ export default function ProductDetails() {
         onClick={() => handleViewDocument(document)}
         icon={<VisibilityIcon />}
       />
-      <ActionButton
+      {/* <ActionButton
         title="Delete Document"
         onClick={() => handleDeleteClick(document)}
         icon={<DeleteIcon />}
-      />
+      /> */}
     </Box>
   );
 
