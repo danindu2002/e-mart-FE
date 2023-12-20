@@ -1,8 +1,8 @@
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Backdrop,
   Box,
-  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -12,18 +12,16 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import axios from "../../../api/apiConfig";
-import ProductImage from "../../../assets/images/headphones.jpg";
-import ProductImage2 from "../../../assets/images/headphone2.jpg";
-import TopBar from "../../customer/TopBar";
-import ImageSlider from "../../../components/cards/ImageSlider";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../../../App";
-import DeleteIcon from "@mui/icons-material/Delete";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import DataTable from "../../../components/tables/DataTable";
+import axios from "../../../api/apiConfig";
+import ProductImage2 from "../../../assets/images/headphone2.jpg";
+import ProductImage from "../../../assets/images/headphones.jpg";
 import ActionButton from "../../../components/buttons/ActionButton";
+import ImageSlider from "../../../components/cards/ImageSlider";
+import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import DataTable from "../../../components/tables/DataTable";
 
 const imageArray = [ProductImage, ProductImage2];
 
@@ -135,8 +133,44 @@ export default function ProductDetails() {
     }
   };
 
+  const handleViewDocument = async (document: any) => {
+    try {
+      const response = await axios.get(
+        `/documents/?documentId=${document.documentId}`
+      );
+      console.log(response.data.object);
+      let documentBase64 = response.data.object.document;
+      console.log("Base64 PDF:", documentBase64);
+      // Create a Blob from the base64 data
+      const blob = base64toBlob(documentBase64);
+      // Create a data URL from the Blob
+      const dataUrl = URL.createObjectURL(blob);
+      // Open a new window with the data URL
+      window.open(dataUrl, "_blank");
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.response.data.description);
+    }
+  };
+
+  // Function to convert base64 to Blob
+  const base64toBlob = (base64Data: string) => {
+    const byteCharacters = atob(base64Data);
+    const byteArray = new Uint8Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteArray[i] = byteCharacters.charCodeAt(i);
+    }
+    return new Blob([byteArray], { type: "application/pdf" });
+  };
+
   const renderActions = (document: any) => (
     <Box>
+      <ActionButton
+        title="View Document"
+        onClick={() => handleViewDocument(document)}
+        // to={`/products/view-document/${document?.documentId}`}
+        icon={<VisibilityIcon />}
+      />
       <ActionButton
         title="Delete Document"
         onClick={() => handleDeleteClick(document)}
@@ -194,7 +228,7 @@ export default function ProductDetails() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: "20px" }}
+                    sx={{ fontSize: "18px" }}
                   >
                     Size: {product?.size}
                   </Typography>
@@ -203,7 +237,7 @@ export default function ProductDetails() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: "20px" }}
+                    sx={{ fontSize: "18px" }}
                   >
                     Color: {product?.color}
                   </Typography>
@@ -237,6 +271,11 @@ export default function ProductDetails() {
           renderActions={renderActions}
         />
       </Container>
+      <DeleteDialog
+        open={openDelete}
+        handleClose={() => setOpenDelete(false)}
+        handleDelete={handleDeleteDialog}
+      />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={openDrop}

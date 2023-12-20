@@ -30,6 +30,10 @@ export default function LayoutRoutes() {
         path="/products/update-product/:productId"
         element={<AddEditProductStepper />}
       />
+       <Route
+        path="/products/view-product/:productId"
+        element={<ViewProductDetails />}
+      />
       <Route path="/categories" element={<ManageCategory />} />
       <Route path="/users" element={<ManageCustomers />} />
     </Routes>
