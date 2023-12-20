@@ -91,7 +91,6 @@ export default function ProductDetails() {
       return null;
     }
   };
-
   useEffect(() => {
     fetchProduct();
     fetchProductImages();

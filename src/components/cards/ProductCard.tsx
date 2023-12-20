@@ -4,8 +4,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Divider, Rating } from "@mui/material";
-import ProductImage from "../../assets/images/headphones.jpg";
-import { useNavigate } from "react-router-dom";
+import ProductImage from "../../assets/images/white-background.jpg";
+import axios from "../../api/apiConfig";
+import { useEffect, useState } from "react";
 
 interface CardProps {
   id: number;
@@ -16,11 +17,50 @@ interface CardProps {
 }
 
 export default function ProductCard({
+  id,
   name,
   rating,
   price,
   description,
 }: CardProps) {
+  const [image, setImage] = useState<any>(null);
+
+  useEffect(() => {
+    fetchProductImages();
+  }, [id]);
+
+  const fetchProductImages = async () => {
+    try {
+      const response = await axios.get(`/images/all-images?productId=${id}`);
+      console.log("product images:", response.data.responseList);
+
+      const decodedImages = response.data.responseList.map(
+        (imageObject: any) => {
+          const { imageName, image } = imageObject;
+          const decodedImage = decodeBase64Image(image);
+          return { imageName, decodedImage };
+        }
+      );
+      setImage(decodedImages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const decodeBase64Image = (base64String: string) => {
+    try {
+      const byteCharacters = atob(base64String);
+      const byteArray = new Uint8Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteArray[i] = byteCharacters.charCodeAt(i);
+      }
+      return URL.createObjectURL(new Blob([byteArray]));
+    } catch (error) {
+      console.error("Error decoding base64 image:", error);
+      return null;
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -34,7 +74,9 @@ export default function ProductCard({
         <CardMedia
           component="img"
           height="auto"
-          image={ProductImage}
+          image={
+            image && image.length > 0 ? image[0].decodedImage : ProductImage
+          }
           alt="product image"
         />
         <Divider />
