@@ -1,17 +1,14 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import CustomerTest from "../views/customer/HomePage";
-import Dashboard from "../views/admin/dashboard/Dashboard";
-import ManageProducts from "../views/admin/products/ManageProducts";
-import ManageCustomers from "../views/admin/customers/ManageCustomers";
-import ManageAdmins from "../views/admin/admins/ManageAdmins";
+import { Route, Routes } from "react-router-dom";
 import AddEditAdmin from "../views/admin/admins/AddEditAdmin";
-import Profile from "../views/admin/profile/AdminProfile";
-import AddEditProduct from "../components/forms/AddEditProduct";
+import ManageAdmins from "../views/admin/admins/ManageAdmins";
 import ManageCategory from "../views/admin/category/ManageCategory";
+import ManageCustomers from "../views/admin/customers/ManageCustomers";
+import Dashboard from "../views/admin/dashboard/Dashboard";
 import AddEditProductStepper from "../views/admin/products/AddEditProducts";
-import ViewProductDetails from "../components/forms/ViewProductDetails";
+import ManageProducts from "../views/admin/products/ManageProducts";
 import ViewProduct from "../views/admin/products/ViewProduct";
+import Profile from "../views/admin/profile/AdminProfile";
+import ErrorPage from "../views/admin/dashboard/ErrorPage";
 
 export default function LayoutRoutes() {
   return (
@@ -31,12 +28,9 @@ export default function LayoutRoutes() {
         path="/products/update-product/:productId"
         element={<AddEditProductStepper />}
       />
-      <Route
-        path="/products/view-product/:productId"
-        element={<ViewProductDetails />}
-      />
       <Route path="/categories" element={<ManageCategory />} />
       <Route path="/users" element={<ManageCustomers />} />
+      <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );
 }

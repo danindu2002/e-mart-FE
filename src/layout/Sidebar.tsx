@@ -29,7 +29,7 @@ import logo from "../assets/icons/EmartLogo.png";
 import CustomListItem from "../components/lists/CustomListItem";
 import Breadcrumbs from "./Breadcrumbs";
 import CategoryIcon from "@mui/icons-material/Category";
-import LayoutRoutes from "./LayoutRoutes";
+import LayoutRoutes from "./AdminLayoutRoutes";
 
 const drawerWidth = 200;
 

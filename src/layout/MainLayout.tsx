@@ -1,11 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "../views/login/LoginPage";
-import Sidebar from "./Sidebar";
 import SignupPage from "../views/login/SignupPage";
-import Homepage from "../views/customer/HomePage";
-import ProtectedRoutes from "./ProtectedRoutes";
-import ProductDetails from "../views/customer/ProductDetails";
-import UserLayoutRoutes from "./UserLayoutRoutes";
+import Sidebar from "./Sidebar";
 import HomepageRoutes from "./UserLayout";
 
 export default function MainLayout() {
