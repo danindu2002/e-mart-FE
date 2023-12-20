@@ -79,7 +79,6 @@ export default function AddEditProduct() {
     control,
     setValue,
     reset,
-    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
