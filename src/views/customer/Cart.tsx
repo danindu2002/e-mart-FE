@@ -17,6 +17,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ActionButton from "../../components/buttons/ActionButton";
 import Swal from "sweetalert2";
 import { Context } from "../../App";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState<any>([]);
@@ -31,6 +33,7 @@ export default function Cart() {
     selectedCategory,
     setSelectedCategory,
   } = useContext(Context);
+  let navigate = useNavigate();
 
   const storedUserData = sessionStorage.getItem("loggedUserData");
   const parsedUserData = JSON.parse(storedUserData as string);
@@ -147,8 +150,19 @@ export default function Cart() {
   return (
     <>
       <Container maxWidth="lg" sx={{ mt: 15 }}>
+        <Button
+          type="button"
+          sx={{
+            p: 0,
+            mb: 2,
+          }}
+          onClick={() => navigate(-1)}
+          startIcon={<KeyboardArrowLeftIcon />}
+        >
+          Go Back
+        </Button>
         <Typography variant="h5" color="initial" sx={{ fontWeight: "bold" }}>
-          Cart
+          Cart Details
         </Typography>
         <Grid container spacing={2} marginTop="10px">
           <Grid item xs={12} md={9} sx={{ p: 1 }}>
