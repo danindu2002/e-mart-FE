@@ -168,7 +168,6 @@ export default function ProductDetails() {
       <ActionButton
         title="View Document"
         onClick={() => handleViewDocument(document)}
-        // to={`/products/view-document/${document?.documentId}`}
         icon={<VisibilityIcon />}
       />
       <ActionButton

@@ -48,7 +48,6 @@ export default function ImageSlider({ images }: any) {
         </IconButton>
         <img
           src={images[currentIndex]}
-          alt={`Product ${currentIndex + 1}`}
           style={{
             width: "100%",
             height: "100%",

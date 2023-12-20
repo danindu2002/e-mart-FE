@@ -22,11 +22,10 @@ import { toast } from "react-toastify";
 import { Context } from "../../App";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
-const imageArray: any[] = [ProductImage, ProductImage2];
-
 export default function ProductDetails() {
   const [product, setProduct] = useState<any>(null);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
+  const [productImages, setProductImages] = useState<any[]>([]);
   const { productId } = useParams();
   const [count, setCount] = useState<number>(1);
   const { setCartProducts } = useContext(Context);
@@ -56,9 +55,51 @@ export default function ProductDetails() {
     }
   };
 
+  const fetchProductImages = async () => {
+    try {
+      setOpenDrop(true);
+      const response = await axios.get(
+        `/images/all-images?productId=${productId}`
+      );
+      console.log("product images:", response.data.responseList);
+
+      const decodedImages = response.data.responseList.map(
+        (imageObject: any) => {
+          const { imageName, image } = imageObject;
+          const decodedImage = decodeBase64Image(image);
+          return { imageName, decodedImage };
+        }
+      );
+      setProductImages(decodedImages);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setOpenDrop(false);
+    }
+  };
+
+  const decodeBase64Image = (base64String: string) => {
+    try {
+      const byteCharacters = atob(base64String);
+      const byteArray = new Uint8Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteArray[i] = byteCharacters.charCodeAt(i);
+      }
+      return URL.createObjectURL(new Blob([byteArray]));
+    } catch (error) {
+      console.error("Error decoding base64 image:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     fetchProduct();
+    fetchProductImages();
   }, [productId]);
+
+  useEffect(() => {
+    console.log("Decoded Images", productImages);
+  }, [productImages]);
 
   const addToCartHandler = async () => {
     console.log("productId", productId);
@@ -87,6 +128,13 @@ export default function ProductDetails() {
     } finally {
     }
   };
+
+  // const imageArray: any[] = [ProductImage2, ProductImage];
+
+  const imageArray = productImages.map(
+    (imageObject) => imageObject.decodedImage
+  );
+  console.log("imageArray", imageArray);
 
   return (
     <Box sx={{ backgroundColor: "#fff " }}>

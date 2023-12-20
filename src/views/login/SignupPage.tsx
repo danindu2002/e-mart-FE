@@ -50,6 +50,10 @@ export default function SignupPage() {
   });
 
   const submitHandler = (data: any) => {
+    if (data.password) {
+      // Encode the 'password' using Base64
+      data.password = btoa(data.password);
+    }
     // Exclude confirmPassword from the submitted data
     const { confirmPassword, ...formDataWithoutConfirmPassword } = data;
     // Add the 'role' attribute to the form data
