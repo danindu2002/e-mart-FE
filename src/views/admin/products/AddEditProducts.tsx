@@ -24,12 +24,13 @@ const steps = ["Add Product Details", "Add Documents", "Add Product Photos"];
 export default function AddEditProduct() {
   const [categories, setCategories] = useState<any[]>([]);
   const [addedProductId, setAddedProductId] = useState<any>(null);
-  let editProduct = false;
+  let editProduct: any = false;
   let navigate = useNavigate();
   let { productId }: any = useParams();
   editProduct = Boolean(productId);
   const [activeStep, setActiveStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [documents, setDocuments] = useState<any[]>([]);
   const isScreenSm = useMediaQuery("(max-width:900px)");
 
   const schema = yup.object().shape({
@@ -111,8 +112,10 @@ export default function AddEditProduct() {
     fetchCategories();
   }, [editProduct, productId, reset, setValue]);
 
-  const handleNext = async () => {
-    if (activeStep === 1) {
+  const handleNext = (data: any) => {
+    if (activeStep === 0) {
+      submitHandler(data);
+    } else if (activeStep === 1) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else if (activeStep === 2) {
       navigate("/admin/products");
@@ -122,7 +125,7 @@ export default function AddEditProduct() {
   };
 
   const handleDocumentChange = async (event: any) => {
-    const files = event.target.files;
+    let files = event.target.files;
     if (files && files.length > 0) {
       for (const file of files) {
         const uploadDocument = await readFileAsBase64(file);
@@ -138,6 +141,7 @@ export default function AddEditProduct() {
           .then((response) => {
             console.log(response);
             toast.success(response.data.description);
+            fetchDocumentDetails();
           })
           .catch((error) => {
             console.log(error);
@@ -209,6 +213,7 @@ export default function AddEditProduct() {
           console.log(response);
           toast.success(response.data.description);
           setAddedProductId(response.data?.object?.productId);
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
         .catch((error) => {
           console.log(error);
@@ -223,13 +228,25 @@ export default function AddEditProduct() {
           console.log(response);
           toast.success(response.data.description);
           setAddedProductId(response.data?.object?.productId);
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
         .catch((error) => {
           console.log(error);
           toast.error(error.response.data.description);
         });
     }
-    setIsSubmitted(true);
+  };
+
+  const fetchDocumentDetails = async () => {
+    try {
+      const response = await axios.get(
+        `/documents/all-documents?productId=${productId}`
+      );
+      console.log("documents:", response.data.responseList);
+      setDocuments(response.data.responseList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const backgroundStyles = {
@@ -258,6 +275,8 @@ export default function AddEditProduct() {
           <AddDocuments
             handleFileChange={handleDocumentChange}
             productId={addedProductId}
+            documents={documents}
+            fetchDocumentDetails={fetchDocumentDetails}
           />
         );
       case 2:
@@ -313,21 +332,21 @@ export default function AddEditProduct() {
                 </Button>
               )}
               <Box sx={{ flex: "1 1 auto" }} />
-              {activeStep === 0 && (
+              {/* {activeStep === 0 && (
                 <Button
                   type="submit"
                   color="secondary"
-                  onClick={handleSubmit(submitHandler)}
+                  // onClick={handleSubmit(submitHandler)}
                 >
                   Submit
                 </Button>
-              )}
+              )} */}
               {activeStep === 0 && (
                 <Button color="secondary" onClick={() => reset()}>
                   Clear
                 </Button>
               )}
-              <Button onClick={handleNext} disabled={!isSubmitted}>
+              <Button onClick={handleSubmit(handleNext)}>
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
             </Box>

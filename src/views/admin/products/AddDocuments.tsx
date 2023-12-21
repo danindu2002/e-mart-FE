@@ -8,8 +8,11 @@ import DataTable from "../../../components/tables/DataTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 
-const AddDocuments = ({ handleFileChange, productId }: any) => {
-  const [documents, setDocuments] = useState<any[]>([]);
+const AddDocuments = ({
+  handleFileChange,
+  fetchDocumentDetails,
+  documents,
+}: any) => {
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [page, setPage] = useState(0);
@@ -28,17 +31,17 @@ const AddDocuments = ({ handleFileChange, productId }: any) => {
     setPage(0);
   };
 
-  const fetchDocumentDetails = async () => {
-    try {
-      const response = await axios.get(
-        `/documents/all-documents?productId=${productId}`
-      );
-      console.log("documents:", response.data.responseList);
-      setDocuments(response.data.responseList);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchDocumentDetails = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `/documents/all-documents?productId=${productId}`
+  //     );
+  //     console.log("documents:", response.data.responseList);
+  //     setDocuments(response.data.responseList);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleDeleteClick = (document: any) => {
     console.log(document);
