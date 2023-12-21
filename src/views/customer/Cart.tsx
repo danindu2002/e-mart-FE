@@ -104,15 +104,37 @@ export default function Cart() {
       total: calculateTotal(),
       ordered: true,
     };
+    const newCartData = {
+      checkoutDate: getCurrentDate(),
+      total: 0,
+    };
     console.log(data);
     try {
+      if (calculateTotal() == 0) {
+        await Swal.fire({
+          title: "Your cart is empty",
+          text: "Continue shopping and add items to your cart",
+          icon: "info",
+          iconColor: "#ffa000",
+          confirmButtonText: "Let's go",
+          confirmButtonColor: "#ffa000",
+          allowOutsideClick: false,
+        });
+        navigate("/user");
+        return;
+      }
       const response = await axios.put(`/cart/${parsedUserData.userId}`, data);
       console.log(response.data);
       Swal.fire({
         title: "Payment Successful!",
         icon: "success",
+        iconColor: "#ffa000",
+        confirmButtonColor: "#ffa000",
       });
       setCartItems([]);
+
+      // creating a new cart after checking out
+      await axios.post(`/cart/${parsedUserData.userId}`, newCartData);
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -242,6 +264,7 @@ export default function Cart() {
               </Typography>
               <Button
                 type="button"
+                // disabled={calculateTotal() == 0 ? true : false}
                 variant="contained"
                 color="success"
                 fullWidth

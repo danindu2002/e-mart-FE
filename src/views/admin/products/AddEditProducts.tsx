@@ -126,6 +126,7 @@ export default function AddEditProduct() {
 
   const handleDocumentChange = async (event: any) => {
     let files = event.target.files;
+    console.log(files);
     if (files && files.length > 0) {
       for (const file of files) {
         const uploadDocument = await readFileAsBase64(file);
@@ -148,6 +149,7 @@ export default function AddEditProduct() {
             toast.error(error.response.data.description);
           });
       }
+      event.target.value = null;
     } else {
       console.log("No files uploaded");
     }
@@ -194,18 +196,19 @@ export default function AddEditProduct() {
   };
 
   const handleBack = () => {
+    if (activeStep == 1) {
+      navigate(`/admin/products/update-product/${addedProductId}`);
+      console.log("addedProductId", addedProductId);
+    }
     setActiveStep((prevStep) => prevStep - 1);
   };
 
   const submitHandler = (data: any) => {
-    if (data.password) {
-      // Encode the 'password' using Base64
-      data.password = btoa(data.password);
-    }
     console.log("Submit Data", data);
 
     if (editProduct) {
       // Update Product
+      setAddedProductId(productId);
       console.log(data);
       axios
         .put(`/products/${productId}`, data)
@@ -332,15 +335,6 @@ export default function AddEditProduct() {
                 </Button>
               )}
               <Box sx={{ flex: "1 1 auto" }} />
-              {/* {activeStep === 0 && (
-                <Button
-                  type="submit"
-                  color="secondary"
-                  // onClick={handleSubmit(submitHandler)}
-                >
-                  Submit
-                </Button>
-              )} */}
               {activeStep === 0 && (
                 <Button color="secondary" onClick={() => reset()}>
                   Clear

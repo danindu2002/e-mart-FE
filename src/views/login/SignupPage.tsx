@@ -79,7 +79,7 @@ export default function SignupPage() {
   const backgroundStyles = {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "rgba(255, 255, 255)",
+    // backgroundColor: "rgba(255, 255, 255)",
     borderRadius: "8px",
   };
 
@@ -110,7 +110,7 @@ export default function SignupPage() {
         /> */}
       </Grid>
       <Grid item xs={12} md={8}>
-        <Container maxWidth="lg" sx={{ ...backgroundStyles }}>
+        <Container maxWidth="lg" sx={{ ...backgroundStyles }} id="signUpCard">
           <Typography
             sx={{
               fontSize: "30px",

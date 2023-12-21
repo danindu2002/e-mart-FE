@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   CircularProgress,
   Container,
   Grid,
@@ -15,6 +16,8 @@ import { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "../../../api/apiConfig";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ProductImage from "../../assets/images/headphones.jpg";
 import ProductImage2 from "../../assets/images/headphone2.jpg";
@@ -232,8 +235,8 @@ export default function ProductDetails() {
   ];
 
   return (
-    <Box sx={{ backgroundColor: "#fff " }}>
-      <Container maxWidth="lg" sx={{ mt: 2 }}>
+    <Box sx={{ backgroundColor: "#fff", borderRadius: "10px" }}>
+      <Container maxWidth="lg" sx={{ mt: 2, ml:-2 }}>
         <Grid container spacing={2}>
           <ImageSlider images={imageArray} />
           <Grid item xs={12} md={6}>
@@ -243,11 +246,27 @@ export default function ProductDetails() {
                 flexDirection: "column",
                 height: "70vh",
                 boxShadow: "none",
+                borderRadius: "10px",
               }}
             >
               <CardContent sx={{ flex: "1 0 auto", alignItems: "flex-start" }}>
-                <Typography component="div" variant="h5">
-                  {product?.productName}
+                <Typography
+                  component="div"
+                  // variant="h6"
+                  sx={{
+                    fontSize: "12.5px",
+                    letterSpacing: "1px",
+                    color: "#ffb300",
+                  }}
+                >
+                  <b>{product?.category}</b>
+                </Typography>
+                <Typography
+                  component="div"
+                  variant="h4"
+                  sx={{ fontSize: "40px" }}
+                >
+                  <b>{product?.productName}</b>
                 </Typography>
                 <Typography
                   variant="subtitle1"
@@ -265,8 +284,55 @@ export default function ProductDetails() {
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
+                  sx={{ textAlign: "justify", fontSize: "15px", mt: 3, mb: 3 }}
                 >
                   {product?.description}
+                </Typography>
+                <Typography
+                  component="div"
+                  variant="h6"
+                  sx={{
+                    fontSize: "17px",
+                    fontWeight: "bold",
+                    alignItems: "center",
+                  }}
+                >
+                  Quantity : {product?.quantity}
+                  {product?.quantity != 0 ?
+                    <Chip
+                      icon={<CheckIcon sx={{ fontSize: "20px" }} />}
+                      label="In Stock"
+                      color="warning"
+                      sx={{ ml: 1.5, fontSize: "12px" }}
+                    />
+                    :
+                    <Chip
+                      icon={<CheckIcon sx={{ fontSize: "20px" }} />}
+                      label="Out of Stock"
+                      color="warning"
+                      sx={{ ml: 1.5, fontSize: "12px" }}
+                    />
+                  }
+                </Typography>
+                {product?.color !== "" && (
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ fontSize: "17px" }}
+                  >
+                    Color : {product?.color}
+                  </Typography>
+                )}
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "28px",
+                    fontFamily: "unset",
+                  }}
+                >
+                  Rs. {product?.price.toFixed(2)}
                 </Typography>
                 {product?.size !== "" && (
                   <Typography
@@ -277,26 +343,11 @@ export default function ProductDetails() {
                     Size: {product?.size}
                   </Typography>
                 )}
-                {product?.color !== "" && (
-                  <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{ fontSize: "20px" }}
-                  >
-                    Color: {product?.color}
-                  </Typography>
-                )}
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Rs. {product?.price.toFixed(2)}
-                </Typography>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
+        <Box sx={{ml:7}}>
         <Typography
           component="div"
           variant="h6"
@@ -315,6 +366,7 @@ export default function ProductDetails() {
           renderActions={renderActions}
           noDataMessage="No Documents Available"
         />
+        </Box>
       </Container>
       <DeleteDialog
         open={openDelete}
