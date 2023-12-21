@@ -3,7 +3,7 @@ import AddEditAdmin from "../views/admin/admins/AddEditAdmin";
 import ManageAdmins from "../views/admin/admins/ManageAdmins";
 import ManageCategory from "../views/admin/category/ManageCategory";
 import ManageCustomers from "../views/admin/customers/ManageCustomers";
-import Dashboard from "../views/admin/dashboard/Dashboard";
+import Dashboard from "../views/admin/dashboard/DashboardOld";
 import AddEditProductStepper from "../views/admin/products/AddEditProducts";
 import ManageProducts from "../views/admin/products/ManageProducts";
 import ViewProduct from "../views/admin/products/ViewProduct";

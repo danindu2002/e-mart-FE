@@ -7,6 +7,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,8 +30,7 @@ export default function AddEditProduct() {
   editProduct = Boolean(productId);
   const [activeStep, setActiveStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const isScreenSm = useMediaQuery("(max-width:900px)");
 
   const schema = yup.object().shape({
     productName: yup.string().required("Product name is required"),
@@ -148,7 +148,6 @@ export default function AddEditProduct() {
             toast.error(error.response.data.description);
           });
       }
-      setSelectedFiles(files);
     } else {
       console.log("No files uploaded");
     }
@@ -303,7 +302,7 @@ export default function AddEditProduct() {
               return (
                 <Step key={label} {...stepProps}>
                   <StepLabel {...labelProps}>
-                    {index === activeStep ? label : null}
+                    {isScreenSm && index !== activeStep ? null : label}
                   </StepLabel>
                 </Step>
               );

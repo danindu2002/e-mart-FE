@@ -3,8 +3,10 @@ import { BarChart, axisClasses } from "@mui/x-charts";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useMediaQuery } from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "../../api/apiConfig";
 
-const dataset = [
+const dataset1 = [
   {
     value: 9,
     month: "Jan",
@@ -58,8 +60,21 @@ const dataset = [
 const valueFormatter = (value: number) => `${value}`;
 
 export default function Chart() {
+  const [dataset, setDataset] = useState<any[]>([{}]);
   const barColor = "#409AE9";
   const isSmallScreen = useMediaQuery("(max-width:600px)");
+
+  function fetchBarChartData() {
+    axios
+      .get("/dashboard/monthly-income")
+      .then((response) => {
+        console.log('monthly-income',response);
+        setDataset(response.data.object);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const chartSetting = {
     yAxis: [
@@ -77,6 +92,10 @@ export default function Chart() {
   const series = [
     { dataKey: "value", label: "Monthly Income", valueFormatter },
   ];
+
+  useEffect(() => {
+    fetchBarChartData();
+  }, []);
 
   return (
     <Box

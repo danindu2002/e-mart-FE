@@ -32,7 +32,7 @@ const AddProductDetails = ({
             sx={{ mb: 2 }}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={6}>
           <FormTextField
             label="Product Code*"
             name="productCode"
@@ -42,18 +42,6 @@ const AddProductDetails = ({
             error={!!errors?.productCode}
             helperText={errors.productCode?.message}
             sx={{ mb: 3 }}
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <FormTextField
-            label="Price*"
-            name="price"
-            placeholder="Enter Price"
-            fullWidth
-            register={register}
-            error={!!errors?.price}
-            helperText={errors.price?.message}
-            sx={{ mb: 2 }}
           />
         </Grid>
       </Grid>
@@ -75,7 +63,19 @@ const AddProductDetails = ({
       </Grid>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
+          <FormTextField
+            label="Price*"
+            name="price"
+            placeholder="Enter Price"
+            fullWidth
+            register={register}
+            error={!!errors?.price}
+            helperText={errors.price?.message}
+            sx={{ mb: 2 }}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
           <FormTextField
             label="Color"
             name="color"
@@ -87,19 +87,7 @@ const AddProductDetails = ({
             sx={{ mb: 3 }}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
-          <FormTextField
-            label="Quantity*"
-            name="quantity"
-            placeholder="Enter Quantity"
-            fullWidth
-            register={register}
-            error={!!errors?.quantity}
-            helperText={errors.quantity?.message}
-            sx={{ mb: 2 }}
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <FormTextField
             label="Rating*"
             name="rating"
@@ -111,7 +99,22 @@ const AddProductDetails = ({
             sx={{ mb: 3 }}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+      </Grid>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <FormTextField
+            label="Quantity*"
+            name="quantity"
+            placeholder="Enter Quantity"
+            fullWidth
+            register={register}
+            error={!!errors?.quantity}
+            helperText={errors.quantity?.message}
+            sx={{ mb: 2 }}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
           <FormControl fullWidth size="small">
             <InputLabel id="size-label">Size</InputLabel>
             <Controller
@@ -134,10 +137,7 @@ const AddProductDetails = ({
             />
           </FormControl>
         </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4} sx={{ mt: 2 }}>
+        <Grid item xs={12} md={4}>
           <FormControl fullWidth size="small">
             <InputLabel id="category-label">Category*</InputLabel>
             <Controller

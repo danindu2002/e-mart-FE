@@ -22,10 +22,10 @@ export default function MainLayout() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/admin/*" element={<Sidebar />} />
-      {/* <Route element={<ProtectedRoute requiredRole="Admin" />}>
+      {/* <Route path="/admin/*" element={<Sidebar />} /> */}
+      <Route element={<ProtectedRoute requiredRole="Admin" />}>
         <Route path="/admin/*" element={<Sidebar />} />
-      </Route> */}
+      </Route>
       <Route path="/user/*" element={<HomepageRoutes />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
       <Route path="/*" element={<ErrorPage />} />
