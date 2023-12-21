@@ -136,13 +136,7 @@ export default function ProductDetails() {
 
   return (
     <Box sx={{ backgroundColor: "#fff " }}>
-      {productImages.length > 0 && (
-        <img
-          src="blob:http://localhost:3000/25a5402a-1f24-4691-8070-0957b495f972"
-          alt="test"
-        />
-      )}
-      <Container maxWidth="lg" sx={{ mt: 13 }}>
+      <Container maxWidth="lg" sx={{ mt: 13, ml: { xs: -4, sm: 4 } }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Button
@@ -165,11 +159,27 @@ export default function ProductDetails() {
                 flexDirection: "column",
                 height: "70vh",
                 boxShadow: "none",
+                ml: 4,
               }}
             >
               <CardContent sx={{ flex: "1 0 auto", alignItems: "flex-start" }}>
-                <Typography component="div" variant="h5">
-                  {product?.productName}
+                <Typography
+                  component="div"
+                  // variant="h6"
+                  sx={{
+                    fontSize: "12.5px",
+                    letterSpacing: "1px",
+                    color: "#ffb300",
+                  }}
+                >
+                  <b>{product?.category}</b>
+                </Typography>
+                <Typography
+                  component="div"
+                  variant="h4"
+                  sx={{ fontSize: "40px" }}
+                >
+                  <b>{product?.productName}</b>
                 </Typography>
                 <Typography
                   variant="subtitle1"
@@ -187,8 +197,16 @@ export default function ProductDetails() {
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
+                  sx={{ textAlign: "justify", fontSize: "15px", mt: 2, mb: 3 }}
                 >
                   {product?.description}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{ fontWeight: "bold", fontFamily: "unset" }}
+                >
+                  Rs. {product?.price.toFixed(2)}
                 </Typography>
                 {product?.size !== "" && (
                   <Typography
@@ -203,55 +221,56 @@ export default function ProductDetails() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: "20px" }}
+                    sx={{ fontSize: "17px", mb: 1 }}
                   >
-                    Color: {product?.color}
+                    Color : {product?.color}
                   </Typography>
                 )}
-                <Box display="flex" alignItems="center">
-                  <Button
-                    variant="contained"
-                    color="info"
-                    size="small"
-                    onClick={decrement}
-                    sx={{ p: "4px", minWidth: "30px", color: "#fff" }}
-                  >
-                    -
-                  </Button>
-                  <Typography variant="h6" component="span" sx={{ mx: 1 }}>
-                    {count}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="info"
-                    onClick={increment}
-                    sx={{ p: "4px", minWidth: "30px", color: "#fff" }}
-                  >
-                    +
-                  </Button>
-                </Box>
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Rs. {product?.price.toFixed(2)}
-                </Typography>
-                <Button
-                  type="button"
-                  variant="contained"
-                  color="success"
-                  sx={{
-                    alignSelf: "center",
-                    color: "#fff",
-                    mt: 2,
-                  }}
-                  startIcon={<ShoppingCartIcon />}
-                  onClick={addToCartHandler}
-                >
-                  Add to cart
-                </Button>
+                {/* <Box display="flex" alignItems="center"> */}
+                <Grid container sx={{ alignItems: "baseline" }}>
+                  <Grid item xs={4} sm={4}>
+                    <Button
+                      variant="contained"
+                      color="info"
+                      size="small"
+                      onClick={decrement}
+                      sx={{ p: "4px", minWidth: "30px", color: "#fff" }}
+                    >
+                      -
+                    </Button>
+                    <Typography variant="h6" component="span" sx={{ mx: 2 }}>
+                      {count}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="info"
+                      onClick={increment}
+                      sx={{ p: "4px", minWidth: "30px", color: "#fff" }}
+                    >
+                      +
+                    </Button>
+                  </Grid>
+                  <Grid item xs={8} sm={8}>
+                    <Button
+                      size="small"
+                      type="button"
+                      variant="contained"
+                      fullWidth
+                      color="success"
+                      sx={{
+                        alignSelf: "center",
+                        color: "#fff",
+                      }}
+                      startIcon={<ShoppingCartIcon />}
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  </Grid>
+                </Grid>
+
+                {/* </Box> */}
               </CardContent>
             </Card>
           </Grid>

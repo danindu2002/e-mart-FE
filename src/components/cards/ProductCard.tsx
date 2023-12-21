@@ -64,8 +64,9 @@ export default function ProductCard({
   return (
     <Card
       sx={{
-        m: 2,
-        width: 230,
+        // m: 2,
+        borderRadius: "5px",
+        width: 260,
         height: 360,
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
       }}
@@ -95,7 +96,7 @@ export default function ProductCard({
             value={rating / 2}
             precision={0.5}
             readOnly
-            sx={{ fontSize: "1.2rem" }}
+            sx={{ fontSize: "1.1rem" }}
           />
           <Typography
             component="div"
@@ -104,11 +105,15 @@ export default function ProductCard({
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              color: "grey",
             }}
           >
             {description}
           </Typography>
-          <Typography color="text.secondary" sx={{ fontSize: "18px" }}>
+          <Typography
+            color="black"
+            sx={{ fontSize: "18px", float: "right", py: 1 }}
+          >
             Rs. {price.toFixed(2)}
           </Typography>
         </CardContent>

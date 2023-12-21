@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import UnauthorizedPage from "../views/login/UnauthorizedPage";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../views/admin/dashboard/ErrorPage";
+import SignupPage from "../views/login/SignupPage";
 
 export default function MainLayout() {
   const [userRole, setUserRole] = useState(null);
@@ -22,6 +23,7 @@ export default function MainLayout() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
       {/* <Route path="/admin/*" element={<Sidebar />} /> */}
       <Route element={<ProtectedRoute requiredRole="Admin" />}>
         <Route path="/admin/*" element={<Sidebar />} />

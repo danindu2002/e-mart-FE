@@ -162,10 +162,10 @@ export default function Cart() {
           Go Back
         </Button>
         <Typography variant="h5" color="initial" sx={{ fontWeight: "bold" }}>
-          Cart Details
+          Shopping Cart Details
         </Typography>
         <Grid container spacing={2} marginTop="10px">
-          <Grid item xs={12} md={9} sx={{ p: 1 }}>
+          <Grid item xs={12} md={7.5} sx={{ mr: 6 }}>
             <DataTable
               data={cartItems}
               columns={tableHeaders}
@@ -181,46 +181,82 @@ export default function Cart() {
           <Grid
             item
             xs={12}
-            md={3}
-            sx={{ backgroundColor: "#eee", p: "0px 15px 15px 0px" }}
+            md={4}
+            sx={{
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.6))",
+              p: "0px 15px 15px 0px",
+              color: "white",
+              borderRadius: "10px",
+            }}
           >
-            <Typography
-              variant="h6"
-              paddingBottom="10px"
-              sx={{ fontWeight: "bold" }}
-            >
-              Summary
-            </Typography>
-            <Divider />
-            <Typography variant="body1" paddingTop="10px">
-              Subtotal: Rs. {calculateSubtotal().toFixed(2)}
-            </Typography>
-            <Typography variant="body1" paddingBottom="10px">
-              Shipping Fee: Rs. 0.00
-            </Typography>
-            <Divider />
-            <Typography
-              variant="body1"
-              paddingTop="10px"
-              sx={{ fontWeight: "bold" }}
-            >
-              Total: Rs. {calculateTotal().toFixed(2)}
-            </Typography>
-            <Button
-              type="button"
-              variant="contained"
-              color="success"
-              fullWidth
-              sx={{
-                alignSelf: "center",
-                color: "#fff",
-                mt: 2,
-              }}
-              endIcon={<ArrowForwardIosIcon />}
-              onClick={handleCheckout}
-            >
-              Proceed to check out
-            </Button>
+            <Box sx={{ m: 2, minHeight: "45vh" }}>
+              <Typography
+                variant="h6"
+                paddingBottom="10px"
+                sx={{
+                  fontWeight: "bold",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  color: "#ffb300",
+                }}
+              >
+                <span>Summary</span>
+              </Typography>
+              <Divider sx={{ backgroundColor: "white", my: 1 }} />
+              <Typography
+                variant="body2"
+                paddingTop="10px"
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <span>Subtotal</span>
+                <span>Rs. {calculateSubtotal().toFixed(2)}</span>
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <span>Discount</span>
+                <span>Rs. 0.00</span>
+              </Typography>
+              <Typography
+                variant="body2"
+                pb="10px"
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <span>Shipping Fee</span>
+                <span>Rs. 0.00</span>
+              </Typography>
+              <Divider sx={{ backgroundColor: "white", my: 1 }} />
+              <Typography
+                variant="body1"
+                paddingTop="10px"
+                sx={{
+                  fontWeight: "bold",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <span>Total</span>
+                <span>Rs. {calculateTotal().toFixed(2)}</span>
+              </Typography>
+              <Button
+                type="button"
+                variant="contained"
+                color="success"
+                fullWidth
+                sx={{
+                  alignSelf: "center",
+                  color: "#fff",
+                  mt: 2,
+                  fontSize: "13px",
+                }}
+                endIcon={<ArrowForwardIosIcon />}
+                onClick={handleCheckout}
+              >
+                Proceed to checkout
+              </Button>
+            </Box>
           </Grid>
         </Grid>
         <Backdrop

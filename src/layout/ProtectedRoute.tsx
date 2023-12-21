@@ -11,12 +11,6 @@ const ProtectedRoute = ({ element, requiredRole }: any) => {
   // Check if the user has the required role
   const isAuthenticated = userRole === requiredRole;
 
-  // if (!isAuthenticated) {
-  //   // If not authenticated, redirect to the unauthorized page
-  //   return <Navigate to="/unauthorized" />;
-  // }
-  // return <Route element={element} />;
-
   return (
     <>
       {isAuthenticated ? <Outlet /> : <Navigate to="/unauthorized" replace />}
