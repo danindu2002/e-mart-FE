@@ -31,18 +31,6 @@ const AddDocuments = ({
     setPage(0);
   };
 
-  // const fetchDocumentDetails = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `/documents/all-documents?productId=${productId}`
-  //     );
-  //     console.log("documents:", response.data.responseList);
-  //     setDocuments(response.data.responseList);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleDeleteClick = (document: any) => {
     console.log(document);
     setSelectedDocument(document);

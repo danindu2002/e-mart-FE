@@ -29,8 +29,8 @@ export default function AddEditProduct() {
   let { productId }: any = useParams();
   editProduct = Boolean(productId);
   const [activeStep, setActiveStep] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [documents, setDocuments] = useState<any[]>([]);
+  const [images, setImages] = useState<any[]>([]);
   const isScreenSm = useMediaQuery("(max-width:900px)");
 
   const schema = yup.object().shape({
@@ -172,12 +172,14 @@ export default function AddEditProduct() {
           .then((response) => {
             console.log(response);
             toast.success(response.data.description);
+            fetchImageDetails();
           })
           .catch((error) => {
             console.log(error);
             toast.error(error.response.data.description);
           });
       }
+      event.target.value = null;
     } else {
       console.log("No files uploaded");
     }
@@ -252,6 +254,18 @@ export default function AddEditProduct() {
     }
   };
 
+  const fetchImageDetails = async () => {
+    try {
+      const response = await axios.get(
+        `/images/all-image-details?productId=${productId}`
+      );
+      console.log("images:", response.data.responseList);
+      setImages(response.data.responseList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const backgroundStyles = {
     display: "flex",
     p: 2,
@@ -287,6 +301,8 @@ export default function AddEditProduct() {
           <AddProductPhotos
             handleFileChange={handleImageChange}
             productId={addedProductId}
+            images={images}
+            fetchImageDetails={fetchImageDetails}
           />
         );
       default:

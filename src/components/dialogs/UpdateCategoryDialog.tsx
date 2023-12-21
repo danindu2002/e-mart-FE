@@ -9,8 +9,14 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormTextField from "../forms/FormTextField";
+import { useEffect } from "react";
 
-export default function CategoryDialog({ open, onClose, onSubmit }: any) {
+export default function CategoryDialog({
+  open,
+  onClose,
+  onSubmit,
+  category,
+}: any) {
   const schema = yup.object().shape({
     categoryCode: yup.string().required("Category Code is required"),
     refCategoryName: yup.string().required("Category Name is required"),
@@ -21,15 +27,41 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
+  // const fetchCategoryData = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `/users/view-users/${parsedUserData?.userId}`
+  //     );
+
+  //     setUserData(res.data.object);
+  //     console.log("userData:", userData);
+
+  //     setValue("firstName", res.data.object.firstName);
+  //     setValue("lastName", res.data.object.lastName);
+  //     setValue("email", res.data.object.email);
+  //     setValue("contactNo", res.data.object.contactNo);
+  //     setValue("address", res.data.object.address);
+  //     setFullName(`${res.data.object.firstName} ${res.data.object.lastName}`);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCategoryData();
+  // }, [setValue]);
+
   const handleCancel = () => {
     reset();
     onClose();
   };
+  // console.log("selected category", category.categoryId);
 
   return (
     <Dialog open={open}>
@@ -44,6 +76,7 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
             register={register}
             error={!!errors?.categoryCode}
             helperText={errors.categoryCode?.message}
+            disabled
             sx={{ mb: 2 }}
           />
           <FormTextField

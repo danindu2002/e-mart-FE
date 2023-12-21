@@ -9,8 +9,11 @@ import DataTable from "../../../components/tables/DataTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 
-const AddProductPhotos = ({ handleFileChange, productId }: any) => {
-  const [images, setImages] = useState<any[]>([]);
+const AddProductPhotos = ({
+  handleFileChange,
+  fetchImageDetails,
+  images,
+}: any) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [page, setPage] = useState(0);
@@ -27,18 +30,6 @@ const AddProductPhotos = ({ handleFileChange, productId }: any) => {
   const handleChangeRowsPerPage = (product: any) => {
     setRowsPerPage(+product.target.value);
     setPage(0);
-  };
-
-  const fetchImageDetails = async () => {
-    try {
-      const response = await axios.get(
-        `/images/all-image-details?productId=${productId}`
-      );
-      console.log("images:", response.data.responseList);
-      setImages(response.data.responseList);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleDeleteClick = (image: any) => {

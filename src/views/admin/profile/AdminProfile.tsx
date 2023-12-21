@@ -52,26 +52,32 @@ export default function AdminProfile() {
     resolver: yupResolver(schema),
   });
 
-  useLayoutEffect(() => {
-    const storedUserData = sessionStorage.getItem("loggedUserData");
-    console.log("storedUserData", storedUserData);
-    const parsedUserData = JSON.parse(storedUserData as string);
+  const fetchLoggedUserData = async () => {
+    try {
+      const storedUserData = sessionStorage.getItem("loggedUserData");
+      console.log("storedUserData", storedUserData);
+      const parsedUserData = JSON.parse(storedUserData as string);
 
-    axios
-      .get(`/users/view-users/${parsedUserData?.userId}`)
-      .then((res) => {
-        setUserData(res.data.object);
-        console.log("userData:", userData);
-        setValue("firstName", res.data.object.firstName);
-        setValue("lastName", res.data.object.lastName);
-        setValue("email", res.data.object.email);
-        setValue("contactNo", res.data.object.contactNo);
-        setValue("address", res.data.object.address);
-        setFullName(`${res.data.object.firstName} ${res.data.object.lastName}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      const res = await axios.get(
+        `/users/view-users/${parsedUserData?.userId}`
+      );
+
+      setUserData(res.data.object);
+      console.log("userData:", userData);
+
+      setValue("firstName", res.data.object.firstName);
+      setValue("lastName", res.data.object.lastName);
+      setValue("email", res.data.object.email);
+      setValue("contactNo", res.data.object.contactNo);
+      setValue("address", res.data.object.address);
+      setFullName(`${res.data.object.firstName} ${res.data.object.lastName}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useLayoutEffect(() => {
+    fetchLoggedUserData();
   }, [setValue]);
 
   const submitHandler = (data: any) => {
@@ -118,6 +124,7 @@ export default function AdminProfile() {
           });
       };
       reader.readAsDataURL(file);
+      window.location.reload();
     } else console.log("No file uploaded");
   };
 

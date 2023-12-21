@@ -125,6 +125,7 @@ export default function AddEditEvent() {
             toast.error(error.response.data.description);
           }
         });
+      reset();
     }
   };
 

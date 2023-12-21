@@ -1,8 +1,8 @@
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CheckIcon from "@mui/icons-material/Check";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Backdrop,
   Box,
-  Button,
   Card,
   CardContent,
   Chip,
@@ -10,23 +10,15 @@ import {
   Container,
   Grid,
   Rating,
-  Typography,
+  Typography
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import axios from "../../../api/apiConfig";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CheckIcon from "@mui/icons-material/Check";
-import ClearIcon from "@mui/icons-material/Clear";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import ProductImage from "../../assets/images/headphones.jpg";
-import ProductImage2 from "../../assets/images/headphone2.jpg";
-import TopBar from "../../customer/TopBar";
-import ImageSlider from "../../../components/cards/ImageSlider";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../../../App";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import axios from "../../../api/apiConfig";
 import ActionButton from "../../../components/buttons/ActionButton";
+import ImageSlider from "../../../components/cards/ImageSlider";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 import DataTable from "../../../components/tables/DataTable";
 

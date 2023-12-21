@@ -119,6 +119,7 @@ export default function UserProfile() {
           });
       };
       reader.readAsDataURL(file);
+      window.location.reload();
     } else console.log("No file uploaded");
   };
 

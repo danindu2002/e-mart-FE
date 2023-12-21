@@ -16,9 +16,10 @@ import { toast } from "react-toastify";
 import axios from "../../../api/apiConfig";
 import ActionButton from "../../../components/buttons/ActionButton";
 import AddCategoryDialog from "../../../components/dialogs/AddCategoryDialog";
-import CategoryDialog from "../../../components/dialogs/CategoryDialog";
+import CategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 import DataTable from "../../../components/tables/DataTable";
+import UpdateCategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
 
 export default function ManageCategory() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -235,7 +236,7 @@ export default function ManageCategory() {
           handleClose={() => setOpenDelete(false)}
           handleDelete={handleDeleteDialog}
         />
-        <CategoryDialog
+        <UpdateCategoryDialog
           open={openUpdate}
           onClose={() => setOpenUpdate(false)}
           onSubmit={categoryUpdateHandler}
