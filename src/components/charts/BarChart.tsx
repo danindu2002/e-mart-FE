@@ -10,7 +10,7 @@ const valueFormatter = (value: number) => `${value}`;
 
 export default function Chart() {
   const [dataset, setDataset] = useState<any[]>([{}]);
-  const barColor = "#409AE9";
+  const barColor = "#ff8a14";
   const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   function fetchBarChartData() {
