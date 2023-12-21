@@ -41,76 +41,78 @@ export default function Dashboard() {
   const [orderCount, setOrderCount] = useState(0);
   const [table, setTable] = useState<any[]>([]);
 
+
   function fetchCustomerCount() {
-    axios
-      .get("/dashboard/customer-count")
-      .then((response) => {
-        console.log("customer-count", response.data.object);
-        setCustomerCount(response.data.object);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function fetchAdminCount() {
-    axios
-      .get("/dashboard/admin-count")
-      .then((response) => {
-        console.log("admin-count", response.data.object);
-        setAdminCount(response.data.object);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function fetchCategoryCount() {
-    axios
-      .get("/dashboard/category-count")
-      .then((response) => {
-        console.log("category-count", response.data.object);
-        setCategoryCount(response.data.object);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function fetchOrderCount() {
-    axios
-      .get("/dashboard/order-count")
-      .then((response) => {
-        console.log("order-count", response.data.object);
-        setOrderCount(response.data.object);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function fetchTableData() {
-    axios
-      .get("/dashboard/checkout")
-      .then((response) => {
-        console.log("tableData", response.data.object);
-        let data = response.data.object;
-        const formatData: TransformedData[] = data.map((item: any) => {
-          return {
-            userId: item.userId,
-            email: item.email,
-            contactNo: item.contactNo,
-            firstName: item.firstName,
-            total: item.total.toFixed(2),
-          };
+      axios
+        .get("/dashboard/customer-count")
+        .then((response) => {
+          console.log('customer-count',response.data.object);
+          setCustomerCount(response.data.object);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        console.log("formData", formatData);
-        setTable(formatData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+    };
+
+    function fetchAdminCount() {
+      axios
+        .get("/dashboard/admin-count")
+        .then((response) => {
+          console.log('admin-count',response.data.object);
+          setAdminCount(response.data.object);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    function fetchCategoryCount() {
+      axios
+        .get("/dashboard/category-count")
+        .then((response) => {
+          console.log('category-count',response.data.object);
+          setCategoryCount(response.data.object);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    function fetchOrderCount() {
+      axios
+        .get("/dashboard/order-count")
+        .then((response) => {
+          console.log('order-count',response.data.object);
+          setOrderCount(response.data.object);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    function fetchTableData() {
+      axios
+        .get("/dashboard/checkout")
+        .then((response) => {
+          console.log('tableData',response.data.object);
+          let data=response.data.object;
+          const formatData: TransformedData[] = data
+          .map((item:any) => {
+            return {
+              userId: item.userId,
+              email: item.email,
+              contactNo:item.contactNo,
+              firstName: item.firstName,
+              total: item.total.toFixed(2),
+            };
+          });
+          console.log("formData",formatData);
+          setTable(formatData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
   const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
@@ -268,3 +270,4 @@ export default function Dashboard() {
     </Box>
   );
 }
+

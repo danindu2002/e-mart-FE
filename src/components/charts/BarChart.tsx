@@ -6,57 +6,6 @@ import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "../../api/apiConfig";
 
-const dataset1 = [
-  {
-    value: 9,
-    month: "Jan",
-  },
-  {
-    value: 1,
-    month: "Feb",
-  },
-  {
-    value: 7,
-    month: "Mar",
-  },
-  {
-    value: 4,
-    month: "Apr",
-  },
-  {
-    value: 7,
-    month: "May",
-  },
-  {
-    value: 8,
-    month: "June",
-  },
-  {
-    value: 9,
-    month: "July",
-  },
-  {
-    value: 5,
-    month: "Aug",
-  },
-  {
-    value: 1,
-    month: "Sept",
-  },
-  {
-    value: 2,
-    month: "Oct",
-  },
-  {
-    value: 7,
-    month: "Nov",
-  },
-  {
-    value: 1,
-    month: "Dec",
-  },
-];
-
 const valueFormatter = (value: number) => `${value}`;
 
 export default function Chart() {
@@ -68,13 +17,13 @@ export default function Chart() {
     axios
       .get("/dashboard/monthly-income")
       .then((response) => {
-        console.log('monthly-income',response);
+        console.log("monthly-income", response);
         setDataset(response.data.object);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }
 
   const chartSetting = {
     yAxis: [
