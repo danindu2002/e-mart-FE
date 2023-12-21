@@ -137,7 +137,7 @@ const AddProductDetails = ({
       </Grid>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} sx={{ mt: 2 }}>
           <FormControl fullWidth size="small">
             <InputLabel id="category-label">Category*</InputLabel>
             <Controller

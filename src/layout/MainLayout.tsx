@@ -6,6 +6,7 @@ import HomepageRoutes from "./UserLayout";
 import { useState, useEffect } from "react";
 import UnauthorizedPage from "../views/login/UnauthorizedPage";
 import ProtectedRoute from "./ProtectedRoute";
+import ErrorPage from "../views/admin/dashboard/ErrorPage";
 
 export default function MainLayout() {
   const [userRole, setUserRole] = useState(null);
@@ -22,22 +23,12 @@ export default function MainLayout() {
     <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route path="/admin/*" element={<Sidebar />} />
-      {/* <Route
-        path="/admin/*"
-        element={
-          userRole === "Admin" ? (
-            <Sidebar />
-          ) : (
-            <Navigate to="/unauthorized" replace />
-          )
-        }
-      /> */}
-      {/* <Route
-        path="/admin/*"
-        element={<ProtectedRoute element={<Sidebar />} requiredRole="Admin" />}
-      /> */}
+      {/* <Route element={<ProtectedRoute requiredRole="Admin" />}>
+        <Route path="/admin/*" element={<Sidebar />} />
+      </Route> */}
       <Route path="/user/*" element={<HomepageRoutes />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
+      <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );
 }

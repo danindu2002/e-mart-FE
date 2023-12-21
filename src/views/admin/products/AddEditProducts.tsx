@@ -302,7 +302,9 @@ export default function AddEditProduct() {
               } = {};
               return (
                 <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
+                  <StepLabel {...labelProps}>
+                    {index === activeStep ? label : null}
+                  </StepLabel>
                 </Step>
               );
             })}
@@ -310,14 +312,11 @@ export default function AddEditProduct() {
           <Box sx={{ mt: 3 }}>
             <>{getStepContent(activeStep)}</>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
+              {activeStep !== 0 && (
+                <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+                  Back
+                </Button>
+              )}
               <Box sx={{ flex: "1 1 auto" }} />
               {activeStep === 0 && (
                 <Button

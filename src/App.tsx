@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
-import { AuthProvider } from "./contexts/AuthContext";
 import MainLayout from "./layout/MainLayout";
 import { theme } from "./theme";
 
@@ -64,11 +63,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <Context.Provider value={contextValues}>
-        <AuthProvider>
-          <BrowserRouter>
-            <MainLayout />
-          </BrowserRouter>
-        </AuthProvider>
+        <BrowserRouter>
+          <MainLayout />
+        </BrowserRouter>
       </Context.Provider>
       {Toast}
     </ThemeProvider>

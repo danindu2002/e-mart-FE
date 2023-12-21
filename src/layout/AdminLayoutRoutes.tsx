@@ -9,28 +9,20 @@ import ManageProducts from "../views/admin/products/ManageProducts";
 import ViewProduct from "../views/admin/products/ViewProduct";
 import Profile from "../views/admin/profile/AdminProfile";
 import ErrorPage from "../views/admin/dashboard/ErrorPage";
+import DashboardRoutes from "../views/admin/dashboard/DashboardRoutes";
+import ProfileRoutes from "../views/admin/profile/ProfileRoutes";
+import AdminRoutes from "../views/admin/admins/AdminRoutes";
+import ProductRoutes from "../views/admin/products/ProductRoutes";
 
-export default function LayoutRoutes() {
+export default function AdminLayoutRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/admins" element={<ManageAdmins />} />
-      <Route path="/admins/add-admin" element={<AddEditAdmin />} />
-      <Route path="/admins/update-admin/:userId" element={<AddEditAdmin />} />
-      <Route path="/products" element={<ManageProducts />} />
-      <Route path="/products/add-product" element={<AddEditProductStepper />} />
-      <Route
-        path="/products/view-product/:productId"
-        element={<ViewProduct />}
-      />
-      <Route
-        path="/products/update-product/:productId"
-        element={<AddEditProductStepper />}
-      />
+      <Route path="/*" element={<DashboardRoutes />} />
+      <Route path="/profile/*" element={<ProfileRoutes />} />
+      <Route path="/admins/*" element={<AdminRoutes />} />
+      <Route path="/products/*" element={<ProductRoutes />} />
       <Route path="/categories" element={<ManageCategory />} />
       <Route path="/users" element={<ManageCustomers />} />
-      <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );
 }

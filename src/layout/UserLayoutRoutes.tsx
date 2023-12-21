@@ -12,7 +12,6 @@ export default function UserLayoutRoutes() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/product-details/:productId" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );
 }
