@@ -26,7 +26,7 @@ export default function AddEditProduct() {
   const [addedProductId, setAddedProductId] = useState<any>(null);
   let editProduct = false;
   let navigate = useNavigate();
-  const { productId } = useParams();
+  let { productId }: any = useParams();
   editProduct = Boolean(productId);
   const [activeStep, setActiveStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -109,10 +109,6 @@ export default function AddEditProduct() {
         });
     }
     fetchCategories();
-
-    return () => {
-      reset();
-    };
   }, [editProduct, productId, reset, setValue]);
 
   const handleNext = async () => {
