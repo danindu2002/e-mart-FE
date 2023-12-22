@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ element, requiredRole }: any) => {
+const ProtectedRoute = ({ requiredRole }: any) => {
   // Retrieve user data from sessionStorage
   const storedUserData = sessionStorage.getItem("loggedUserData");
   const userData = storedUserData ? JSON.parse(storedUserData) : null;
-  const userRole = userData ? userData.role : null;
+  const userRole = userData ? userData.role.toLowerCase() : null;
   console.log(userRole);
 
   // Check if the user has the required role

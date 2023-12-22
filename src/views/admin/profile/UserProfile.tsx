@@ -27,6 +27,7 @@ export default function UserProfile() {
   const [userData, setUserData] = useState<any>({});
   const [editMode, setEditMode] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const { profilePhoto, setProfilePhoto } = useContext(Context);
 
   const schema = yup.object().shape({
     firstName: yup.string().required("First Name is required"),
@@ -53,26 +54,30 @@ export default function UserProfile() {
     resolver: yupResolver(schema),
   });
 
-  useLayoutEffect(() => {
-    const storedUserData = sessionStorage.getItem("loggedUserData");
-    console.log("storedUserData", storedUserData);
-    const parsedUserData = JSON.parse(storedUserData as string);
+  const fetchUserData = async () => {
+    try {
+      const storedUserData = sessionStorage.getItem("loggedUserData");
+      console.log("storedUserData", storedUserData);
+      const parsedUserData = JSON.parse(storedUserData as string);
+      const response = await axios.get(
+        `/users/view-users/${parsedUserData?.userId}`
+      );
+      const userData = response.data.object;
+      setUserData(userData);
+      console.log("userData:", userData);
+      setValue("firstName", userData.firstName);
+      setValue("lastName", userData.lastName);
+      setValue("email", userData.email);
+      setValue("contactNo", userData.contactNo);
+      setValue("address", userData.address);
+      setFullName(`${userData.firstName} ${userData.lastName}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    axios
-      .get(`/users/view-users/${parsedUserData?.userId}`)
-      .then((res) => {
-        setUserData(res.data.object);
-        console.log("userData:", userData);
-        setValue("firstName", res.data.object.firstName);
-        setValue("lastName", res.data.object.lastName);
-        setValue("email", res.data.object.email);
-        setValue("contactNo", res.data.object.contactNo);
-        setValue("address", res.data.object.address);
-        setFullName(`${res.data.object.firstName} ${res.data.object.lastName}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  useLayoutEffect(() => {
+    fetchUserData();
   }, [setValue]);
 
   const submitHandler = (data: any) => {
@@ -100,6 +105,7 @@ export default function UserProfile() {
       reader.onload = (event) => {
         const base64Data = (event!.target!.result as string).split(",");
         const uploadImage = base64Data[1];
+        setProfilePhoto(uploadImage);
         console.log(uploadImage.length);
         const { userId, role, ...userDataWithoutUserId } = userData;
         const updatedUser = {
@@ -113,6 +119,7 @@ export default function UserProfile() {
           .then((response) => {
             console.log("File uploaded successfully", response.data);
             toast.success(response.data.description);
+            fetchUserData();
           })
           .catch((error) => {
             console.error("Error uploading file", error);

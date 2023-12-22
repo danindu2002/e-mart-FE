@@ -25,7 +25,7 @@ export default function MainLayout() {
       <Route path="/" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       {/* <Route path="/admin/*" element={<Sidebar />} /> */}
-      <Route element={<ProtectedRoute requiredRole="Admin" />}>
+      <Route element={<ProtectedRoute requiredRole="admin" />}>
         <Route path="/admin/*" element={<Sidebar />} />
       </Route>
       <Route path="/user/*" element={<HomepageRoutes />} />

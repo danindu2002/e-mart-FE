@@ -126,37 +126,17 @@ export default function TopBar() {
           <Grid item sx={{ display: isScreenSm ? "none" : "block" }}>
             <Button
               type="button"
-              onClick={handleCategoryMenuClick}
+              variant="contained"
+              color="info"
               sx={{
                 textTransform: "capitalize",
                 backgroundColor: "#EDA90E",
                 color: "#fff",
-                border: "1px solid #EDA90E",
-                "&:hover": {
-                  backgroundColor: "#fff",
-                  color: "#EDA90E",
-                },
               }}
-              startIcon={
-                <ListIcon
-                  sx={{
-                    "&:hover": {
-                      color: "#EDA90E",
-                    },
-                  }}
-                />
-              }
+              onClick={handleCategoryMenuClick}
+              startIcon={<ListIcon />}
             >
-              <Typography
-                color="#fff"
-                sx={{
-                  "&:hover": {
-                    color: "#EDA90E",
-                  },
-                }}
-              >
-                {isScreenMd ? "Categories" : "Browse Categories"}
-              </Typography>
+              {isScreenMd ? "Categories" : "Browse Categories"}
             </Button>
             <Menu
               anchorEl={categoryMenu}
