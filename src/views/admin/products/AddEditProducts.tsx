@@ -250,8 +250,14 @@ export default function AddEditProduct() {
           : `/documents/all-documents?productId=${productId}`
       );
       console.log("documents:", response.data.responseList);
-      setDocuments(response.data.responseList);
-    } catch (error) {
+      let responseData = response.data.responseList;
+      setDocuments(responseData);
+    } catch (error: any) {
+      let responseData = error.response.data.responseList;
+      if (responseData && responseData.length === 0) {
+        setDocuments([]);
+        console.error(error);
+      }
       console.error(error);
     }
   };

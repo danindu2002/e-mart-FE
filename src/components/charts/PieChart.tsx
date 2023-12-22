@@ -51,7 +51,6 @@ export default function Chart({ pastEvents, futureEvents }: PieChartProps) {
               highlightScope: { faded: "global", highlighted: "item" },
               faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
               innerRadius: 40,
-              outerRadius: 100,
               paddingAngle: 3,
               cornerRadius: 5,
             },
