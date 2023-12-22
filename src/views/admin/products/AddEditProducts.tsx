@@ -266,13 +266,19 @@ export default function AddEditProduct() {
     try {
       const response = await axios.get(
         productId === undefined
-          ? `/images/all-image-details?productId=${addedProductId}`
-          : `/images/all-image-details?productId=${productId}`
+          ? `/images/all-images?productId=${addedProductId}`
+          : `/images/all-images?productId=${productId}`
       );
       console.log("images:", response.data.responseList);
-      setImages(response.data.responseList);
-    } catch (error) {
-      console.log(error);
+      let responseData = response.data.responseList;
+      setImages(responseData);
+    } catch (error: any) {
+      let responseData = error.response.data.responseList;
+      if (responseData && responseData.length === 0) {
+        setImages([]);
+        console.error(error);
+      }
+      console.error(error);
     }
   };
 

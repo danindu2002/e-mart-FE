@@ -113,13 +113,6 @@ export default function Sidebar() {
     theme.breakpoints.up("md")
   );
 
-  // useEffect(() => {
-  //   const storedUserData = sessionStorage.getItem("loggedUserData");
-  //   const parsedUserData = JSON.parse(storedUserData as string);
-  //   setProfilePhoto(parsedUserData?.profilePhoto);
-  //   console.log("profilePhoto", profilePhoto);
-  // }, [profilePhoto]);
-
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };

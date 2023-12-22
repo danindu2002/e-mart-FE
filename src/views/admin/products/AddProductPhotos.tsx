@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import axios from "../../../api/apiConfig";
@@ -55,6 +55,16 @@ const AddProductPhotos = ({
     }
   };
 
+  const formatData = (data: any) => {
+    return data?.map((data: any) => ({
+      imageId: data?.imageId,
+      image: (
+        <Avatar variant="square" src={`data:image/png;base64,${data?.image}`} />
+      ),
+      imageName: data?.imageName,
+    }));
+  };
+
   const renderActions = (image: any) => (
     <Box>
       <ActionButton
@@ -65,7 +75,7 @@ const AddProductPhotos = ({
     </Box>
   );
 
-  const tableHeaders = ["Image ID", "Image Name"];
+  const tableHeaders = ["Image ID", "Image", "Image Name"];
 
   return (
     <>
@@ -128,7 +138,7 @@ const AddProductPhotos = ({
             Uploaded Product Images
           </Typography>
           <DataTable
-            data={images}
+            data={formatData(images)}
             columns={tableHeaders}
             page={page}
             rowsPerPage={rowsPerPage}
