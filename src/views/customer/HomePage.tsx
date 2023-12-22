@@ -1,22 +1,17 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../App";
 import axios from "../../api/apiConfig";
 import HomepageImage from "../../assets/images/HomepageImage.jpg";
 import ProductCard from "../../components/cards/ProductCard";
+import Chip from "@mui/material/Chip";
 
 export default function Homepage() {
   const [products, setProducts] = useState<any[]>([]);
   const navigate = useNavigate();
-  const {
-    cartProducts,
-    setCartProducts,
-    searchTerm,
-    setSearchTerm,
-    selectedCategory,
-    setSelectedCategory,
-  } = useContext(Context);
+  const { searchTerm, setSearchTerm, selectedCategory, setSelectedCategory } =
+    useContext(Context);
 
   const fetchProducts = async () => {
     try {
@@ -40,6 +35,7 @@ export default function Homepage() {
   };
 
   const searchCategories = async () => {
+    console.log(selectedCategory);
     try {
       const response = await axios.get(
         `/products/search-category/${selectedCategory}`
@@ -59,12 +55,6 @@ export default function Homepage() {
     };
   }, [selectedCategory]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     fetchProducts();
-  //   };
-  // }, [navigate]);
-
   useEffect(() => {
     if (searchTerm.trim() === "") {
       fetchProducts();
@@ -72,6 +62,11 @@ export default function Homepage() {
       searchProducts(searchTerm);
     }
   }, [searchTerm]);
+
+  const clearFilters = () => {
+    setSelectedCategory(null);
+    fetchProducts();
+  };
 
   return (
     <>
@@ -83,13 +78,22 @@ export default function Homepage() {
             style={{ width: "100%" }}
           />
         </Box>
-        <Typography
-          variant="h5"
-          color="initial"
-          sx={{ fontWeight: "bold", mb: 3 }}
-        >
-          Products For You!
-        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Typography
+            variant="h5"
+            color="initial"
+            sx={{ fontWeight: "bold", mb: 3, mr: 2 }}
+          >
+            Products For You!
+          </Typography>
+          {selectedCategory && (
+            <Chip
+              label="Clear Filters"
+              variant="outlined"
+              onDelete={clearFilters}
+            />
+          )}
+        </Box>
         {/* <Box
           sx={{
             display: "flex",

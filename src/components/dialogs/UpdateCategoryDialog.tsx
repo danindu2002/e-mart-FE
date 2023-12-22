@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormTextField from "../forms/FormTextField";
 import { useEffect } from "react";
+import axios from "../../api/apiConfig";
 
 export default function CategoryDialog({
   open,
@@ -33,35 +34,31 @@ export default function CategoryDialog({
     resolver: yupResolver(schema),
   });
 
-  // const fetchCategoryData = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `/users/view-users/${parsedUserData?.userId}`
-  //     );
+  const fetchCategoryData = async () => {
+    console.log(category?.categoryId);
+    try {
+      const res = await axios.get(`/categories/${category?.categoryId}`);
+      const categoryData = res.data.object;
+      setValue("categoryCode", categoryData.categoryCode);
+      setValue("refCategoryName", categoryData.refCategoryName);
+      setValue("categoryDescription", categoryData.categoryDescription);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  //     setUserData(res.data.object);
-  //     console.log("userData:", userData);
+  useEffect(() => {
+    if (open) {
+      fetchCategoryData();
+    }
+  }, [category]);
 
-  //     setValue("firstName", res.data.object.firstName);
-  //     setValue("lastName", res.data.object.lastName);
-  //     setValue("email", res.data.object.email);
-  //     setValue("contactNo", res.data.object.contactNo);
-  //     setValue("address", res.data.object.address);
-  //     setFullName(`${res.data.object.firstName} ${res.data.object.lastName}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchCategoryData();
-  // }, [setValue]);
+  console.log(category?.categoryId);
 
   const handleCancel = () => {
     reset();
     onClose();
   };
-  // console.log("selected category", category.categoryId);
 
   return (
     <Dialog open={open}>
@@ -69,7 +66,7 @@ export default function CategoryDialog({
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <FormTextField
-            label="Category Code*"
+            label="Category Code"
             name="categoryCode"
             placeholder="Enter Category Code"
             fullWidth

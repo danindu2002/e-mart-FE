@@ -92,7 +92,7 @@ export default function AddEditProduct() {
   useLayoutEffect(() => {
     if (editProduct) {
       axios
-        .get(`/products/view-products/${productId}`)
+        .get(`/products/view-products-category/${productId}`)
         .then((res) => {
           console.log("user:", res.data);
           setValue("productName", res.data.object.productName);
@@ -245,19 +245,23 @@ export default function AddEditProduct() {
   const fetchDocumentDetails = async () => {
     try {
       const response = await axios.get(
-        `/documents/all-documents?productId=${productId}`
+        productId === undefined
+          ? `/documents/all-documents?productId=${addedProductId}`
+          : `/documents/all-documents?productId=${productId}`
       );
       console.log("documents:", response.data.responseList);
       setDocuments(response.data.responseList);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const fetchImageDetails = async () => {
     try {
       const response = await axios.get(
-        `/images/all-image-details?productId=${productId}`
+        productId === undefined
+          ? `/images/all-image-details?productId=${addedProductId}`
+          : `/images/all-image-details?productId=${productId}`
       );
       console.log("images:", response.data.responseList);
       setImages(response.data.responseList);
