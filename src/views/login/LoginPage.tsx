@@ -81,10 +81,10 @@ export default function LoginPage() {
 
       const matchedUser = response.data.object.role;
       if (matchedUser) {
-        if (matchedUser === "User") {
+        if (matchedUser.toLowerCase() === "user") {
           createCart(response.data.object?.userId);
           navigate("/user");
-        } else if (matchedUser === "Admin") {
+        } else if (matchedUser.toLowerCase() === "admin") {
           navigate("/admin/");
         }
       } else {
@@ -104,7 +104,7 @@ export default function LoginPage() {
     alignItems: "center",
     justifyContent: "center",
     height: { xs: "75vh", md: "95vh" },
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRadius: "8px",
     zIndex: 1,
     position: { xs: "absolute", md: "static" },
