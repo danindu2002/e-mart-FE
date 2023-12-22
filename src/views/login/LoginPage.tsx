@@ -24,6 +24,7 @@ import LoginBackgroundImage from "../../assets/images/background-image.jpg";
 import { Context } from "../../App";
 
 export default function LoginPage() {
+  // login changed
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
