@@ -23,13 +23,14 @@ import List from "@mui/material/List";
 import Toolbar from "@mui/material/Toolbar";
 import { CSSObject, Theme, styled } from "@mui/material/styles";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/icons/EmartLogo.png";
 import CustomListItem from "../components/lists/CustomListItem";
 import Breadcrumbs from "./Breadcrumbs";
 import CategoryIcon from "@mui/icons-material/Category";
 import LayoutRoutes from "./AdminLayoutRoutes";
+import { Context } from "../App";
 
 const drawerWidth = 200;
 
@@ -104,7 +105,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar() {
   const [open, setOpen] = useState(true);
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const { profilePhoto, setProfilePhoto } = useContext(Context);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -112,12 +113,12 @@ export default function Sidebar() {
     theme.breakpoints.up("md")
   );
 
-  useEffect(() => {
-    const storedUserData = sessionStorage.getItem("loggedUserData");
-    const parsedUserData = JSON.parse(storedUserData as string);
-    setProfilePhoto(parsedUserData?.profilePhoto);
-    console.log("profilePhoto", profilePhoto);
-  }, [profilePhoto]);
+  // useEffect(() => {
+  //   const storedUserData = sessionStorage.getItem("loggedUserData");
+  //   const parsedUserData = JSON.parse(storedUserData as string);
+  //   setProfilePhoto(parsedUserData?.profilePhoto);
+  //   console.log("profilePhoto", profilePhoto);
+  // }, [profilePhoto]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

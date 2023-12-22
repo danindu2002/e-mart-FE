@@ -26,6 +26,7 @@ import { Context } from "../../App";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { profilePhoto, setProfilePhoto } = useContext(Context);
 
   const schema = yup.object().shape({
     email: yup.string().required("Email is required"),
@@ -78,6 +79,7 @@ export default function LoginPage() {
       const loggedUserData = { ...response.data.object, loggedIn: true };
       console.log("sessionStorage:", loggedUserData);
       sessionStorage.setItem("loggedUserData", JSON.stringify(loggedUserData));
+      setProfilePhoto(loggedUserData.profilePhoto);
 
       const matchedUser = response.data.object.role;
       if (matchedUser) {

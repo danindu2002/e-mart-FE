@@ -25,6 +25,8 @@ const Toast = (
 interface AppContext {
   cartProducts: number;
   setCartProducts: any;
+  profilePhoto: any;
+  setProfilePhoto: any;
   searchTerm: string;
   setSearchTerm: any;
   selectedCategory: any;
@@ -34,6 +36,8 @@ interface AppContext {
 export const Context = createContext<AppContext>({
   cartProducts: 0,
   setCartProducts: () => {},
+  profilePhoto: "",
+  setProfilePhoto: () => {},
   searchTerm: "",
   setSearchTerm: () => {},
   selectedCategory: null,
@@ -42,6 +46,7 @@ export const Context = createContext<AppContext>({
 
 export default function App() {
   const [cartProducts, setCartProducts] = useState(0);
+  const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -49,7 +54,32 @@ export default function App() {
     console.log("Updated cart length", cartProducts);
     console.log("Search Term", searchTerm);
     console.log("Selected Category", selectedCategory);
+    console.log("ContextProfile Photo", profilePhoto);
   }, [cartProducts, searchTerm, selectedCategory]);
+
+  useEffect(() => {
+    if (profilePhoto) {
+      const storedUserData = sessionStorage.getItem("loggedUserData");
+      if (storedUserData) {
+        let parsedUserData = JSON.parse(storedUserData as string);
+        parsedUserData.profilePhoto = profilePhoto;
+        sessionStorage.setItem(
+          "loggedUserData",
+          JSON.stringify(parsedUserData)
+        );
+        console.log("profilePhoto", profilePhoto);
+      }
+    }
+  }, [profilePhoto]);
+
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("loggedUserData");
+    if (storedUserData) {
+      const parsedUserData = JSON.parse(storedUserData as string);
+      console.log("parsedUserData", parsedUserData);
+      setProfilePhoto(parsedUserData?.profilePhoto);
+    }
+  }, []);
 
   const contextValues = {
     cartProducts,
@@ -58,6 +88,8 @@ export default function App() {
     setSearchTerm,
     selectedCategory,
     setSelectedCategory,
+    profilePhoto,
+    setProfilePhoto,
   };
 
   return (

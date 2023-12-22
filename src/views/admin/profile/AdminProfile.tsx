@@ -26,6 +26,7 @@ export default function AdminProfile() {
   const [userData, setUserData] = useState<any>({});
   const [editMode, setEditMode] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const { profilePhoto, setProfilePhoto } = useContext(Context);
 
   const schema = yup.object().shape({
     firstName: yup.string().required("First Name is required"),
@@ -105,6 +106,7 @@ export default function AdminProfile() {
       reader.onload = (event) => {
         const base64Data = (event!.target!.result as string).split(",");
         const uploadImage = base64Data[1];
+        setProfilePhoto(uploadImage);
         console.log(uploadImage.length);
         const { userId, role, ...userDataWithoutUserId } = userData;
         const updatedUser = {
@@ -118,13 +120,13 @@ export default function AdminProfile() {
           .then((response) => {
             console.log("File uploaded successfully", response.data);
             toast.success(response.data.description);
+            fetchLoggedUserData();
           })
           .catch((error) => {
             console.error("Error uploading file", error);
           });
       };
       reader.readAsDataURL(file);
-      window.location.reload();
     } else console.log("No file uploaded");
   };
 
