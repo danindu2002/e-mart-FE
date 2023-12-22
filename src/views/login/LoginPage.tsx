@@ -23,6 +23,7 @@ import logo from "../../assets/icons/EmartLogo.png";
 import LoginBackgroundImage from "../../assets/images/background-image.jpg";
 import { Context } from "../../App";
 
+// change ex
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
