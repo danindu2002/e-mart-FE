@@ -1,18 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import AddEditAdmin from "../views/admin/admins/AddEditAdmin";
-import ManageAdmins from "../views/admin/admins/ManageAdmins";
+import AdminRoutes from "../views/admin/admins/AdminRoutes";
 import ManageCategory from "../views/admin/category/ManageCategory";
 import ManageCustomers from "../views/admin/customers/ManageCustomers";
-import Dashboard from "../views/admin/dashboard/DashboardOld";
-import AddEditProductStepper from "../views/admin/products/AddEditProducts";
-import ManageProducts from "../views/admin/products/ManageProducts";
-import ViewProduct from "../views/admin/products/ViewProduct";
-import Profile from "../views/admin/profile/AdminProfile";
-import ErrorPage from "../views/admin/dashboard/ErrorPage";
 import DashboardRoutes from "../views/admin/dashboard/DashboardRoutes";
-import ProfileRoutes from "../views/admin/profile/ProfileRoutes";
-import AdminRoutes from "../views/admin/admins/AdminRoutes";
 import ProductRoutes from "../views/admin/products/ProductRoutes";
+import ProfileRoutes from "../views/admin/profile/ProfileRoutes";
 
 export default function AdminLayoutRoutes() {
   return (

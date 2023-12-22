@@ -82,7 +82,7 @@ export default function AdminProfile() {
 
   const submitHandler = (data: any) => {
     console.log("Submit Data", data);
-    const formData = { ...data, role: "2" };
+    const formData = { ...data, role: "2", profilePhoto: null };
     console.log(formData);
     axios
       .put(`/users/${userData?.userId}/false`, formData)

@@ -11,9 +11,20 @@ import {
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import yupPassword from "yup-password";
+
+yupPassword(yup);
 
 const schema = yup.object().shape({
-  password: yup.string().required("Password is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(20, "Password cannot exceed 20 characters")
+    .minLowercase(1, "Password must contain at least 1 lower case letter")
+    .minUppercase(1, "Password must contain at least 1 upper case letter")
+    .minNumbers(1, "Password must contain at least 1 number")
+    .minSymbols(1, "Password must contain at least 1 special character")
+    .required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Passwords must match")

@@ -77,7 +77,7 @@ export default function UserProfile() {
 
   const submitHandler = (data: any) => {
     console.log("Submit Data", data);
-    const formData = { ...data, role: "1" };
+    const formData = { ...data, role: "1", profilePhoto: null };
     console.log(formData);
     axios
       .put(`/users/${userData?.userId}/false`, formData)

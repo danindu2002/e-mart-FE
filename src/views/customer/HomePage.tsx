@@ -104,7 +104,7 @@ export default function Homepage() {
         > */}
         <Grid container spacing={4} sx={{ mb: 4 }}>
           {products.map((product) => (
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={6} md={3}>
               <Link
                 to={`/user/product-details/${product.productId}`}
                 key={product.productId}

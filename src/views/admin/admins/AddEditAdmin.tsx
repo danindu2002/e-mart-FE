@@ -29,8 +29,7 @@ export default function AddEditEvent() {
       .required("Email is required"),
     contactNo: yup
       .string()
-      .matches(/^[0-9]+$/, "Invalid Contact Number")
-      .min(10, "Must be at least 10 digits")
+      .matches(/^[0-9]{10}$/, "Invalid Contact Number")
       .required("Contact No is required"),
     address: yup.string().required("Address is required"),
     password: editUser

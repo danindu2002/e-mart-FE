@@ -61,6 +61,7 @@ export default function Cart() {
     return data?.map((data: any) => ({
       productId: data?.productId,
       productName: data?.productName,
+      quantity: data?.noOfItems,
       color: data?.color,
       size: data?.size,
       subTotal: data?.subTotal.toFixed(2),
@@ -157,7 +158,14 @@ export default function Cart() {
     }
   }
 
-  const tableHeaders = ["#", "Product Name", "Color", "Size", "Subtotal"];
+  const tableHeaders = [
+    "#",
+    "Product Name",
+    "Quantity",
+    "Color",
+    "Size",
+    "Subtotal",
+  ];
 
   const renderActions = (product: any) => (
     <Box>

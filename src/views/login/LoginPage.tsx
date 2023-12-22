@@ -190,9 +190,9 @@ export default function LoginPage() {
                       edge="end"
                     >
                       {showPassword ? (
-                        <VisibilityOffIcon />
-                      ) : (
                         <VisibilityIcon />
+                      ) : (
+                        <VisibilityOffIcon />
                       )}
                     </IconButton>
                   </InputAdornment>
