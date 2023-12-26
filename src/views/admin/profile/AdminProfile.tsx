@@ -196,70 +196,133 @@ export default function AdminProfile() {
         <Container maxWidth="lg" sx={{ ...backgroundStyles }}>
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", mb: 1.5, color: "#444" }}
+            sx={{ fontWeight: "bold", mb: 1, color: "#444" }}
           >
             Admin Profile
           </Typography>
-          <Grid container spacing={2} alignItems="center" marginBottom="25px">
-            <Grid item>
+
+          <Grid
+            container
+            spacing={2}
+            alignItems="center"
+            marginBottom="25px"
+            sx={{ mb: 5 }}
+          >
+            <Grid item xs={12} md={6} container alignItems="center">
+              {/* Avatar */}
               <Avatar
                 src={`data:image/png;base64,${userData.profilePhoto}`}
-                sx={{ width: 75, height: 75 }}
+                sx={{ width: 100, height: 100 }}
               />
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" sx={{ p: 0 }}>
+              <Typography
+                sx={{
+                  p: 0,
+                  marginLeft: 2,
+                  fontSize: "30px",
+                  fontWeight: "bold",
+                }}
+              >
                 {fullName}
               </Typography>
-              <Grid container spacing={1} alignItems="center">
-                <Grid item sx={{ padding: 0 }}>
-                  <Button
-                    component="label"
-                    color="primary"
-                    sx={{
-                      textTransform: "capitalize",
-                      fontSize: "15px",
-                      pt: 0,
-                    }}
-                    startIcon={<AddAPhotoIcon />}
-                  >
-                    Change Profile Photo
-                    <Input type="file" onChange={handleFileChange} />
-                  </Button>
-                </Grid>
-                <Grid item sx={{ padding: 0 }}>
-                  <Button
-                    type="button"
-                    color="primary"
-                    sx={{
-                      textTransform: "capitalize",
-                      fontSize: "15px",
-                      pt: 0,
-                    }}
-                    onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
-                    startIcon={<EditIcon />}
-                  >
-                    Edit Profile
-                  </Button>
-                </Grid>
-                <Grid item sx={{ padding: 0 }}>
-                  <Button
-                    type="button"
-                    color="primary"
-                    sx={{
-                      textTransform: "capitalize",
-                      fontSize: "15px",
-                      pt: 0,
-                    }}
-                    onClick={() => setOpenUpdate(true)}
-                    startIcon={<KeyIcon />}
-                  >
-                    Change Password
-                  </Button>
-                </Grid>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              md={6}
+              alignItems="flex-start"
+              justifyContent="flex-end"
+            >
+              <Grid item xs={12} md={6}>
+                <Button
+                  component="label"
+                  color="primary"
+                  sx={{
+                    textTransform: "capitalize",
+                    fontSize: "15px",
+                    mb: "5px",
+                    width: "100%",
+                    color: "white",
+                    border: "1px solid #EDA90E",
+                    backgroundColor: "#EDA90E",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#EDA90E",
+                      border: "1px solid #EDA90E",
+                      "& .MuiSvgIcon-root": {
+                        color: "#EDA90E",
+                      },
+                    },
+                  }}
+                  startIcon={<AddAPhotoIcon sx={{ color: "white" }} />}
+                >
+                  Change Profile Photo
+                  <Input
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    onChange={handleFileChange}
+                  />
+                </Button>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Button
+                  type="button"
+                  color="primary"
+                  sx={{
+                    textTransform: "capitalize",
+                    fontSize: "15px",
+                    mb: "5px",
+                    width: "100%",
+                    color: "white",
+                    border: "1px solid #EDA90E",
+                    backgroundColor: "#EDA90E",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#EDA90E",
+                      border: "1px solid #EDA90E",
+                      "& .MuiSvgIcon-root": {
+                        color: "#EDA90E",
+                      },
+                    },
+                  }}
+                  onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
+                  startIcon={<EditIcon sx={{ color: "white" }} />}
+                >
+                  Edit Profile
+                </Button>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Button
+                  type="button"
+                  color="primary"
+                  sx={{
+                    textTransform: "capitalize",
+                    fontSize: "15px",
+                    mb: "5px",
+                    width: "100%",
+                    color: "white",
+                    backgroundColor: "#EDA90E",
+                    border: "1px solid #EDA90E",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#EDA90E",
+                      border: "1px solid #EDA90E",
+                      "& .MuiSvgIcon-root": {
+                        color: "#EDA90E",
+                      },
+                    },
+                  }}
+                  onClick={() => setOpenUpdate(true)}
+                  startIcon={<KeyIcon sx={{ color: "white" }} />}
+                >
+                  Change Password
+                </Button>
               </Grid>
             </Grid>
           </Grid>
+
           <form onSubmit={handleSubmit(submitHandler)}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>

@@ -100,6 +100,7 @@ export default function AddEditEvent() {
         .then((response) => {
           console.log(response);
           toast.success(response.data.description);
+          reset();
         })
         .catch((error) => {
           console.log(error);
@@ -116,6 +117,7 @@ export default function AddEditEvent() {
           console.log(response);
           if (response.data.description) {
             toast.success(response.data.description);
+            reset();
           }
         })
         .catch((error) => {
@@ -124,7 +126,6 @@ export default function AddEditEvent() {
             toast.error(error.response.data.description);
           }
         });
-      reset();
     }
   };
 
