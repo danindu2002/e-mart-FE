@@ -183,6 +183,24 @@ export default function AdminProfile() {
     width: 1,
   });
 
+  const buttonStyles = {
+    textTransform: "capitalize",
+    fontSize: "15px",
+    mb: "5px",
+    width: "100%",
+    color: "white",
+    border: "1px solid #EDA90E",
+    backgroundColor: "#EDA90E",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "#EDA90E",
+      border: "1px solid #EDA90E",
+      "& .MuiSvgIcon-root": {
+        color: "#EDA90E",
+      },
+    },
+  };
+
   return (
     <div className="container">
       <Box
@@ -212,7 +230,7 @@ export default function AdminProfile() {
               {/* Avatar */}
               <Avatar
                 src={`data:image/png;base64,${userData.profilePhoto}`}
-                sx={{ width: 100, height: 100 }}
+                sx={{ width: 150, height: 150 }}
               />
               <Typography
                 sx={{
@@ -225,35 +243,19 @@ export default function AdminProfile() {
                 {fullName}
               </Typography>
             </Grid>
-
+            <Grid item md={2}></Grid>
             <Grid
               item
               xs={12}
-              md={6}
-              alignItems="flex-start"
+              md={4}
+              direction="column"
               justifyContent="flex-end"
             >
               <Grid item xs={12} md={6}>
                 <Button
                   component="label"
                   color="primary"
-                  sx={{
-                    textTransform: "capitalize",
-                    fontSize: "15px",
-                    mb: "5px",
-                    width: "100%",
-                    color: "white",
-                    border: "1px solid #EDA90E",
-                    backgroundColor: "#EDA90E",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#EDA90E",
-                      border: "1px solid #EDA90E",
-                      "& .MuiSvgIcon-root": {
-                        color: "#EDA90E",
-                      },
-                    },
-                  }}
+                  sx={{ ...buttonStyles }}
                   startIcon={<AddAPhotoIcon sx={{ color: "white" }} />}
                 >
                   Change Profile Photo
@@ -269,27 +271,11 @@ export default function AdminProfile() {
                 <Button
                   type="button"
                   color="primary"
-                  sx={{
-                    textTransform: "capitalize",
-                    fontSize: "15px",
-                    mb: "5px",
-                    width: "100%",
-                    color: "white",
-                    border: "1px solid #EDA90E",
-                    backgroundColor: "#EDA90E",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#EDA90E",
-                      border: "1px solid #EDA90E",
-                      "& .MuiSvgIcon-root": {
-                        color: "#EDA90E",
-                      },
-                    },
-                  }}
+                  sx={{ ...buttonStyles }}
                   onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
                   startIcon={<EditIcon sx={{ color: "white" }} />}
                 >
-                  Edit Profile
+                  Edit Your Profile
                 </Button>
               </Grid>
 
@@ -297,23 +283,7 @@ export default function AdminProfile() {
                 <Button
                   type="button"
                   color="primary"
-                  sx={{
-                    textTransform: "capitalize",
-                    fontSize: "15px",
-                    mb: "5px",
-                    width: "100%",
-                    color: "white",
-                    backgroundColor: "#EDA90E",
-                    border: "1px solid #EDA90E",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#EDA90E",
-                      border: "1px solid #EDA90E",
-                      "& .MuiSvgIcon-root": {
-                        color: "#EDA90E",
-                      },
-                    },
-                  }}
+                  sx={{ ...buttonStyles }}
                   onClick={() => setOpenUpdate(true)}
                   startIcon={<KeyIcon sx={{ color: "white" }} />}
                 >
