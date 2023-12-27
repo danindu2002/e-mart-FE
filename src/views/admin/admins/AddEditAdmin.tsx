@@ -3,7 +3,17 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, Button, Container, Grid, Link, Typography } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import { useContext, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -253,6 +263,29 @@ export default function AddEditEvent() {
                   />
                 </Grid>
               </Grid>
+            )}
+            {!editUser && (
+              <Typography variant="body1" sx={{ color: "gray" }}>
+                Passwords must:
+                <List sx={{ paddingLeft: 2 }}>
+                  <ListItem sx={{ p: 0 }}>
+                    <CheckIcon />
+                    Be a minimum of 8 characters
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <CheckIcon />
+                    Include at least one uppercase letter (A-Z)
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <CheckIcon />
+                    Include at least one lowercase letter (a-z)
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <CheckIcon />
+                    Include at least one number (0-9)
+                  </ListItem>
+                </List>
+              </Typography>
             )}
             <Grid container spacing={2}>
               <Box

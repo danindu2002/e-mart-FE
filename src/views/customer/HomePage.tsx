@@ -85,7 +85,7 @@ export default function Homepage() {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
+      <Container maxWidth="lg" sx={{ mt: 10, mb: 5, overflow: "auto" }}>
         <Box sx={{ m: "20px auto" }}>
           <img
             src={HomepageImage}

@@ -52,7 +52,7 @@ export default function Chart() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        overflow: "auto",
+        overflow:isSmallScreen ? "scroll" : "none",
         width: "100%",
         mx:2,
       }}
