@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Typography, CardMedia } from "@mui/material";
+import { Card, CardContent, Grid, Typography, CardMedia, Box } from "@mui/material";
 import { title } from "process";
 import React from "react";
 
