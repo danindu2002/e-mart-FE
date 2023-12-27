@@ -187,7 +187,7 @@ export default function AdminProfile() {
     textTransform: "capitalize",
     fontSize: "15px",
     mb: "5px",
-    width: "100%",
+    width: { xs: "100%", md: "70%" },
     color: "white",
     border: "1px solid #EDA90E",
     backgroundColor: "#EDA90E",
@@ -226,15 +226,21 @@ export default function AdminProfile() {
             marginBottom="25px"
             sx={{ mb: 5 }}
           >
-            <Grid item xs={12} md={6} container alignItems="center">
+            <Grid
+              item
+              xs={12}
+              md={6}
+              container
+              alignItems="center"
+              justifyContent="center"
+            >
               {/* Avatar */}
               <Avatar
                 src={`data:image/png;base64,${userData.profilePhoto}`}
-                sx={{ width: 150, height: 150 }}
+                sx={{ width: 120, height: 120 }}
               />
               <Typography
                 sx={{
-                  p: 0,
                   marginLeft: 2,
                   fontSize: "30px",
                   fontWeight: "bold",
@@ -255,6 +261,7 @@ export default function AdminProfile() {
                 <Button
                   component="label"
                   color="primary"
+                  // size="small"
                   sx={{ ...buttonStyles }}
                   startIcon={<AddAPhotoIcon sx={{ color: "white" }} />}
                 >
@@ -271,6 +278,7 @@ export default function AdminProfile() {
                 <Button
                   type="button"
                   color="primary"
+                  size="small"
                   sx={{ ...buttonStyles }}
                   onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
                   startIcon={<EditIcon sx={{ color: "white" }} />}
