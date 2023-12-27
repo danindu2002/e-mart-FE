@@ -1,4 +1,11 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Pagination,
+  Typography,
+} from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../App";
@@ -6,10 +13,18 @@ import axios from "../../api/apiConfig";
 import HomepageImage from "../../assets/images/HomepageImage.jpg";
 import ProductCard from "../../components/cards/ProductCard";
 import Chip from "@mui/material/Chip";
+import noProducts from "../../assets/images/noProducts.jpg";
 
 export default function Homepage() {
   const [products, setProducts] = useState<any[]>([]);
-  const navigate = useNavigate();
+  const itemsPerPage = 8;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (event: any, page: any) => setCurrentPage(page);
   const { searchTerm, setSearchTerm, selectedCategory, setSelectedCategory } =
     useContext(Context);
 
@@ -70,7 +85,7 @@ export default function Homepage() {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ mt: 10 }}>
+      <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
         <Box sx={{ m: "20px auto" }}>
           <img
             src={HomepageImage}
@@ -103,25 +118,44 @@ export default function Homepage() {
           }}
         > */}
         <Grid container spacing={4} sx={{ mb: 4 }}>
-          {products.map((product) => (
-            <Grid item xs={12} sm={6} md={3}>
-              <Link
-                to={`/user/product-details/${product.productId}`}
-                key={product.productId}
-                style={{ textDecoration: "none" }}
-              >
-                <ProductCard
-                  id={product.productId}
-                  name={product.productName}
-                  rating={product.rating}
-                  description={product.description}
-                  price={product.price}
-                />
-              </Link>
-            </Grid>
-          ))}
-          {/* </Box> */}
+          {currentProducts.length === 0 ? (
+            <Typography
+              variant="h5"
+              color="textSecondary"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              No products found.
+            </Typography>
+          ) : (
+            // <img src={noProducts} alt="Image" />
+            currentProducts.map((product) => (
+              <Grid item xs={12} sm={6} md={3} key={product.productId}>
+                <Link
+                  to={`/user/product-details/${product.productId}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <ProductCard
+                    id={product.productId}
+                    name={product.productName}
+                    rating={product.rating}
+                    description={product.description}
+                    price={product.price}
+                  />
+                </Link>
+              </Grid>
+            ))
+          )}
         </Grid>
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+          <Pagination
+            count={Math.ceil(products.length / itemsPerPage)}
+            page={currentPage}
+            color="primary"
+            size="large"
+            shape="rounded"
+            onChange={paginate}
+          />
+        </Box>
       </Container>
     </>
   );

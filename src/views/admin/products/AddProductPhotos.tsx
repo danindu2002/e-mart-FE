@@ -113,7 +113,7 @@ const AddProductPhotos = ({
               <input
                 id="file-input"
                 type="file"
-                accept="image/*"
+                accept=".jpg, .jpeg, .png"
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 multiple

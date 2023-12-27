@@ -106,7 +106,7 @@ export default function Dashboard() {
               <Chip
                 label={item.total.toFixed(2)}
                 color="primary"
-                variant="outlined"
+                // variant="outlined"
               />
             ),
           };
@@ -255,6 +255,7 @@ export default function Dashboard() {
         >
           Top Customers
         </Typography>
+       <Box sx={{mx:3}}>
         <DataTable
           data={table}
           columns={tableHeaders}
@@ -265,6 +266,7 @@ export default function Dashboard() {
           onRowsPerPageChange={handleChangeRowsPerPage}
           noDataMessage="No Checkout Details Available"
         />
+        </Box>
       </Box>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

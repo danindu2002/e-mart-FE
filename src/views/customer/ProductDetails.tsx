@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   CircularProgress,
   Container,
   Grid,
@@ -16,6 +17,8 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "../../api/apiConfig";
 import ProductImage from "../../assets/images/headphones.jpg";
 import ProductImage2 from "../../assets/images/headphone2.jpg";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import TopBar from "./TopBar";
 import ImageSlider from "../../components/cards/ImageSlider";
 import { toast } from "react-toastify";
@@ -201,13 +204,41 @@ export default function ProductDetails() {
                 >
                   {product?.description}
                 </Typography>
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{ fontWeight: "bold", fontFamily: "unset" }}
-                >
-                  Rs. {product?.price.toFixed(2)}
-                </Typography>
+                <Box display="flex" flexDirection="row">
+                  <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{ fontWeight: "bold", fontFamily: "unset" }}
+                  >
+                    Rs. {product?.price.toFixed(2)}
+                  </Typography>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    sx={{
+                      fontSize: "17px",
+                      fontWeight: "bold",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* Quantity : {product?.quantity} */}
+                    {product?.quantity != 0 ? (
+                      <Chip
+                        icon={<CheckIcon sx={{ fontSize: "20px" }} />}
+                        label="In Stock"
+                        color="warning"
+                        sx={{ ml: 1.5, fontSize: "12px" }}
+                      />
+                    ) : (
+                      <Chip
+                        icon={<CloseIcon sx={{ fontSize: "20px" }} />}
+                        label="Out of Stock"
+                        color="error"
+                        sx={{ ml: 1.5, fontSize: "12px" }}
+                      />
+                    )}
+                  </Typography>
+                </Box>
                 {product?.size !== "" && (
                   <Typography
                     variant="h6"

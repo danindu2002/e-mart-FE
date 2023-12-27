@@ -45,6 +45,7 @@ export default function Chart({ pastEvents, futureEvents }: PieChartProps) {
           Product Count in Categories
         </Typography>
         <PieChart
+          // sx={{my:2}}
           series={[
             {
               data,

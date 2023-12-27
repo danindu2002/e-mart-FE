@@ -54,6 +54,7 @@ export default function Chart() {
         alignItems: "center",
         overflow: "auto",
         width: "100%",
+        mx:2,
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: "bold", mt: "15px" }}>
