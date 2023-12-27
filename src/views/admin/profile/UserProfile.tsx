@@ -23,12 +23,14 @@ import FormTextField from "../../../components/forms/FormTextField";
 import { Context } from "../../../App";
 import TopBar from "../../customer/TopBar";
 import { useNavigate } from "react-router-dom";
+import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 
 export default function UserProfile() {
   const [fullName, setFullName] = useState("");
   const [userData, setUserData] = useState<any>({});
   const [editMode, setEditMode] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
   const { profilePhoto, setProfilePhoto } = useContext(Context);
   let navigate = useNavigate();
 
@@ -165,9 +167,18 @@ export default function UserProfile() {
     setOpenUpdate(false);
   };
 
-  const deleteUserAccount = (data: any) => {
+  const handleDeleteClick = () => {
     console.log(userData.userId);
+    setOpenDelete(true);
+  };
 
+  const handleDeleteDialog = () => {
+    deleteUserAccount();
+    setOpenDelete(false);
+  };
+
+  const deleteUserAccount = () => {
+    console.log(userData.userId);
     axios
       .delete(`/users/${userData?.userId}`)
       .then((response) => {
@@ -294,7 +305,7 @@ export default function UserProfile() {
                         fontSize: "15px",
                         pt: 0,
                       }}
-                      onClick={deleteUserAccount}
+                      onClick={handleDeleteClick}
                       startIcon={<DeleteIcon />}
                     >
                       Delete Account
@@ -431,6 +442,11 @@ export default function UserProfile() {
           reset={reset1}
           register={register1}
           errors={errors1}
+        />
+        <DeleteDialog
+          open={openDelete}
+          handleClose={() => setOpenDelete(false)}
+          handleDelete={handleDeleteDialog}
         />
       </Container>
     </>
