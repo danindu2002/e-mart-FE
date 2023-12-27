@@ -40,11 +40,12 @@ export default function Chart({ pastEvents, futureEvents }: PieChartProps) {
 
   return (
     <Stack direction="row" textAlign="center" spacing={2}>
-      <Box flexGrow={1} sx={{ height: { height }, backgroundColor: "#fff" }}>
+      <Box flexGrow={1} sx={{ height: { height }, backgroundColor: "#fff", }}>
         <Typography variant="h6" sx={{ fontWeight: "bold", mb: "15px" }}>
           Product Count in Categories
         </Typography>
         <PieChart
+        // sx={{my:2}}
           series={[
             {
               data,
@@ -53,6 +54,8 @@ export default function Chart({ pastEvents, futureEvents }: PieChartProps) {
               innerRadius: 40,
               paddingAngle: 3,
               cornerRadius: 5,
+              cy:100,
+              cx:200,
             },
           ]}
           width={chartWidth}
