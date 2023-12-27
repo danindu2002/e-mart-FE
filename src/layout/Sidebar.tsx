@@ -126,7 +126,7 @@ export default function Sidebar() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", overflow: "hidden" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ backgroundColor: "#fff" }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -164,34 +164,34 @@ export default function Sidebar() {
             sx={{ cursor: "pointer" }}
           />
         </Toolbar>
-      </AppBar>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={openMenu}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={() => navigate("/admin/profile")}>
-          <ListItemIcon>
-            <ManageAccountsIcon />
-          </ListItemIcon>
-          Edit Profile
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            navigate("/");
-            sessionStorage.clear();
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={openMenu}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
           }}
         >
-          <ListItemIcon sx={{ fontSize: "5px !important" }}>
-            <LogoutIcon />
-          </ListItemIcon>
-          Signout
-        </MenuItem>
-      </Menu>
+          <MenuItem onClick={() => navigate("/admin/profile")}>
+            <ListItemIcon>
+              <ManageAccountsIcon />
+            </ListItemIcon>
+            Edit Profile
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate("/");
+              sessionStorage.clear();
+            }}
+          >
+            <ListItemIcon sx={{ fontSize: "5px !important" }}>
+              <LogoutIcon />
+            </ListItemIcon>
+            Signout
+          </MenuItem>
+        </Menu>
+      </AppBar>
       <Drawer
         variant="permanent"
         open={open}
@@ -249,9 +249,8 @@ export default function Sidebar() {
         sx={{
           flexGrow: 1,
           p: 3,
-          height: "100%",
           backgroundColor: "#eee",
-          minHeight: "100vh",
+          height: "100vh",
           overflow: "auto",
         }}
       >

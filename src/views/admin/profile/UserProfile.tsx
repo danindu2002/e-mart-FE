@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import KeyIcon from "@mui/icons-material/Key";
 import {
   Avatar,
@@ -21,6 +22,7 @@ import ChangePasswordDialog from "../../../components/dialogs/ChangePasswordDial
 import FormTextField from "../../../components/forms/FormTextField";
 import { Context } from "../../../App";
 import TopBar from "../../customer/TopBar";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
   const [fullName, setFullName] = useState("");
@@ -28,6 +30,7 @@ export default function UserProfile() {
   const [editMode, setEditMode] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const { profilePhoto, setProfilePhoto } = useContext(Context);
+  let navigate = useNavigate();
 
   const schema = yup.object().shape({
     firstName: yup.string().required("First Name is required"),
@@ -162,6 +165,22 @@ export default function UserProfile() {
     setOpenUpdate(false);
   };
 
+  const deleteUserAccount = (data: any) => {
+    console.log(userData.userId);
+
+    axios
+      .delete(`/users/${userData?.userId}`)
+      .then((response) => {
+        console.log(response);
+        toast.success(response.data.description);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.data.description);
+      });
+  };
+
   const backgroundStyles = {
     display: "flex",
     p: 2,
@@ -264,6 +283,21 @@ export default function UserProfile() {
                       startIcon={<KeyIcon />}
                     >
                       Change Password
+                    </Button>
+                  </Grid>
+                  <Grid item sx={{ padding: 0 }}>
+                    <Button
+                      type="button"
+                      color="primary"
+                      sx={{
+                        textTransform: "capitalize",
+                        fontSize: "15px",
+                        pt: 0,
+                      }}
+                      onClick={deleteUserAccount}
+                      startIcon={<DeleteIcon />}
+                    >
+                      Delete Account
                     </Button>
                   </Grid>
                 </Grid>
