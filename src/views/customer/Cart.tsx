@@ -25,14 +25,7 @@ export default function Cart() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
-  const {
-    cartProducts,
-    setCartProducts,
-    searchTerm,
-    setSearchTerm,
-    selectedCategory,
-    setSelectedCategory,
-  } = useContext(Context);
+  const { cartProducts, setCartProducts } = useContext(Context);
   let navigate = useNavigate();
 
   const storedUserData = sessionStorage.getItem("loggedUserData");
@@ -136,11 +129,11 @@ export default function Cart() {
 
       // creating a new cart after checking out
       await axios.post(`/cart/${parsedUserData.userId}`, newCartData);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       Swal.fire({
         title: "Oops...",
-        text: "Something went wrong!",
+        text: error.response.data.description,
         icon: "error",
       });
     }

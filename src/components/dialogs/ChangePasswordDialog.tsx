@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import CheckIcon from "@mui/icons-material/Check";
 import {
   Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
   DialogActions,
+  DialogContent,
+  DialogTitle,
+  List,
+  ListItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import yupPassword from "yup-password";
 
 yupPassword(yup);
@@ -70,6 +72,27 @@ const ChangePasswordDialog = ({ open, onClose, onSubmit }: any) => {
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
           />
+          <Typography variant="body1" sx={{ mt: 1.5, color: "gray" }}>
+            Passwords must:
+            <List sx={{ paddingLeft: 2 }}>
+              <ListItem sx={{ p: 0 }}>
+                <CheckIcon />
+                Be a minimum of 8 characters
+              </ListItem>
+              <ListItem sx={{ p: 0 }}>
+                <CheckIcon />
+                Include at least one uppercase letter (A-Z)
+              </ListItem>
+              <ListItem sx={{ p: 0 }}>
+                <CheckIcon />
+                Include at least one lowercase letter (a-z)
+              </ListItem>
+              <ListItem sx={{ p: 0 }}>
+                <CheckIcon />
+                Include at least one number (0-9)
+              </ListItem>
+            </List>
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button

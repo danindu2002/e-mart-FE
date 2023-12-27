@@ -12,7 +12,7 @@ export const theme = createTheme({
       main: "#ff0000",
     },
     warning: {
-      main: "#ffc107",
+      main: "#008000",
     },
     info: {
       main: "#EDA90E",

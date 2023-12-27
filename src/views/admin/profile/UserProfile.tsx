@@ -227,7 +227,11 @@ export default function UserProfile() {
                       startIcon={<AddAPhotoIcon />}
                     >
                       Change Profile Photo
-                      <Input type="file" onChange={handleFileChange} />
+                      <Input
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        onChange={handleFileChange}
+                      />
                     </Button>
                   </Grid>
                   <Grid item sx={{ padding: 0 }}>

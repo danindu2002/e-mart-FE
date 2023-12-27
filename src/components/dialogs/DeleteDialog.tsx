@@ -45,10 +45,10 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
               justifyContent: "center",
             }}
           >
-            <WarningIcon sx={{ color: "#A00", fontSize: "110px" }} />
+            <WarningIcon sx={{ color: "#FF313A", fontSize: "110px" }} />
           </Box>
         </DialogTitle>
-        <DialogContent sx={{ color: "#666", p: 1 }}>
+        <DialogContent sx={{ color: "#666", p: 2 }}>
           <DialogContentText
             id="alert-dialog-description"
             align="center"
@@ -61,12 +61,9 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
         <DialogActions>
           <Button
             type="button"
-            variant="outlined"
             sx={{
               alignSelf: "center",
-              color: "#A00",
-              border: "1px solid #A00",
-              "&:hover": { border: "1px solid #700" },
+              color: "#4c4c4c",
             }}
             onClick={handleClose}
           >
@@ -77,8 +74,8 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
             autoFocus
             variant="contained"
             sx={{
-              backgroundColor: "#A00",
-              "&:hover": { backgroundColor: "#700" },
+              backgroundColor: "#FF313A",
+              "&:hover": { backgroundColor: "#A00" },
             }}
           >
             Delete

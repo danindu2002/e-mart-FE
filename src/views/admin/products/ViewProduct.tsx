@@ -10,7 +10,7 @@ import {
   Container,
   Grid,
   Rating,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { Context } from "../../../App";
 import axios from "../../../api/apiConfig";
 import ActionButton from "../../../components/buttons/ActionButton";
+import CloseIcon from "@mui/icons-material/Close";
 import ImageSlider from "../../../components/cards/ImageSlider";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 import DataTable from "../../../components/tables/DataTable";
@@ -228,7 +229,7 @@ export default function ProductDetails() {
 
   return (
     <Box sx={{ backgroundColor: "#fff", borderRadius: "10px" }}>
-      <Container maxWidth="lg" sx={{ mt: 2, ml:-2 }}>
+      <Container maxWidth="lg" sx={{ mt: 2, ml: -2 }}>
         <Grid container spacing={2}>
           <ImageSlider images={imageArray} />
           <Grid item xs={12} md={6}>
@@ -290,21 +291,21 @@ export default function ProductDetails() {
                   }}
                 >
                   Quantity : {product?.quantity}
-                  {product?.quantity != 0 ?
+                  {product?.quantity != 0 ? (
                     <Chip
                       icon={<CheckIcon sx={{ fontSize: "20px" }} />}
                       label="In Stock"
                       color="warning"
                       sx={{ ml: 1.5, fontSize: "12px" }}
                     />
-                    :
+                  ) : (
                     <Chip
-                      icon={<CheckIcon sx={{ fontSize: "20px" }} />}
+                      icon={<CloseIcon sx={{ fontSize: "20px" }} />}
                       label="Out of Stock"
-                      color="warning"
+                      color="error"
                       sx={{ ml: 1.5, fontSize: "12px" }}
                     />
-                  }
+                  )}
                 </Typography>
                 {product?.color !== "" && (
                   <Typography
@@ -339,25 +340,25 @@ export default function ProductDetails() {
             </Card>
           </Grid>
         </Grid>
-        <Box sx={{ml:7}}>
-        <Typography
-          component="div"
-          variant="h6"
-          sx={{ fontWeight: "bold", mt: 3 }}
-        >
-          Document Details
-        </Typography>
-        <DataTable
-          data={documents}
-          columns={tableHeaders}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          count={documents.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          renderActions={renderActions}
-          noDataMessage="No Documents Available"
-        />
+        <Box sx={{ ml: 7 }}>
+          <Typography
+            component="div"
+            variant="h6"
+            sx={{ fontWeight: "bold", mt: 3 }}
+          >
+            Document Details
+          </Typography>
+          <DataTable
+            data={documents}
+            columns={tableHeaders}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            count={documents.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            renderActions={renderActions}
+            noDataMessage="No Documents Available"
+          />
         </Box>
       </Container>
       <DeleteDialog
