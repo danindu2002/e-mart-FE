@@ -16,7 +16,8 @@ export default function DashboardCard({
   title,
 }: CardProps) {
   return (
-    <Card
+    <Card 
+    
       sx={{
         minWidth: 200,
         m: "10px",
