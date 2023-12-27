@@ -183,9 +183,11 @@ export default function UserProfile() {
 
   const backgroundStyles = {
     display: "flex",
+    mt: 4,
     p: 2,
     flexDirection: "column",
-    backgroundColor: "rgba(255, 255, 255)",
+    backgroundColor: "#fff",
+    boxShadow: "4px 4px 8px rgb(172, 177, 179)",
     borderRadius: "8px",
     width: { lg: "82vw" },
   };
@@ -226,11 +228,14 @@ export default function UserProfile() {
               <Grid item>
                 <Avatar
                   src={`data:image/png;base64,${userData.profilePhoto}`}
-                  sx={{ width: 75, height: 75 }}
+                  sx={{ width: 100, height: 100 }}
                 />
               </Grid>
               <Grid item>
-                <Typography variant="h6" sx={{ p: 0 }}>
+                <Typography
+                  variant="h6"
+                  sx={{ p: 0, fontSize: "25px", fontWeight: "bold" }}
+                >
                   {fullName}
                 </Typography>
                 <Grid container spacing={1} alignItems="center">
