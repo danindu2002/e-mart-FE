@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Typography, CardMedia } from "@mui/material";
+import { Card, CardContent, Grid, Typography, CardMedia, Divider } from "@mui/material";
 import { title } from "process";
 import React from "react";
 
@@ -16,7 +16,8 @@ export default function DashboardCard({
   title,
 }: CardProps) {
   return (
-    <Card
+    <Card 
+    
       sx={{
         minWidth: 200,
         m: "10px",
@@ -52,7 +53,8 @@ export default function DashboardCard({
             />
           </Grid>
         </Grid>
-        <Typography variant="body1" color="text.secondary">
+        <Divider sx={{my:2}}/>
+        <Typography variant="body1" color="text.secondary" sx={{mb:-1,}}>
           {title}
         </Typography>
       </CardContent>

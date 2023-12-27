@@ -216,6 +216,7 @@ export default function Dashboard() {
             width: "58%",
             "@media (max-width: 900px)": {
               width: "100%",
+              overflow:"auto",
             },
           }}
         >
