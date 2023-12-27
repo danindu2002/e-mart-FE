@@ -135,6 +135,8 @@ export default function Cart() {
         title: "Oops...",
         text: error.response.data.description,
         icon: "error",
+        iconColor: "#ffa000",
+        confirmButtonColor: "#ffa000",
       });
     }
   };
