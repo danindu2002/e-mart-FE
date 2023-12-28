@@ -1,9 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Container, Grid, Link, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import FormTextField from "../../components/forms/FormTextField";
+import CheckIcon from "@mui/icons-material/Check";
 import axios from "../../api/apiConfig";
 import { toast } from "react-toastify";
 import SignUpImage from "../../assets/images/signup-image-blur.jpg";
@@ -219,6 +228,27 @@ export default function SignupPage() {
                 />
               </Grid>
             </Grid>
+            <Typography variant="body1" sx={{ mt: -2, color: "gray" }}>
+              Passwords must:
+              <List sx={{ paddingLeft: 2, pt: 0 }}>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Be a minimum of 8 characters
+                </ListItem>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Include at least one uppercase letter (A-Z)
+                </ListItem>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Include at least one lowercase letter (a-z)
+                </ListItem>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Include at least one number (0-9)
+                </ListItem>
+              </List>
+            </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Button
@@ -264,7 +294,7 @@ export default function SignupPage() {
               variant="body1"
               color="#71797E"
               sx={{
-                mt: 3,
+                mt: 2,
                 mb: 3,
                 textAlign: "center",
               }}

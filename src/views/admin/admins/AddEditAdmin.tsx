@@ -14,7 +14,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
@@ -71,7 +71,7 @@ export default function AddEditEvent() {
     resolver: yupResolver(schema),
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (editUser) {
       axios
         .get(`/users/view-users/${userId}`)
@@ -92,7 +92,7 @@ export default function AddEditEvent() {
     return () => {
       reset();
     };
-  }, [editUser, userId, reset, setValue]);
+  }, [editUser, userId, reset]);
 
   const submitHandler = (data: any) => {
     if (data.password) {

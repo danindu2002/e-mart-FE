@@ -22,7 +22,6 @@ export default function CategoryDialog({
   const schema = yup.object().shape({
     categoryCode: yup
       .string()
-      .trim()
       .required("Category code is required")
       .min(1, "Category code must be between 1 and 5 characters")
       .max(5, "Category code must be between 1 and 5 characters")
@@ -30,11 +29,8 @@ export default function CategoryDialog({
     refCategoryName: yup
       .string()
       .required("Category Name is required")
-      .matches(/^\S+$/, "Category code cannot be empty"),
-    categoryDescription: yup
-      .string()
-      .required("Description is required")
-      .matches(/^\S+$/, "Category code cannot be empty"),
+      .matches(/^\S+$/, "Category name cannot be empty"),
+    categoryDescription: yup.string().required("Description is required"),
   });
 
   const {

@@ -92,7 +92,7 @@ export default function AddEditProduct() {
       });
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (editProduct) {
       axios
         .get(`/products/view-products-category/${productId}`)
@@ -113,7 +113,7 @@ export default function AddEditProduct() {
         });
     }
     fetchCategories();
-  }, [editProduct, productId, reset, setValue]);
+  }, [editProduct, productId, reset]);
 
   const handleNext = (data: any) => {
     if (activeStep === 0) {
