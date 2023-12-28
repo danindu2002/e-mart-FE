@@ -97,7 +97,7 @@ const AddDocuments = ({
           }}
         >
           <Typography variant="body2" sx={{ mb: "10px" }}>
-            Click to upload your Document
+            Click to upload your Document (Max Size: 1MB, PDF format only)
           </Typography>
           <label htmlFor="file-input">
             <Button
@@ -111,10 +111,11 @@ const AddDocuments = ({
               <input
                 id="file-input"
                 type="file"
-                accept="application/pdf"
+                accept=".pdf"
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 multiple
+                max-size="1000000" // 1MB in bytes
               />
             </Button>
           </label>

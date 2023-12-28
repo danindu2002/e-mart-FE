@@ -118,7 +118,7 @@ export default function ManageCustomers() {
       <Box sx={{ display: "flex", mb: "10px" }}>
         <form onSubmit={handleSubmit(submitHandler)}>
           <FormTextField
-            placeholder="Search Customer Details"
+            placeholder="Search by first name, last name, email, contact no or address"
             name="name"
             register={register}
             sx={{ ...fieldStyle }}

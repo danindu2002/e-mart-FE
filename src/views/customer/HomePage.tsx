@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   Pagination,
@@ -13,16 +14,23 @@ import axios from "../../api/apiConfig";
 import HomepageImage from "../../assets/images/HomepageImage.jpg";
 import ProductCard from "../../components/cards/ProductCard";
 import Chip from "@mui/material/Chip";
-import noProducts from "../../assets/images/noProducts.jpg";
+import noProducts from "../../assets/images/no-product.png";
 
 export default function Homepage() {
   const [products, setProducts] = useState<any[]>([]);
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(() => {
+    if (currentProducts.length > 0) {
+      setLoading(false);
+    }
+  }, [currentProducts]);
 
   const paginate = (event: any, page: any) => setCurrentPage(page);
   const { searchTerm, setSearchTerm, selectedCategory, setSelectedCategory } =
@@ -86,7 +94,7 @@ export default function Homepage() {
   return (
     <>
       <Container maxWidth="lg" sx={{ mt: 10, mb: 5, overflow: "auto" }}>
-        <Box sx={{ m: "20px auto" }}>
+        <Box sx={{ m: "0px auto 20px auto" }}>
           <img
             src={HomepageImage}
             alt="Homepage Image"
@@ -118,16 +126,17 @@ export default function Homepage() {
           }}
         > */}
         <Grid container spacing={4} sx={{ mb: 4 }}>
-          {currentProducts.length === 0 ? (
+          {loading ? (
             <Typography
               variant="h5"
               color="textSecondary"
               sx={{ textAlign: "center", width: "100%" }}
             >
-              No products found.
+              <CircularProgress color="inherit" />
+              <br />
+              Loading...
             </Typography>
-          ) : (
-            // <img src={noProducts} alt="Image" />
+          ) : currentProducts.length > 0 ? (
             currentProducts.map((product) => (
               <Grid item xs={12} sm={6} md={3} key={product.productId}>
                 <Link
@@ -144,18 +153,33 @@ export default function Homepage() {
                 </Link>
               </Grid>
             ))
+          ) : (
+            <Box width="100%" display="flex" justifyContent="center">
+              <img src={noProducts} alt="Image" width="200px" />
+            </Box>
+            // <Typography
+            //   variant="h5"
+            //   color="textSecondary"
+            //   sx={{ textAlign: "center", width: "100%" }}
+            // >
+            //   No products found.
+            // </Typography>
           )}
         </Grid>
-        <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <Pagination
-            count={Math.ceil(products.length / itemsPerPage)}
-            page={currentPage}
-            color="primary"
-            size="large"
-            shape="rounded"
-            onChange={paginate}
-          />
-        </Box>
+        {currentProducts.length !== 0 && (
+          <Box
+            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <Pagination
+              count={Math.ceil(products.length / itemsPerPage)}
+              page={currentPage}
+              color="primary"
+              size="large"
+              shape="rounded"
+              onChange={paginate}
+            />
+          </Box>
+        )}
       </Container>
     </>
   );

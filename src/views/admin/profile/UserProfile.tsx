@@ -81,7 +81,7 @@ export default function UserProfile() {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchUserData();
   }, [setValue]);
 
@@ -128,6 +128,7 @@ export default function UserProfile() {
           })
           .catch((error) => {
             console.error("Error uploading file", error);
+            toast.error(error.response.data.description);
           });
       };
       reader.readAsDataURL(file);

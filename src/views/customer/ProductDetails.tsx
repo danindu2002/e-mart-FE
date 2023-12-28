@@ -160,7 +160,7 @@ export default function ProductDetails() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: "70vh",
+                height: "auto",
                 boxShadow: "none",
                 ml: 4,
               }}
@@ -168,7 +168,6 @@ export default function ProductDetails() {
               <CardContent sx={{ flex: "1 0 auto", alignItems: "flex-start" }}>
                 <Typography
                   component="div"
-                  // variant="h6"
                   sx={{
                     fontSize: "12.5px",
                     letterSpacing: "1px",
@@ -180,7 +179,7 @@ export default function ProductDetails() {
                 <Typography
                   component="div"
                   variant="h4"
-                  sx={{ fontSize: "40px" }}
+                  sx={{ fontSize: "35px" }}
                 >
                   <b>{product?.productName}</b>
                 </Typography>
@@ -200,50 +199,16 @@ export default function ProductDetails() {
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
-                  sx={{ textAlign: "justify", fontSize: "15px", mt: 2, mb: 3 }}
+                  sx={{ textAlign: "justify", fontSize: "15px", mt: 2, mb: 1 }}
                 >
                   {product?.description}
                 </Typography>
-                <Box display="flex" flexDirection="row">
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    sx={{ fontWeight: "bold", fontFamily: "unset" }}
-                  >
-                    Rs. {product?.price.toFixed(2)}
-                  </Typography>
-                  <Typography
-                    component="div"
-                    variant="h6"
-                    sx={{
-                      fontSize: "17px",
-                      fontWeight: "bold",
-                      alignItems: "center",
-                    }}
-                  >
-                    {/* Quantity : {product?.quantity} */}
-                    {product?.quantity != 0 ? (
-                      <Chip
-                        icon={<CheckIcon sx={{ fontSize: "20px" }} />}
-                        label="In Stock"
-                        color="warning"
-                        sx={{ ml: 1.5, fontSize: "12px" }}
-                      />
-                    ) : (
-                      <Chip
-                        icon={<CloseIcon sx={{ fontSize: "20px" }} />}
-                        label="Out of Stock"
-                        color="error"
-                        sx={{ ml: 1.5, fontSize: "12px" }}
-                      />
-                    )}
-                  </Typography>
-                </Box>
+
                 {product?.size !== "" && (
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: "20px" }}
+                    sx={{ fontSize: "18px" }}
                   >
                     Size: {product?.size}
                   </Typography>
@@ -252,19 +217,57 @@ export default function ProductDetails() {
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: "17px", mb: 1 }}
+                    sx={{ fontSize: "18px" }}
                   >
                     Color : {product?.color}
                   </Typography>
                 )}
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      alignItems: "center",
+                      mt: 1,
+                      mb: 1.5,
+                    }}
+                  >
+                    Quantity : {product?.quantity}
+                    {product?.quantity !== 0 ? (
+                      <Chip
+                        icon={<CheckIcon sx={{ fontSize: "15px" }} />}
+                        label="In Stock"
+                        color="warning"
+                        sx={{ ml: 1.5, fontSize: "12px" }}
+                      />
+                    ) : (
+                      <Chip
+                        icon={<CloseIcon sx={{ fontSize: "15px" }} />}
+                        label="Out of Stock"
+                        color="error"
+                        sx={{ ml: 1.5, fontSize: "12px" }}
+                      />
+                    )}
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{ fontWeight: "bold", fontSize: "26px", mb: 1.5 }}
+                >
+                  Rs. {product?.price.toFixed(2)}
+                </Typography>
                 {/* <Box display="flex" alignItems="center"> */}
                 <Grid container sx={{ alignItems: "baseline" }}>
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={12} sm={4}>
                     <Button
                       variant="contained"
                       color="info"
                       size="small"
                       onClick={decrement}
+                      disabled={product?.quantity === 0}
                       sx={{ p: "4px", minWidth: "30px", color: "#fff" }}
                     >
                       -
@@ -277,12 +280,13 @@ export default function ProductDetails() {
                       size="small"
                       color="info"
                       onClick={increment}
+                      disabled={product?.quantity === 0}
                       sx={{ p: "4px", minWidth: "30px", color: "#fff" }}
                     >
                       +
                     </Button>
                   </Grid>
-                  <Grid item xs={8} sm={8}>
+                  <Grid item xs={12} sm={8}>
                     <Button
                       size="small"
                       type="button"
@@ -292,7 +296,9 @@ export default function ProductDetails() {
                       sx={{
                         alignSelf: "center",
                         color: "#fff",
+                        mt: { xs: 2, md: 0 },
                       }}
+                      disabled={product?.quantity === 0}
                       startIcon={<ShoppingCartIcon />}
                       onClick={addToCartHandler}
                     >
@@ -300,7 +306,6 @@ export default function ProductDetails() {
                     </Button>
                   </Grid>
                 </Grid>
-
                 {/* </Box> */}
               </CardContent>
             </Card>

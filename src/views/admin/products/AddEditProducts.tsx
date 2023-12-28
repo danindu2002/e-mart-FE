@@ -39,26 +39,29 @@ export default function AddEditProduct() {
       .string()
       .trim()
       .required("Product code is required")
-      .min(1, "Product code must be at least 1 character")
-      .max(5, "Product code must be at most 5 characters"),
-    description: yup.string().required("Description is required"),
+      .min(1, "Product code must be between 1 and 5 characters")
+      .max(5, "Product code must be between 1 and 5 characters")
+      .matches(/^\S+$/, "Product code cannot be empty"),
+    description: yup
+      .string()
+      .required("Description is required")
+      .max(300, "Description must be less than 300 characters"),
     quantity: yup
       .number()
-      .typeError("Please enter a valid input")
+      .typeError("Please enter a valid quantity")
       .positive("Quantity must be a positive number")
-      .integer("Quantity must be an integer")
+      .integer("Quantity must be a whole number")
       .required("Quantity is required"),
     rating: yup
       .number()
-      .typeError("Please enter a valid input")
-      .integer("Rating must be an integer")
-      .min(1, "Rating must be at least 1")
-      .max(10, "Rating must be at most 10")
+      .typeError("Please enter a valid rating")
+      .integer("Rating must be a whole number")
+      .min(1, "Rating must be between 1 and 10")
+      .max(10, "Rating must be between 1 and 10")
       .required("Rating is required"),
-
     price: yup
       .number()
-      .typeError("Please enter a valid input")
+      .typeError("Please enter a valid price")
       .positive("Price must be a positive number")
       .required("Price is required"),
     size: yup.string(),
@@ -373,7 +376,11 @@ export default function AddEditProduct() {
                 </Button>
               )}
               <Button onClick={handleSubmit(handleNext)}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1
+                  ? "Finish"
+                  : activeStep === 0
+                  ? "Save and Next"
+                  : "Next"}
               </Button>
             </Box>
           </Box>

@@ -6,7 +6,7 @@ import * as yup from "yup";
 import FormTextField from "../../components/forms/FormTextField";
 import axios from "../../api/apiConfig";
 import { toast } from "react-toastify";
-import SignUpImage from "../../assets/images/signup-image.jpg";
+import SignUpImage from "../../assets/images/signup-image-blur.jpg";
 import yupPassword from "yup-password";
 
 export default function SignupPage() {
@@ -96,18 +96,7 @@ export default function SignupPage() {
         backgroundColor: "#ddd",
       }}
     >
-      <Grid item xs={12} md={6}>
-        {/* <img
-          src={SignUpImage}
-          alt="Left Side Image"
-          style={{
-            width: "100%",
-            height: "100vh",
-            objectFit: "cover",
-            zIndex: "-1",
-          }}
-        /> */}
-      </Grid>
+      <Grid item xs={12} md={6}></Grid>
       <Grid item xs={12} md={8}>
         <Container maxWidth="lg" sx={{ ...backgroundStyles }} id="signUpCard">
           <Typography

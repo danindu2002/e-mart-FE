@@ -77,9 +77,9 @@ export default function AdminProfile() {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchLoggedUserData();
-  }, [setValue]);
+  }, []);
 
   const submitHandler = (data: any) => {
     console.log("Submit Data", data);
@@ -124,6 +124,7 @@ export default function AdminProfile() {
           })
           .catch((error) => {
             console.error("Error uploading file", error);
+            toast.error(error.response.data.description);
           });
       };
       reader.readAsDataURL(file);

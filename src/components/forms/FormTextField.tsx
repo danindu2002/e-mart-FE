@@ -1,4 +1,4 @@
-import { SxProps, TextField } from "@mui/material";
+import { SxProps, TextField, InputAdornment } from "@mui/material";
 
 /**
  * Renders a MUI TextField component with customizable properties for form input
@@ -32,6 +32,7 @@ interface FormTextFieldProps {
   value?: any;
   onChange?: any;
   disabled?: boolean;
+  startAdornment?: React.ReactNode; // New prop for start adornment
 }
 
 export default function FormTextField({
@@ -47,6 +48,7 @@ export default function FormTextField({
   sx,
   onChange,
   disabled = false,
+  startAdornment, // New prop
 }: FormTextFieldProps) {
   return (
     <TextField
@@ -63,6 +65,11 @@ export default function FormTextField({
       autoComplete="off"
       disabled={disabled}
       sx={sx}
+      InputProps={{
+        startAdornment: startAdornment && (
+          <InputAdornment position="start">{startAdornment}</InputAdornment>
+        ),
+      }}
     />
   );
 }

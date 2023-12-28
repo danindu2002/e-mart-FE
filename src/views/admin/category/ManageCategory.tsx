@@ -7,6 +7,8 @@ import {
   Button,
   CircularProgress,
   Container,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
@@ -14,12 +16,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../api/apiConfig";
+import SearchIcon from "@mui/icons-material/Search";
 import ActionButton from "../../../components/buttons/ActionButton";
 import AddCategoryDialog from "../../../components/dialogs/AddCategoryDialog";
 import CategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 import DataTable from "../../../components/tables/DataTable";
 import UpdateCategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
+import { ClearIcon } from "@mui/x-date-pickers";
+import FormTextField from "../../../components/forms/FormTextField";
 
 export default function ManageCategory() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -31,6 +36,8 @@ export default function ManageCategory() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const { register, handleSubmit, reset } = useForm();
 
   const fetchCategories = () => {
     setOpenDrop(true);
@@ -220,6 +227,42 @@ export default function ManageCategory() {
           >
             Manage Categories
           </Typography>
+        </Box>
+        <Box sx={{ display: "flex", mb: "10px" }}>
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <FormTextField
+              placeholder="Search by category name"
+              name="name"
+              register={register}
+              sx={{ ...fieldStyle }}
+            />
+            <Tooltip title="Search" arrow>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ ...searchButton, mr: "5px" }}
+              >
+                <IconButton sx={{ p: 0, color: "#fff" }}>
+                  <SearchIcon />
+                </IconButton>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Clear" arrow>
+              <Button
+                variant="contained"
+                type="button"
+                onClick={() => {
+                  reset();
+                  // fetchProducts();
+                }}
+                sx={{ ...searchButton }}
+              >
+                <IconButton sx={{ p: 0, color: "#fff" }}>
+                  <ClearIcon />
+                </IconButton>
+              </Button>
+            </Tooltip>
+          </form>
         </Box>
         <DataTable
           data={categories}

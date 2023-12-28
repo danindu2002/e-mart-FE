@@ -88,9 +88,7 @@ const AddProductPhotos = ({
           mt: 2,
         }}
       >
-        <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-          Upload Product Images
-        </Typography>
+        <Typography variant="h6">Upload Product Images</Typography>
         <Box
           sx={{
             backgroundColor: "#f0f0f0",
@@ -101,6 +99,10 @@ const AddProductPhotos = ({
             alignItems: "center",
           }}
         >
+          <Typography variant="body2" sx={{ mb: "10px" }}>
+            Click to upload your Product Images (Max Size: 1MB, JPG/PNG format
+            only)
+          </Typography>
           <label htmlFor="file-input">
             <Button
               color="primary"
@@ -117,12 +119,10 @@ const AddProductPhotos = ({
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 multiple
+                max-size="1000000" // 1MB in bytes
               />
             </Button>
           </label>
-          <Typography variant="body2" sx={{ marginTop: "10px" }}>
-            Click to upload your Product Images
-          </Typography>
         </Box>
       </Box>
       {images.length > 0 && (

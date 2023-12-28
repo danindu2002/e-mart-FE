@@ -65,11 +65,13 @@ const AddProductDetails = ({
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <FormTextField
-            label="Price*"
+            type="number"
+            label="Price (Rs.)*"
             name="price"
-            placeholder="Enter Price"
+            placeholder="Enter Price (Rs.)"
             fullWidth
             register={register}
+            // startAdornment="Rs."
             error={!!errors?.price}
             helperText={errors.price?.message}
             sx={{ mb: 2 }}
@@ -89,6 +91,7 @@ const AddProductDetails = ({
         </Grid>
         <Grid item xs={12} md={4}>
           <FormTextField
+            type="number"
             label="Rating*"
             name="rating"
             placeholder="Enter Rating"
@@ -104,6 +107,7 @@ const AddProductDetails = ({
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <FormTextField
+            type="number"
             label="Quantity*"
             name="quantity"
             placeholder="Enter Quantity"
@@ -138,7 +142,7 @@ const AddProductDetails = ({
           </FormControl>
         </Grid>
         <Grid item xs={12} md={4}>
-          <FormControl fullWidth size="small">
+          <FormControl fullWidth size="small" error={!!errors?.category}>
             <InputLabel id="category-label">Category*</InputLabel>
             <Controller
               name="category"
