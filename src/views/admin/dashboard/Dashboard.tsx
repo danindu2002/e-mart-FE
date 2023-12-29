@@ -49,7 +49,7 @@ export default function Dashboard() {
 
   function fetchCustomerCount() {
     axios
-      .get("/dashboard/customer-count")
+      .get(`/dashboard/customer-count/${userId}`)
       .then((response) => {
         console.log("customer-count", response.data.object);
         setCustomerCount(response.data.object);
@@ -61,7 +61,7 @@ export default function Dashboard() {
 
   function fetchAdminCount() {
     axios
-      .get("/dashboard/admin-count")
+      .get(`/dashboard/admin-count/${userId}`)
       .then((response) => {
         console.log("admin-count", response.data.object);
         setAdminCount(response.data.object);
@@ -73,7 +73,7 @@ export default function Dashboard() {
 
   function fetchCategoryCount() {
     axios
-      .get("/dashboard/category-count")
+      .get(`/dashboard/category-count/${userId}`)
       .then((response) => {
         console.log("category-count", response.data.object);
         setCategoryCount(response.data.object);
@@ -85,7 +85,7 @@ export default function Dashboard() {
 
   function fetchOrderCount() {
     axios
-      .get("/dashboard/order-count")
+      .get(`/dashboard/order-count/${userId}`)
       .then((response) => {
         console.log("order-count", response.data.object);
         setOrderCount(response.data.object);
@@ -97,7 +97,7 @@ export default function Dashboard() {
 
   function fetchTableData() {
     axios
-      .get("/dashboard/checkout")
+      .get(`/dashboard/checkout/${userId}`)
       .then((response) => {
         console.log("tableData", response.data.object);
         let data = response.data.object;
@@ -143,7 +143,6 @@ export default function Dashboard() {
 
   const tableHeaders = [
     "User Id",
-    // "Profile Photo",
     "Email",
     "Contact",
     "First Name",
