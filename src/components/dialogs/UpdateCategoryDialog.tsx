@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Button,
   Dialog,
@@ -5,13 +6,11 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import ClearIcon from "@mui/icons-material/Clear";
-import FormTextField from "../forms/FormTextField";
-import { useEffect } from "react";
 import axios from "../../api/apiConfig";
+import FormTextField from "../forms/FormTextField";
 
 export default function CategoryDialog({
   open,
@@ -22,7 +21,6 @@ export default function CategoryDialog({
   const schema = yup.object().shape({
     categoryCode: yup
       .string()
-      .trim()
       .required("Category code is required")
       .min(1, "Category code must be between 1 and 5 characters")
       .max(5, "Category code must be between 1 and 5 characters")
@@ -30,11 +28,8 @@ export default function CategoryDialog({
     refCategoryName: yup
       .string()
       .required("Category Name is required")
-      .matches(/^\S+$/, "Category code cannot be empty"),
-    categoryDescription: yup
-      .string()
-      .required("Description is required")
-      .matches(/^\S+$/, "Category code cannot be empty"),
+      .matches(/^\S+$/, "Category name cannot be empty"),
+    categoryDescription: yup.string().required("Description is required"),
   });
 
   const {
@@ -66,10 +61,7 @@ export default function CategoryDialog({
     }
   }, [category]);
 
-  console.log(category?.categoryId);
-
   const handleCancel = () => {
-    reset();
     onClose();
   };
 

@@ -211,7 +211,7 @@ export default function ManageAdmins() {
         <Box sx={{ display: "flex", mb: "10px" }}>
           <form onSubmit={handleSubmit(submitHandler)}>
             <FormTextField
-              placeholder="Search by product name or category"
+              placeholder="Search by product name or description"
               name="name"
               register={register}
               sx={{ ...fieldStyle }}

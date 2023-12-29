@@ -23,6 +23,7 @@ import FormTextField from "../../../components/forms/FormTextField";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../../components/buttons/ActionButton";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import { Context } from "../../../App";
 
 export default function ManageAdmins() {
   const [users, setUsers] = useState<any[]>([]);
@@ -31,6 +32,7 @@ export default function ManageAdmins() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
+  const { userId } = useContext(Context);
   const navigate = useNavigate();
 
   const fetchUsers = () => {
@@ -51,6 +53,10 @@ export default function ManageAdmins() {
     fetchUsers();
     console.log("Users: ", users);
   }, []);
+
+  // useEffect(() => {
+  //   console.log("Context userId: ", userId);
+  // }, [userId]);
 
   const formatData = (data: Array<any>) => {
     console.log("Users: ", data);

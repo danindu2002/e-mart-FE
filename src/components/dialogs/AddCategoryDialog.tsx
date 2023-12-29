@@ -23,11 +23,8 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
     refCategoryName: yup
       .string()
       .required("Category Name is required")
-      .matches(/^\S+$/, "Category code cannot be empty"),
-    categoryDescription: yup
-      .string()
-      .required("Description is required")
-      .matches(/^\S+$/, "Category code cannot be empty"),
+      .matches(/^\S+$/, "Category name cannot be empty"),
+    categoryDescription: yup.string().required("Description is required"),
   });
 
   const {

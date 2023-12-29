@@ -257,7 +257,7 @@ export default function ProductDetails() {
                 <Typography
                   component="div"
                   variant="h4"
-                  sx={{ fontSize: "40px" }}
+                  sx={{ fontSize: "35px" }}
                 >
                   <b>{product?.productName}</b>
                 </Typography>
@@ -277,65 +277,66 @@ export default function ProductDetails() {
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
-                  sx={{ textAlign: "justify", fontSize: "15px", mt: 3, mb: 3 }}
+                  sx={{ textAlign: "justify", fontSize: "15px", mt: 2, mb: 1 }}
                 >
                   {product?.description}
                 </Typography>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  sx={{
-                    fontSize: "17px",
-                    fontWeight: "bold",
-                    alignItems: "center",
-                  }}
-                >
-                  Quantity : {product?.quantity}
-                  {product?.quantity != 0 ? (
-                    <Chip
-                      icon={<CheckIcon sx={{ fontSize: "20px" }} />}
-                      label="In Stock"
-                      color="warning"
-                      sx={{ ml: 1.5, fontSize: "12px" }}
-                    />
-                  ) : (
-                    <Chip
-                      icon={<CloseIcon sx={{ fontSize: "20px" }} />}
-                      label="Out of Stock"
-                      color="error"
-                      sx={{ ml: 1.5, fontSize: "12px" }}
-                    />
-                  )}
-                </Typography>
-                {product?.color !== "" && (
-                  <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{ fontSize: "17px" }}
-                  >
-                    Color : {product?.color}
-                  </Typography>
-                )}
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "28px",
-                    fontFamily: "unset",
-                  }}
-                >
-                  Rs. {product?.price.toFixed(2)}
-                </Typography>
+
                 {product?.size !== "" && (
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: "20px" }}
+                    sx={{ fontSize: "18px" }}
                   >
                     Size: {product?.size}
                   </Typography>
                 )}
+                {product?.color !== "" && (
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ fontSize: "18px" }}
+                  >
+                    Color : {product?.color}
+                  </Typography>
+                )}
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      alignItems: "center",
+                      mt: 1,
+                      mb: 1.5,
+                    }}
+                  >
+                    Quantity : {product?.quantity}
+                    {/* {product?.quantity !== 0 ? (
+                      <Chip
+                        icon={<CheckIcon sx={{ fontSize: "15px" }} />}
+                        label="In Stock"
+                        color="warning"
+                        sx={{ ml: 1.5, fontSize: "12px" }}
+                      />
+                    ) : (
+                      <Chip
+                        icon={<CloseIcon sx={{ fontSize: "15px" }} />}
+                        label="Out of Stock"
+                        color="error"
+                        sx={{ ml: 1.5, fontSize: "12px" }}
+                      />
+                    )} */}
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{ fontWeight: "bold", fontSize: "26px", mb: 1.5 }}
+                >
+                  Rs. {product?.price.toFixed(2)}
+                </Typography>
               </CardContent>
             </Card>
           </Grid>

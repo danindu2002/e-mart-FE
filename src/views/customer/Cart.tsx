@@ -132,8 +132,8 @@ export default function Cart() {
     } catch (error: any) {
       console.error(error);
       Swal.fire({
-        title: "Oops...",
-        text: error.response.data.description,
+        title: "Sorry...",
+        text: error.response.data.description ?? "An error occurred.",
         icon: "error",
         iconColor: "#ffa000",
         confirmButtonColor: "#ffa000",
