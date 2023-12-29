@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import DataTable from "../../../components/tables/DataTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import { Context } from "../../../App";
 
 const AddProductPhotos = ({
   handleFileChange,
@@ -18,6 +19,7 @@ const AddProductPhotos = ({
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { userId } = useContext(Context);
 
   useEffect(() => {
     fetchImageDetails();
@@ -45,7 +47,9 @@ const AddProductPhotos = ({
 
   const deleteImage = async (imageId: any) => {
     try {
-      const response = await axios.delete(`/images/?imageId=${imageId}`);
+      const response = await axios.delete(
+        `/images/${userId}?imageId=${imageId}`
+      );
       console.log(response);
       toast.success(response.data.description);
       fetchImageDetails();

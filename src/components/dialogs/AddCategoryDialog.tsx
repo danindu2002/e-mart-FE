@@ -19,12 +19,15 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
       .required("Category code is required")
       .min(1, "Category code must be between 1 and 5 characters")
       .max(5, "Category code must be between 1 and 5 characters")
-      .matches(/^\S+$/, "Category code cannot be empty"),
+      .matches(/\S/, "Category code cannot be empty"),
     refCategoryName: yup
       .string()
       .required("Category Name is required")
-      .matches(/^\S+$/, "Category name cannot be empty"),
-    categoryDescription: yup.string().required("Description is required"),
+      .matches(/\S/, "Category name cannot be empty"),
+    categoryDescription: yup
+      .string()
+      .required("Description is required")
+      .matches(/\S/, "Category Description cannot be empty"),
   });
 
   const {

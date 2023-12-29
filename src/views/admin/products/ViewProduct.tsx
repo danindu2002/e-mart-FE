@@ -34,7 +34,7 @@ export default function ProductDetails() {
   const [count, setCount] = useState<number>(1);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { setCartProducts } = useContext(Context);
+  const { setCartProducts, userId } = useContext(Context);
   let navigate = useNavigate();
 
   const storedUserData = sessionStorage.getItem("loggedUserData");
@@ -88,7 +88,7 @@ export default function ProductDetails() {
   const deleteDocument = async (documentId: any) => {
     try {
       const response = await axios.delete(
-        `/documents/?documentId=${documentId}`
+        `/documents/${userId}?documentId=${documentId}`
       );
       console.log(response);
       toast.success(response.data.description);

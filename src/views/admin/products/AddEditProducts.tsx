@@ -11,7 +11,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ import axios from "../../../api/apiConfig";
 import AddDocuments from "./AddDocuments";
 import AddProductDetails from "./AddProductDetails";
 import AddProductPhotos from "./AddProductPhotos";
+import { Context } from "../../../App";
 
 const steps = ["Add Product Details", "Add Documents", "Add Product Photos"];
 
@@ -35,23 +36,25 @@ export default function AddEditProduct() {
   const [images, setImages] = useState<any[]>([]);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
   const isScreenSm = useMediaQuery("(max-width:900px)");
+  const { userId } = useContext(Context);
 
   const schema = yup.object().shape({
     productName: yup
       .string()
       .required("Product name is required")
-      .matches(/^\S+$/, "Product Name cannot be empty"),
+      .matches(/\S/, "Product Name cannot be empty"),
     productCode: yup
       .string()
       .trim()
       .required("Product code is required")
       .min(1, "Product code must be between 1 and 5 characters")
       .max(5, "Product code must be between 1 and 5 characters")
-      .matches(/^\S+$/, "Product code cannot be empty"),
+      .matches(/\S/, "Product code cannot be empty"),
     description: yup
       .string()
       .required("Description is required")
-      .max(300, "Description must be less than 300 characters"),
+      .max(300, "Description must be less than 300 characters")
+      .matches(/\S/, "Description cannot be empty"),
     quantity: yup
       .number()
       .typeError("Please enter a valid quantity")
@@ -71,7 +74,7 @@ export default function AddEditProduct() {
       .positive("Price must be a positive number")
       .required("Price is required"),
     size: yup.string(),
-    color: yup.string(),
+    color: yup.string().matches(/\S/, "Color cannot be empty"),
     category: yup.string().required("Category is required"),
   });
 
@@ -88,7 +91,7 @@ export default function AddEditProduct() {
 
   const fetchCategories = () => {
     axios
-      .get("/categories/")
+      .get("")
       .then((response) => {
         console.log(response.data.responseList);
         setCategories(response.data.responseList);
@@ -148,7 +151,7 @@ export default function AddEditProduct() {
         };
         console.log(data);
         axios
-          .post("/documents/", data)
+          .post(`/documents/${userId}`, data)
           .then((response) => {
             console.log(response);
             toast.success(response.data.description);
@@ -180,7 +183,7 @@ export default function AddEditProduct() {
         };
         console.log("image data", data);
         axios
-          .post("/images/", data)
+          .post(`/images/${userId}`, data)
           .then((response) => {
             console.log(response);
             toast.success(response.data.description);
@@ -226,7 +229,7 @@ export default function AddEditProduct() {
       setAddedProductId(productId);
       console.log(data);
       axios
-        .put(`/products/${productId}`, data)
+        .put(`/products/${productId}/${userId}`, data)
         .then((response) => {
           console.log(response);
           toast.success(response.data.description);
@@ -241,7 +244,7 @@ export default function AddEditProduct() {
       // Add Product
       console.log(data);
       axios
-        .post("/products/", data)
+        .post(`/products/${userId}`, data)
         .then((response) => {
           console.log(response);
           toast.success(response.data.description);

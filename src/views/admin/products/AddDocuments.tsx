@@ -1,12 +1,13 @@
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import { Box, Button, Typography } from "@mui/material";
 import axios from "../../../api/apiConfig";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ActionButton from "../../../components/buttons/ActionButton";
 import { toast } from "react-toastify";
 import DataTable from "../../../components/tables/DataTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import { Context } from "../../../App";
 
 const AddDocuments = ({
   handleFileChange,
@@ -17,6 +18,7 @@ const AddDocuments = ({
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { userId } = useContext(Context);
 
   useEffect(() => {
     fetchDocumentDetails();
@@ -45,7 +47,7 @@ const AddDocuments = ({
   const deleteDocument = async (documentId: any) => {
     try {
       const response = await axios.delete(
-        `/documents/?documentId=${documentId}`
+        `/documents/${userId}?documentId=${documentId}`
       );
       console.log(response);
       toast.success(response.data.description);
