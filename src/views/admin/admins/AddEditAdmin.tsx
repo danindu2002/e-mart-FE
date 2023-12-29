@@ -120,7 +120,10 @@ export default function AddEditEvent() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.response.data.description);
+          toast.error(
+            error.response.data.description ??
+              "An error occurred while updating admin"
+          );
         });
       navigate("/admin/admins");
     } else {
@@ -139,7 +142,10 @@ export default function AddEditEvent() {
         .catch((error) => {
           console.log(error);
           if (error.response.data.description) {
-            toast.error(error.response.data.description);
+            toast.error(
+              error.response.data.description ??
+                "An error occurred while adding new admin"
+            );
           }
         });
     }

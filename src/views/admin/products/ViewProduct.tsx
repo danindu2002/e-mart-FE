@@ -95,7 +95,7 @@ export default function ProductDetails() {
       fetchDocumentDetails();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
     }
   };
 
@@ -115,7 +115,7 @@ export default function ProductDetails() {
       window.open(dataUrl, "_blank");
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
     }
   };
 
@@ -189,7 +189,7 @@ export default function ProductDetails() {
       console.log(response.data.responseList);
       fetchCartItems();
     } catch (error: any) {
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
       console.error(error);
     }
   };

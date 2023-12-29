@@ -79,7 +79,7 @@ export default function SignupPage() {
       .catch((error) => {
         console.log(error);
         if (error.response.data.description) {
-          toast.error(error.response.data.description);
+          toast.error(error.response.data.description ?? "An error occurred");
         }
       });
   };

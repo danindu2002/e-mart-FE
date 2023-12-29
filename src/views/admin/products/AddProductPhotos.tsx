@@ -55,7 +55,7 @@ const AddProductPhotos = ({
       fetchImageDetails();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
     }
   };
 

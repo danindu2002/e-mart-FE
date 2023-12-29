@@ -96,7 +96,7 @@ export default function UserProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
     setEditMode(false);
   };
@@ -127,7 +127,7 @@ export default function UserProfile() {
           })
           .catch((error) => {
             console.error("Error uploading file", error);
-            toast.error(error.response.data.description);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       };
       reader.readAsDataURL(file);
@@ -162,7 +162,7 @@ export default function UserProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
     setOpenUpdate(false);
   };
@@ -188,7 +188,7 @@ export default function UserProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
   };
 
