@@ -31,8 +31,14 @@ export default function AddEditEvent() {
   yupPassword(yup);
 
   const schema = yup.object().shape({
-    firstName: yup.string().required("First Name is required"),
-    lastName: yup.string().required("Last Name is required"),
+    firstName: yup
+      .string()
+      .required("First Name is required")
+      .matches(/\S/, "First Name cannot be empty"),
+    lastName: yup
+      .string()
+      .required("Last Name is required")
+      .matches(/\S/, "Last Name cannot be empty"),
     email: yup
       .string()
       .email("Please enter a valid Email Address")
@@ -41,7 +47,10 @@ export default function AddEditEvent() {
       .string()
       .matches(/^((0\d{9})|(\+\d{11}))$/, "Please enter a valid Contact No")
       .required("Contact Number is required"),
-    address: yup.string().required("Address is required"),
+    address: yup
+      .string()
+      .required("Address is required")
+      .matches(/\S/, "Address cannot be empty"),
     password: editUser
       ? yup.string()
       : yup

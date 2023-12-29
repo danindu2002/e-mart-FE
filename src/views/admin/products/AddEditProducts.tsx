@@ -42,18 +42,19 @@ export default function AddEditProduct() {
     productName: yup
       .string()
       .required("Product name is required")
-      .matches(/^\S+$/, "Product Name cannot be empty"),
+      .matches(/\S/, "Product Name cannot be empty"),
     productCode: yup
       .string()
       .trim()
       .required("Product code is required")
       .min(1, "Product code must be between 1 and 5 characters")
       .max(5, "Product code must be between 1 and 5 characters")
-      .matches(/^\S+$/, "Product code cannot be empty"),
+      .matches(/\S/, "Product code cannot be empty"),
     description: yup
       .string()
       .required("Description is required")
-      .max(300, "Description must be less than 300 characters"),
+      .max(300, "Description must be less than 300 characters")
+      .matches(/\S/, "Description cannot be empty"),
     quantity: yup
       .number()
       .typeError("Please enter a valid quantity")
@@ -73,7 +74,7 @@ export default function AddEditProduct() {
       .positive("Price must be a positive number")
       .required("Price is required"),
     size: yup.string(),
-    color: yup.string(),
+    color: yup.string().matches(/\S/, "Color cannot be empty"),
     category: yup.string().required("Category is required"),
   });
 
