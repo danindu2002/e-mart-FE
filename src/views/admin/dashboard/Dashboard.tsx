@@ -6,12 +6,13 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DashboardCard from "../../../components/cards/DashboardCard";
 import BarChart from "../../../components/charts/BarChart";
 import PieChart from "../../../components/charts/PieChart";
 import DataTable from "../../../components/tables/DataTable";
 import axios from "../../../api/apiConfig";
+import { Context } from "../../../App";
 
 interface OriginalData {
   checkoutId: number;
@@ -41,6 +42,11 @@ export default function Dashboard() {
   const [categoryCount, setCategoryCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [table, setTable] = useState<any[]>([]);
+  const { userId } = useContext(Context);
+
+  useEffect(() => {
+    console.log("Context userId: ", userId);
+  }, [userId]);
 
   function fetchCustomerCount() {
     axios
@@ -216,7 +222,7 @@ export default function Dashboard() {
             width: "58%",
             "@media (max-width: 900px)": {
               width: "100%",
-              overflow:"auto",
+              overflow: "auto",
             },
           }}
         >
@@ -256,17 +262,17 @@ export default function Dashboard() {
         >
           Top Customers
         </Typography>
-       <Box sx={{mx:3}}>
-        <DataTable
-          data={table}
-          columns={tableHeaders}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          count={table.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          noDataMessage="No Checkout Details Available"
-        />
+        <Box sx={{ mx: 3 }}>
+          <DataTable
+            data={table}
+            columns={tableHeaders}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            count={table.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            noDataMessage="No Checkout Details Available"
+          />
         </Box>
       </Box>
       <Backdrop

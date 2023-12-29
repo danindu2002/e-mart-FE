@@ -1,7 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Container,
   Step,
   StepLabel,
@@ -31,10 +33,14 @@ export default function AddEditProduct() {
   const [activeStep, setActiveStep] = useState(0);
   const [documents, setDocuments] = useState<any[]>([]);
   const [images, setImages] = useState<any[]>([]);
+  const [openDrop, setOpenDrop] = useState<boolean>(false);
   const isScreenSm = useMediaQuery("(max-width:900px)");
 
   const schema = yup.object().shape({
-    productName: yup.string().required("Product name is required"),
+    productName: yup
+      .string()
+      .required("Product name is required")
+      .matches(/^\S+$/, "Product Name cannot be empty"),
     productCode: yup
       .string()
       .trim()
@@ -49,7 +55,7 @@ export default function AddEditProduct() {
     quantity: yup
       .number()
       .typeError("Please enter a valid quantity")
-      .positive("Quantity must be a positive number")
+      .min(0, "Quantity cannot be a negative number")
       .integer("Quantity must be a whole number")
       .required("Quantity is required"),
     rating: yup
@@ -131,6 +137,7 @@ export default function AddEditProduct() {
     let files = event.target.files;
     console.log(files);
     if (files && files.length > 0) {
+      setOpenDrop(true);
       for (const file of files) {
         const uploadDocument = await readFileAsBase64(file);
         let data = {
@@ -152,6 +159,7 @@ export default function AddEditProduct() {
             toast.error(error.response.data.description);
           });
       }
+      setOpenDrop(false);
       event.target.value = null;
     } else {
       console.log("No files uploaded");
@@ -162,6 +170,7 @@ export default function AddEditProduct() {
     const files: any = event.target.files;
     console.log(files);
     if (files && files.length > 0) {
+      setOpenDrop(true);
       for (const file of files) {
         const uploadImage = await readFileAsBase64(file);
         let data = {
@@ -182,6 +191,7 @@ export default function AddEditProduct() {
             toast.error(error.response.data.description);
           });
       }
+      setOpenDrop(false);
       event.target.value = null;
     } else {
       console.log("No files uploaded");
@@ -386,6 +396,12 @@ export default function AddEditProduct() {
           </Box>
         </Box>
       </Container>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openDrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   );
 }

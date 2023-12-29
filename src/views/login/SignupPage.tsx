@@ -27,12 +27,12 @@ export default function SignupPage() {
     lastName: yup.string().required("Last Name is required"),
     email: yup
       .string()
-      .email("Invalid Email Address")
+      .email("Please enter a valid Email Address")
       .required("Email is required"),
     contactNo: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Invalid Contact Number")
-      .required("Contact No is required"),
+      .matches(/^((0\d{9})|(\+\d{11}))$/, "Please enter a valid Contact No")
+      .required("Contact Number is required"),
     address: yup.string().required("Address is required"),
     password: yup
       .string()

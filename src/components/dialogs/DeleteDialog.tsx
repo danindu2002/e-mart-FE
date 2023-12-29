@@ -1,5 +1,6 @@
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import WarningIcon from "@mui/icons-material/ReportProblemRounded";
+import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 import {
   Box,
   Button,
@@ -45,7 +46,9 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
               justifyContent: "center",
             }}
           >
-            <WarningIcon sx={{ color: "#FF313A", fontSize: "110px" }} />
+            <WarningAmberOutlinedIcon
+              sx={{ color: "#FF313A", fontSize: "110px" }}
+            />
           </Box>
         </DialogTitle>
         <DialogContent sx={{ color: "#666", p: 2 }}>

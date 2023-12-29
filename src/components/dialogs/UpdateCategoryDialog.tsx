@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Button,
   Dialog,
@@ -5,13 +6,11 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import ClearIcon from "@mui/icons-material/Clear";
-import FormTextField from "../forms/FormTextField";
-import { useEffect } from "react";
 import axios from "../../api/apiConfig";
+import FormTextField from "../forms/FormTextField";
 
 export default function CategoryDialog({
   open,
@@ -62,10 +61,7 @@ export default function CategoryDialog({
     }
   }, [category]);
 
-  console.log(category?.categoryId);
-
   const handleCancel = () => {
-    reset();
     onClose();
   };
 
