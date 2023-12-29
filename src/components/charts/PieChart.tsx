@@ -1,7 +1,8 @@
 import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import axios from "../../api/apiConfig";
-import { useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
+import { Context } from "../../App";
 
 interface PieChartProps {
   pastEvents: number;
@@ -21,10 +22,11 @@ export default function Chart({ pastEvents, futureEvents }: PieChartProps) {
   const chartHeight = isSmallScreen ? 170 : 200;
   const height = isSmallScreen ? 280 : 320;
   const [data, setData] = useState<any>([]);
+  const { userId } = useContext(Context);
 
   const fetchPieChartData = () => {
     axios
-      .get("/dashboard/category-product-count")
+      .get(`/dashboard/category-product-count/${userId}`)
       .then((response) => {
         console.log("pieChartData", response.data.object);
         setData(response.data.object);

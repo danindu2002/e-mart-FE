@@ -1,7 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Container,
   Step,
   StepLabel,
@@ -9,7 +11,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,6 +20,7 @@ import axios from "../../../api/apiConfig";
 import AddDocuments from "./AddDocuments";
 import AddProductDetails from "./AddProductDetails";
 import AddProductPhotos from "./AddProductPhotos";
+import { Context } from "../../../App";
 
 const steps = ["Add Product Details", "Add Documents", "Add Product Photos"];
 
@@ -31,38 +34,47 @@ export default function AddEditProduct() {
   const [activeStep, setActiveStep] = useState(0);
   const [documents, setDocuments] = useState<any[]>([]);
   const [images, setImages] = useState<any[]>([]);
+  const [openDrop, setOpenDrop] = useState<boolean>(false);
   const isScreenSm = useMediaQuery("(max-width:900px)");
+  const { userId } = useContext(Context);
 
   const schema = yup.object().shape({
-    productName: yup.string().required("Product name is required"),
+    productName: yup
+      .string()
+      .required("Product name is required")
+      .matches(/\S/, "Product Name cannot be empty"),
     productCode: yup
       .string()
       .trim()
       .required("Product code is required")
-      .min(1, "Product code must be at least 1 character")
-      .max(5, "Product code must be at most 5 characters"),
-    description: yup.string().required("Description is required"),
+      .min(1, "Product code must be between 1 and 5 characters")
+      .max(5, "Product code must be between 1 and 5 characters")
+      .matches(/\S/, "Product code cannot be empty"),
+    description: yup
+      .string()
+      .required("Description is required")
+      .max(300, "Description must be less than 300 characters")
+      .matches(/\S/, "Description cannot be empty"),
     quantity: yup
       .number()
-      .typeError("Please enter a valid input")
-      .positive("Quantity must be a positive number")
-      .integer("Quantity must be an integer")
+      .typeError("Please enter a valid quantity")
+      .min(0, "Quantity cannot be a negative number")
+      .integer("Quantity must be a whole number")
       .required("Quantity is required"),
     rating: yup
       .number()
-      .typeError("Please enter a valid input")
-      .integer("Rating must be an integer")
-      .min(1, "Rating must be at least 1")
-      .max(10, "Rating must be at most 10")
+      .typeError("Please enter a valid rating")
+      .integer("Rating must be a whole number")
+      .min(1, "Rating must be between 1 and 10")
+      .max(10, "Rating must be between 1 and 10")
       .required("Rating is required"),
-
     price: yup
       .number()
-      .typeError("Please enter a valid input")
+      .typeError("Please enter a valid price")
       .positive("Price must be a positive number")
       .required("Price is required"),
     size: yup.string(),
-    color: yup.string(),
+    color: yup.string().matches(/\S/, "Color cannot be empty"),
     category: yup.string().required("Category is required"),
   });
 
@@ -89,7 +101,7 @@ export default function AddEditProduct() {
       });
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (editProduct) {
       axios
         .get(`/products/view-products-category/${productId}`)
@@ -110,7 +122,7 @@ export default function AddEditProduct() {
         });
     }
     fetchCategories();
-  }, [editProduct, productId, reset, setValue]);
+  }, [editProduct, productId, reset]);
 
   const handleNext = (data: any) => {
     if (activeStep === 0) {
@@ -128,6 +140,7 @@ export default function AddEditProduct() {
     let files = event.target.files;
     console.log(files);
     if (files && files.length > 0) {
+      setOpenDrop(true);
       for (const file of files) {
         const uploadDocument = await readFileAsBase64(file);
         let data = {
@@ -138,7 +151,7 @@ export default function AddEditProduct() {
         };
         console.log(data);
         axios
-          .post("/documents/", data)
+          .post(`/documents/${userId}`, data)
           .then((response) => {
             console.log(response);
             toast.success(response.data.description);
@@ -146,9 +159,10 @@ export default function AddEditProduct() {
           })
           .catch((error) => {
             console.log(error);
-            toast.error(error.response.data.description);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       }
+      setOpenDrop(false);
       event.target.value = null;
     } else {
       console.log("No files uploaded");
@@ -159,6 +173,7 @@ export default function AddEditProduct() {
     const files: any = event.target.files;
     console.log(files);
     if (files && files.length > 0) {
+      setOpenDrop(true);
       for (const file of files) {
         const uploadImage = await readFileAsBase64(file);
         let data = {
@@ -168,7 +183,7 @@ export default function AddEditProduct() {
         };
         console.log("image data", data);
         axios
-          .post("/images/", data)
+          .post(`/images/${userId}`, data)
           .then((response) => {
             console.log(response);
             toast.success(response.data.description);
@@ -176,9 +191,10 @@ export default function AddEditProduct() {
           })
           .catch((error) => {
             console.log(error);
-            toast.error(error.response.data.description);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       }
+      setOpenDrop(false);
       event.target.value = null;
     } else {
       console.log("No files uploaded");
@@ -213,7 +229,7 @@ export default function AddEditProduct() {
       setAddedProductId(productId);
       console.log(data);
       axios
-        .put(`/products/${productId}`, data)
+        .put(`/products/${productId}/${userId}`, data)
         .then((response) => {
           console.log(response);
           toast.success(response.data.description);
@@ -222,13 +238,13 @@ export default function AddEditProduct() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.response.data.description);
+          toast.error(error.response.data.description ?? "An error occurred");
         });
     } else {
       // Add Product
       console.log(data);
       axios
-        .post("/products/", data)
+        .post(`/products/${userId}`, data)
         .then((response) => {
           console.log(response);
           toast.success(response.data.description);
@@ -237,7 +253,7 @@ export default function AddEditProduct() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.response.data.description);
+          toast.error(error.response.data.description ?? "An error occurred");
         });
     }
   };
@@ -373,12 +389,22 @@ export default function AddEditProduct() {
                 </Button>
               )}
               <Button onClick={handleSubmit(handleNext)}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1
+                  ? "Finish"
+                  : activeStep === 0
+                  ? "Save and Next"
+                  : "Next"}
               </Button>
             </Box>
           </Box>
         </Box>
       </Container>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openDrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   );
 }

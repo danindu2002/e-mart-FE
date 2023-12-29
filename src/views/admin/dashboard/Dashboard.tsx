@@ -6,12 +6,13 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DashboardCard from "../../../components/cards/DashboardCard";
 import BarChart from "../../../components/charts/BarChart";
 import PieChart from "../../../components/charts/PieChart";
 import DataTable from "../../../components/tables/DataTable";
 import axios from "../../../api/apiConfig";
+import { Context } from "../../../App";
 
 interface OriginalData {
   checkoutId: number;
@@ -32,7 +33,6 @@ interface TransformedData {
 }
 
 export default function Dashboard() {
-  const [events, setEvent] = useState<any[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
@@ -41,10 +41,15 @@ export default function Dashboard() {
   const [categoryCount, setCategoryCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [table, setTable] = useState<any[]>([]);
+  const { userId } = useContext(Context);
+
+  useEffect(() => {
+    console.log("Context userId: ", userId);
+  }, [userId]);
 
   function fetchCustomerCount() {
     axios
-      .get("/dashboard/customer-count")
+      .get(`/dashboard/customer-count/${userId}`)
       .then((response) => {
         console.log("customer-count", response.data.object);
         setCustomerCount(response.data.object);
@@ -56,7 +61,7 @@ export default function Dashboard() {
 
   function fetchAdminCount() {
     axios
-      .get("/dashboard/admin-count")
+      .get(`/dashboard/admin-count/${userId}`)
       .then((response) => {
         console.log("admin-count", response.data.object);
         setAdminCount(response.data.object);
@@ -68,7 +73,7 @@ export default function Dashboard() {
 
   function fetchCategoryCount() {
     axios
-      .get("/dashboard/category-count")
+      .get(`/dashboard/category-count/${userId}`)
       .then((response) => {
         console.log("category-count", response.data.object);
         setCategoryCount(response.data.object);
@@ -80,7 +85,7 @@ export default function Dashboard() {
 
   function fetchOrderCount() {
     axios
-      .get("/dashboard/order-count")
+      .get(`/dashboard/order-count/${userId}`)
       .then((response) => {
         console.log("order-count", response.data.object);
         setOrderCount(response.data.object);
@@ -92,7 +97,7 @@ export default function Dashboard() {
 
   function fetchTableData() {
     axios
-      .get("/dashboard/checkout")
+      .get(`/dashboard/checkout/${userId}`)
       .then((response) => {
         console.log("tableData", response.data.object);
         let data = response.data.object;
@@ -138,7 +143,6 @@ export default function Dashboard() {
 
   const tableHeaders = [
     "User Id",
-    // "Profile Photo",
     "Email",
     "Contact",
     "First Name",
@@ -216,7 +220,7 @@ export default function Dashboard() {
             width: "58%",
             "@media (max-width: 900px)": {
               width: "100%",
-              overflow:"auto",
+              overflow: "auto",
             },
           }}
         >
@@ -256,17 +260,17 @@ export default function Dashboard() {
         >
           Top Customers
         </Typography>
-       <Box sx={{mx:3}}>
-        <DataTable
-          data={table}
-          columns={tableHeaders}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          count={table.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          noDataMessage="No Checkout Details Available"
-        />
+        <Box sx={{ mx: 3 }}>
+          <DataTable
+            data={table}
+            columns={tableHeaders}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            count={table.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            noDataMessage="No Checkout Details Available"
+          />
         </Box>
       </Box>
       <Backdrop

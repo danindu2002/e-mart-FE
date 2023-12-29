@@ -31,6 +31,8 @@ interface AppContext {
   setSearchTerm: any;
   selectedCategory: any;
   setSelectedCategory: any;
+  userId: any;
+  setUserId: any;
 }
 
 export const Context = createContext<AppContext>({
@@ -42,12 +44,15 @@ export const Context = createContext<AppContext>({
   setSearchTerm: () => {},
   selectedCategory: null,
   setSelectedCategory: () => {},
+  userId: null,
+  setUserId: () => {},
 });
 
 export default function App() {
   const [cartProducts, setCartProducts] = useState(0);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [userId, setUserId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
@@ -78,6 +83,7 @@ export default function App() {
       const parsedUserData = JSON.parse(storedUserData as string);
       console.log("parsedUserData", parsedUserData);
       setProfilePhoto(parsedUserData?.profilePhoto);
+      setUserId(parsedUserData?.userId);
     }
   }, []);
 
@@ -90,6 +96,8 @@ export default function App() {
     setSelectedCategory,
     profilePhoto,
     setProfilePhoto,
+    userId,
+    setUserId,
   };
 
   return (

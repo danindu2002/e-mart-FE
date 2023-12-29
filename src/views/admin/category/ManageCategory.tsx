@@ -7,19 +7,25 @@ import {
   Button,
   CircularProgress,
   Container,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../api/apiConfig";
+import SearchIcon from "@mui/icons-material/Search";
 import ActionButton from "../../../components/buttons/ActionButton";
 import AddCategoryDialog from "../../../components/dialogs/AddCategoryDialog";
 import CategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 import DataTable from "../../../components/tables/DataTable";
 import UpdateCategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
+import { ClearIcon } from "@mui/x-date-pickers";
+import FormTextField from "../../../components/forms/FormTextField";
+import { Context } from "../../../App";
 
 export default function ManageCategory() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -31,6 +37,9 @@ export default function ManageCategory() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { userId } = useContext(Context);
+
+  const { register, handleSubmit, reset } = useForm();
 
   const fetchCategories = () => {
     setOpenDrop(true);
@@ -77,7 +86,7 @@ export default function ManageCategory() {
   const fetchSearchedProduct = (data: any) => {
     setOpenDrop(true);
     axios
-      .get(`/categories/search/${data.name}`)
+      .get(`/categories/search-categories/${data.name}`)
       .then((response) => setCategories(formatData(response.data.responseList)))
       .catch((error) => setCategories(formatData([])));
     setOpenDrop(false);
@@ -85,14 +94,17 @@ export default function ManageCategory() {
 
   const addCategoryHandler = async (data: any) => {
     try {
-      const response = await axios.post(`/categories/`, data);
+      const response = await axios.post(`/categories/${userId}`, data);
       console.log(response.data);
       setOpen(false);
       fetchCategories();
       toast.success(response.data.description);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while adding new category"
+      );
     }
   };
 
@@ -108,7 +120,7 @@ export default function ManageCategory() {
       console.log(categoryId);
 
       const response = await axios.put(
-        `/categories/?categoryId=${categoryId}`,
+        `/categories/${userId}?categoryId=${categoryId}`,
         data
       );
       console.log(response.data);
@@ -117,7 +129,10 @@ export default function ManageCategory() {
       toast.success(response.data.description);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while updating category"
+      );
     }
   };
 
@@ -128,19 +143,24 @@ export default function ManageCategory() {
   };
 
   const handleDeleteDialog = () => {
-    deleteAdmin(selectedCategory?.categoryId);
+    deleteCategory(selectedCategory?.categoryId);
     setOpenDelete(false);
   };
 
-  const deleteAdmin = async (categoryId: any) => {
+  const deleteCategory = async (categoryId: any) => {
     try {
-      const response = await axios.delete(`/categories/${categoryId}`);
+      const response = await axios.delete(
+        `/categories/${categoryId}/${userId}`
+      );
       console.log(response);
       toast.success(response.data.description);
       fetchCategories();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while deleting category"
+      );
     }
   };
 
@@ -220,6 +240,42 @@ export default function ManageCategory() {
           >
             Manage Categories
           </Typography>
+        </Box>
+        <Box sx={{ display: "flex", mb: "10px" }}>
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <FormTextField
+              placeholder="Search by category name or description"
+              name="name"
+              register={register}
+              sx={{ ...fieldStyle }}
+            />
+            <Tooltip title="Search" arrow>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ ...searchButton, mr: "5px" }}
+              >
+                <IconButton sx={{ p: 0, color: "#fff" }}>
+                  <SearchIcon />
+                </IconButton>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Clear" arrow>
+              <Button
+                variant="contained"
+                type="button"
+                onClick={() => {
+                  reset();
+                  fetchCategories();
+                }}
+                sx={{ ...searchButton }}
+              >
+                <IconButton sx={{ p: 0, color: "#fff" }}>
+                  <ClearIcon />
+                </IconButton>
+              </Button>
+            </Tooltip>
+          </form>
         </Box>
         <DataTable
           data={categories}

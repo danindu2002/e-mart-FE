@@ -17,17 +17,19 @@ import { useForm } from "react-hook-form";
 import axios from "../../../api/apiConfig";
 import DataTable from "../../../components/tables/DataTable";
 import FormTextField from "../../../components/forms/FormTextField";
+import { Context } from "../../../App";
 
 export default function ManageCustomers() {
   const [users, setUsers] = useState<any[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
+  const { userId } = useContext(Context);
 
   const fetchUsers = () => {
     setOpenDrop(true);
     axios
-      .get("/users/view-user-roles/1")
+      .get(`/users/view-user-roles/1/${userId}`)
       .then((response) => {
         console.log(response.data.responseList);
         setUsers(formatData(response.data.responseList));
@@ -74,7 +76,7 @@ export default function ManageCustomers() {
   const fetchSearchedUser = (data: any) => {
     setOpenDrop(true);
     axios
-      .get(`/users/search-users?keyword=${data.name}&role=1`)
+      .get(`/users/search-users/${userId}?keyword=${data.name}&role=1`)
       .then((response) => setUsers(formatData(response.data.responseList)))
       .catch((error) => setUsers(formatData([])));
     setOpenDrop(false);
@@ -118,7 +120,7 @@ export default function ManageCustomers() {
       <Box sx={{ display: "flex", mb: "10px" }}>
         <form onSubmit={handleSubmit(submitHandler)}>
           <FormTextField
-            placeholder="Search Customer Details"
+            placeholder="Search by first name, last name, email, contact no or address"
             name="name"
             register={register}
             sx={{ ...fieldStyle }}

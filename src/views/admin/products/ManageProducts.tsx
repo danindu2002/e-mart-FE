@@ -24,6 +24,7 @@ import FormTextField from "../../../components/forms/FormTextField";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../../components/buttons/ActionButton";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import { Context } from "../../../App";
 
 export default function ManageAdmins() {
   const [products, setProducts] = useState<any[]>([]);
@@ -32,6 +33,7 @@ export default function ManageAdmins() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
+  const { userId } = useContext(Context);
   const navigate = useNavigate();
 
   const fetchProducts = () => {
@@ -109,13 +111,13 @@ export default function ManageAdmins() {
 
   const deleteAdmin = async (productId: any) => {
     try {
-      const response = await axios.delete(`/products/${productId}`);
+      const response = await axios.delete(`/products/${productId}/${userId}`);
       console.log(response);
       toast.success(response.data.description);
       fetchProducts();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.data.description);
+      toast.error(error.data.description ?? "An error occurred");
     }
   };
 
@@ -211,7 +213,7 @@ export default function ManageAdmins() {
         <Box sx={{ display: "flex", mb: "10px" }}>
           <form onSubmit={handleSubmit(submitHandler)}>
             <FormTextField
-              placeholder="Search Product Details"
+              placeholder="Search by product name or description"
               name="name"
               register={register}
               sx={{ ...fieldStyle }}

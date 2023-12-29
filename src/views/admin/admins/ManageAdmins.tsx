@@ -23,6 +23,7 @@ import FormTextField from "../../../components/forms/FormTextField";
 import { useNavigate } from "react-router-dom";
 import ActionButton from "../../../components/buttons/ActionButton";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import { Context } from "../../../App";
 
 export default function ManageAdmins() {
   const [users, setUsers] = useState<any[]>([]);
@@ -31,12 +32,13 @@ export default function ManageAdmins() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
+  const { userId } = useContext(Context);
   const navigate = useNavigate();
 
   const fetchUsers = () => {
     setOpenDrop(true);
     axios
-      .get("/users/view-user-roles/2")
+      .get(`/users/view-user-roles/2/${userId}`)
       .then((response) => {
         console.log(response.data.responseList);
         setUsers(formatData(response.data.responseList));
@@ -83,7 +85,7 @@ export default function ManageAdmins() {
   const fetchSearchedUser = (data: any) => {
     setOpenDrop(true);
     axios
-      .get(`/users/search-users?keyword=${data.name}&role=2`)
+      .get(`/users/search-users/${userId}?keyword=${data.name}&role=2`)
       .then((response) => setUsers(formatData(response.data.responseList)))
       .catch((error) => setUsers(formatData([])));
     setOpenDrop(false);
@@ -108,7 +110,9 @@ export default function ManageAdmins() {
       fetchUsers();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.data.description);
+      toast.error(
+        error.data.description ?? "An error occurred while deleting admin"
+      );
     }
   };
 
@@ -199,7 +203,7 @@ export default function ManageAdmins() {
         <Box sx={{ display: "flex", mb: "10px" }}>
           <form onSubmit={handleSubmit(submitHandler)}>
             <FormTextField
-              placeholder="Search Admin Details"
+              placeholder="Search by first name, last name, email, contact no or address"
               name="name"
               register={register}
               sx={{ ...fieldStyle }}

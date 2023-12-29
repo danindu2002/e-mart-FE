@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import DataTable from "../../../components/tables/DataTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "../../../components/dialogs/DeleteDialog";
+import { Context } from "../../../App";
 
 const AddProductPhotos = ({
   handleFileChange,
@@ -18,6 +19,7 @@ const AddProductPhotos = ({
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { userId } = useContext(Context);
 
   useEffect(() => {
     fetchImageDetails();
@@ -45,13 +47,15 @@ const AddProductPhotos = ({
 
   const deleteImage = async (imageId: any) => {
     try {
-      const response = await axios.delete(`/images/?imageId=${imageId}`);
+      const response = await axios.delete(
+        `/images/${userId}?imageId=${imageId}`
+      );
       console.log(response);
       toast.success(response.data.description);
       fetchImageDetails();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
     }
   };
 
@@ -88,9 +92,7 @@ const AddProductPhotos = ({
           mt: 2,
         }}
       >
-        <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-          Upload Product Images
-        </Typography>
+        <Typography variant="h6">Upload Product Images</Typography>
         <Box
           sx={{
             backgroundColor: "#f0f0f0",
@@ -101,6 +103,10 @@ const AddProductPhotos = ({
             alignItems: "center",
           }}
         >
+          <Typography variant="body2" sx={{ mb: "10px" }}>
+            Click to upload your Product Images (Max Size: 1MB, JPG/PNG format
+            only)
+          </Typography>
           <label htmlFor="file-input">
             <Button
               color="primary"
@@ -117,12 +123,10 @@ const AddProductPhotos = ({
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 multiple
+                max-size="1000000" // 1MB in bytes
               />
             </Button>
           </label>
-          <Typography variant="body2" sx={{ marginTop: "10px" }}>
-            Click to upload your Product Images
-          </Typography>
         </Box>
       </Box>
       {images.length > 0 && (

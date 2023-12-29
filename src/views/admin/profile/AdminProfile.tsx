@@ -33,13 +33,12 @@ export default function AdminProfile() {
     lastName: yup.string().required("Last Name is required"),
     email: yup
       .string()
-      .email("Invalid Email Address")
+      .email("Please enter a valid Email Address")
       .required("Email is required"),
     contactNo: yup
       .string()
-      .matches(/^[0-9]+$/, "Invalid Contact Number")
-      .min(10, "Must be at least 10 digits")
-      .required("Contact No is required"),
+      .matches(/^((0\d{9})|(\+\d{11}))$/, "Please enter a valid Contact No")
+      .required("Contact Number is required"),
     address: yup.string().required("Address is required"),
   });
 
@@ -77,9 +76,9 @@ export default function AdminProfile() {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchLoggedUserData();
-  }, [setValue]);
+  }, []);
 
   const submitHandler = (data: any) => {
     console.log("Submit Data", data);
@@ -93,7 +92,7 @@ export default function AdminProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
     setEditMode(false);
   };
@@ -124,6 +123,7 @@ export default function AdminProfile() {
           })
           .catch((error) => {
             console.error("Error uploading file", error);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       };
       reader.readAsDataURL(file);
@@ -157,7 +157,7 @@ export default function AdminProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
     setOpenUpdate(false);
   };

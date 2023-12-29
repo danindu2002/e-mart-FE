@@ -91,11 +91,11 @@ export default function LoginPage() {
           navigate("/admin/");
         }
       } else {
-        toast.error(response.data.description);
+        toast.error(response.data.description ?? "An error occurred");
       }
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
     }
   };
 

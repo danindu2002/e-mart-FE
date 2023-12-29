@@ -1,12 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Container, Grid, Link, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import FormTextField from "../../components/forms/FormTextField";
+import CheckIcon from "@mui/icons-material/Check";
 import axios from "../../api/apiConfig";
 import { toast } from "react-toastify";
-import SignUpImage from "../../assets/images/signup-image.jpg";
+import SignUpImage from "../../assets/images/signup-image-blur.jpg";
 import yupPassword from "yup-password";
 
 export default function SignupPage() {
@@ -18,12 +27,12 @@ export default function SignupPage() {
     lastName: yup.string().required("Last Name is required"),
     email: yup
       .string()
-      .email("Invalid Email Address")
+      .email("Please enter a valid Email Address")
       .required("Email is required"),
     contactNo: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Invalid Contact Number")
-      .required("Contact No is required"),
+      .matches(/^((0\d{9})|(\+\d{11}))$/, "Please enter a valid Contact No")
+      .required("Contact Number is required"),
     address: yup.string().required("Address is required"),
     password: yup
       .string()
@@ -70,7 +79,7 @@ export default function SignupPage() {
       .catch((error) => {
         console.log(error);
         if (error.response.data.description) {
-          toast.error(error.response.data.description);
+          toast.error(error.response.data.description ?? "An error occurred");
         }
       });
   };
@@ -96,18 +105,7 @@ export default function SignupPage() {
         backgroundColor: "#ddd",
       }}
     >
-      <Grid item xs={12} md={6}>
-        {/* <img
-          src={SignUpImage}
-          alt="Left Side Image"
-          style={{
-            width: "100%",
-            height: "100vh",
-            objectFit: "cover",
-            zIndex: "-1",
-          }}
-        /> */}
-      </Grid>
+      <Grid item xs={12} md={6}></Grid>
       <Grid item xs={12} md={8}>
         <Container maxWidth="lg" sx={{ ...backgroundStyles }} id="signUpCard">
           <Typography
@@ -230,6 +228,27 @@ export default function SignupPage() {
                 />
               </Grid>
             </Grid>
+            <Typography variant="body1" sx={{ mt: -2, color: "gray" }}>
+              Passwords must:
+              <List sx={{ paddingLeft: 2, pt: 0 }}>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Be a minimum of 8 characters
+                </ListItem>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Include at least one uppercase letter (A-Z)
+                </ListItem>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Include at least one lowercase letter (a-z)
+                </ListItem>
+                <ListItem sx={{ p: 0 }}>
+                  <CheckIcon />
+                  Include at least one number (0-9)
+                </ListItem>
+              </List>
+            </Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Button
@@ -275,7 +294,7 @@ export default function SignupPage() {
               variant="body1"
               color="#71797E"
               sx={{
-                mt: 3,
+                mt: 2,
                 mb: 3,
                 textAlign: "center",
               }}

@@ -23,12 +23,14 @@ import FormTextField from "../../../components/forms/FormTextField";
 import { Context } from "../../../App";
 import TopBar from "../../customer/TopBar";
 import { useNavigate } from "react-router-dom";
+import DeleteDialog from "../../../components/dialogs/DeleteDialog";
 
 export default function UserProfile() {
   const [fullName, setFullName] = useState("");
   const [userData, setUserData] = useState<any>({});
   const [editMode, setEditMode] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
   const { profilePhoto, setProfilePhoto } = useContext(Context);
   let navigate = useNavigate();
 
@@ -37,13 +39,12 @@ export default function UserProfile() {
     lastName: yup.string().required("Last Name is required"),
     email: yup
       .string()
-      .email("Invalid Email Address")
+      .email("Please enter a valid Email Address")
       .required("Email is required"),
     contactNo: yup
       .string()
-      .matches(/^[0-9]+$/, "Invalid Contact Number")
-      .min(10, "Must be at least 10 digits")
-      .required("Contact No is required"),
+      .matches(/^((0\d{9})|(\+\d{11}))$/, "Please enter a valid Contact No")
+      .required("Contact Number is required"),
     address: yup.string().required("Address is required"),
   });
 
@@ -79,7 +80,7 @@ export default function UserProfile() {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchUserData();
   }, [setValue]);
 
@@ -95,7 +96,7 @@ export default function UserProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
     setEditMode(false);
   };
@@ -126,6 +127,7 @@ export default function UserProfile() {
           })
           .catch((error) => {
             console.error("Error uploading file", error);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       };
       reader.readAsDataURL(file);
@@ -160,14 +162,23 @@ export default function UserProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
     setOpenUpdate(false);
   };
 
-  const deleteUserAccount = (data: any) => {
+  const handleDeleteClick = () => {
     console.log(userData.userId);
+    setOpenDelete(true);
+  };
 
+  const handleDeleteDialog = () => {
+    deleteUserAccount();
+    setOpenDelete(false);
+  };
+
+  const deleteUserAccount = () => {
+    console.log(userData.userId);
     axios
       .delete(`/users/${userData?.userId}`)
       .then((response) => {
@@ -177,15 +188,17 @@ export default function UserProfile() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.data.description);
+        toast.error(error.data.description ?? "An error occurred");
       });
   };
 
   const backgroundStyles = {
     display: "flex",
+    mt: 4,
     p: 2,
     flexDirection: "column",
-    backgroundColor: "rgba(255, 255, 255)",
+    backgroundColor: "#fff",
+    boxShadow: "4px 4px 8px rgb(172, 177, 179)",
     borderRadius: "8px",
     width: { lg: "82vw" },
   };
@@ -226,11 +239,14 @@ export default function UserProfile() {
               <Grid item>
                 <Avatar
                   src={`data:image/png;base64,${userData.profilePhoto}`}
-                  sx={{ width: 75, height: 75 }}
+                  sx={{ width: 100, height: 100 }}
                 />
               </Grid>
               <Grid item>
-                <Typography variant="h6" sx={{ p: 0 }}>
+                <Typography
+                  variant="h6"
+                  sx={{ p: 0, fontSize: "25px", fontWeight: "bold" }}
+                >
                   {fullName}
                 </Typography>
                 <Grid container spacing={1} alignItems="center">
@@ -294,7 +310,7 @@ export default function UserProfile() {
                         fontSize: "15px",
                         pt: 0,
                       }}
-                      onClick={deleteUserAccount}
+                      onClick={handleDeleteClick}
                       startIcon={<DeleteIcon />}
                     >
                       Delete Account
@@ -431,6 +447,11 @@ export default function UserProfile() {
           reset={reset1}
           register={register1}
           errors={errors1}
+        />
+        <DeleteDialog
+          open={openDelete}
+          handleClose={() => setOpenDelete(false)}
+          handleDelete={handleDeleteDialog}
         />
       </Container>
     </>

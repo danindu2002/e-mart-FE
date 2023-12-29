@@ -14,7 +14,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
@@ -31,17 +31,26 @@ export default function AddEditEvent() {
   yupPassword(yup);
 
   const schema = yup.object().shape({
-    firstName: yup.string().required("First Name is required"),
-    lastName: yup.string().required("Last Name is required"),
+    firstName: yup
+      .string()
+      .required("First Name is required")
+      .matches(/\S/, "First Name cannot be empty"),
+    lastName: yup
+      .string()
+      .required("Last Name is required")
+      .matches(/\S/, "Last Name cannot be empty"),
     email: yup
       .string()
-      .email("Invalid Email Address")
+      .email("Please enter a valid Email Address")
       .required("Email is required"),
     contactNo: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Invalid Contact Number")
-      .required("Contact No is required"),
-    address: yup.string().required("Address is required"),
+      .matches(/^((0\d{9})|(\+\d{11}))$/, "Please enter a valid Contact No")
+      .required("Contact Number is required"),
+    address: yup
+      .string()
+      .required("Address is required")
+      .matches(/\S/, "Address cannot be empty"),
     password: editUser
       ? yup.string()
       : yup
@@ -57,7 +66,7 @@ export default function AddEditEvent() {
       ? yup.string()
       : yup
           .string()
-          .oneOf([yup.ref("password")], "Passwords must match")
+          .oneOf([yup.ref("password")], "Passwords do not match")
           .required("Confirm Password is required"),
   });
 
@@ -71,7 +80,7 @@ export default function AddEditEvent() {
     resolver: yupResolver(schema),
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (editUser) {
       axios
         .get(`/users/view-users/${userId}`)
@@ -89,10 +98,7 @@ export default function AddEditEvent() {
           console.log(err);
         });
     }
-    return () => {
-      reset();
-    };
-  }, [editUser, userId, reset, setValue]);
+  }, [editUser, userId]);
 
   const submitHandler = (data: any) => {
     if (data.password) {
@@ -114,7 +120,10 @@ export default function AddEditEvent() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.response.data.description);
+          toast.error(
+            error.response.data.description ??
+              "An error occurred while updating admin"
+          );
         });
       navigate("/admin/admins");
     } else {
@@ -133,7 +142,10 @@ export default function AddEditEvent() {
         .catch((error) => {
           console.log(error);
           if (error.response.data.description) {
-            toast.error(error.response.data.description);
+            toast.error(
+              error.response.data.description ??
+                "An error occurred while adding new admin"
+            );
           }
         });
     }
