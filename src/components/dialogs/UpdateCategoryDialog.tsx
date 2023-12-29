@@ -63,7 +63,7 @@ export default function CategoryDialog({
     if (open) {
       fetchCategoryData();
     }
-  }, [category]);
+  }, [category, open]);
 
   const handleCancel = () => {
     onClose();

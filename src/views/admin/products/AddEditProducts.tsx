@@ -91,7 +91,7 @@ export default function AddEditProduct() {
 
   const fetchCategories = () => {
     axios
-      .get("")
+      .get("/categories/")
       .then((response) => {
         console.log(response.data.responseList);
         setCategories(response.data.responseList);
@@ -159,7 +159,7 @@ export default function AddEditProduct() {
           })
           .catch((error) => {
             console.log(error);
-            toast.error(error.response.data.description);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       }
       setOpenDrop(false);
@@ -191,7 +191,7 @@ export default function AddEditProduct() {
           })
           .catch((error) => {
             console.log(error);
-            toast.error(error.response.data.description);
+            toast.error(error.response.data.description ?? "An error occurred");
           });
       }
       setOpenDrop(false);
@@ -238,7 +238,7 @@ export default function AddEditProduct() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.response.data.description);
+          toast.error(error.response.data.description ?? "An error occurred");
         });
     } else {
       // Add Product
@@ -253,7 +253,7 @@ export default function AddEditProduct() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.response.data.description);
+          toast.error(error.response.data.description ?? "An error occurred");
         });
     }
   };
