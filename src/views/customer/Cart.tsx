@@ -132,8 +132,8 @@ export default function Cart() {
     } catch (error: any) {
       console.error(error);
       Swal.fire({
-        title: "Sorry...",
-        text: error.response.data.description ?? "An error occurred.",
+        title: "Unable to supply the following products",
+        text: error.response.data.description ?? "An error occurred",
         icon: "error",
         iconColor: "#ffa000",
         confirmButtonColor: "#ffa000",

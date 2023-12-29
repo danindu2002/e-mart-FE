@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,6 +25,7 @@ import DataTable from "../../../components/tables/DataTable";
 import UpdateCategoryDialog from "../../../components/dialogs/UpdateCategoryDialog";
 import { ClearIcon } from "@mui/x-date-pickers";
 import FormTextField from "../../../components/forms/FormTextField";
+import { Context } from "../../../App";
 
 export default function ManageCategory() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -36,6 +37,7 @@ export default function ManageCategory() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { userId } = useContext(Context);
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -84,7 +86,7 @@ export default function ManageCategory() {
   const fetchSearchedProduct = (data: any) => {
     setOpenDrop(true);
     axios
-      .get(`/categories/search/${data.name}`)
+      .get(`/categories/search-categories/${data.name}`)
       .then((response) => setCategories(formatData(response.data.responseList)))
       .catch((error) => setCategories(formatData([])));
     setOpenDrop(false);
@@ -92,7 +94,7 @@ export default function ManageCategory() {
 
   const addCategoryHandler = async (data: any) => {
     try {
-      const response = await axios.post(`/categories/`, data);
+      const response = await axios.post(`/categories/${userId}`, data);
       console.log(response.data);
       setOpen(false);
       fetchCategories();
@@ -115,7 +117,7 @@ export default function ManageCategory() {
       console.log(categoryId);
 
       const response = await axios.put(
-        `/categories/?categoryId=${categoryId}`,
+        `/categories/${userId}?categoryId=${categoryId}`,
         data
       );
       console.log(response.data);
@@ -141,7 +143,9 @@ export default function ManageCategory() {
 
   const deleteAdmin = async (categoryId: any) => {
     try {
-      const response = await axios.delete(`/categories/${categoryId}`);
+      const response = await axios.delete(
+        `/categories/${categoryId}/${userId}`
+      );
       console.log(response);
       toast.success(response.data.description);
       fetchCategories();
@@ -231,7 +235,7 @@ export default function ManageCategory() {
         <Box sx={{ display: "flex", mb: "10px" }}>
           <form onSubmit={handleSubmit(submitHandler)}>
             <FormTextField
-              placeholder="Search by category name"
+              placeholder="Search by category name or description"
               name="name"
               register={register}
               sx={{ ...fieldStyle }}
@@ -253,7 +257,7 @@ export default function ManageCategory() {
                 type="button"
                 onClick={() => {
                   reset();
-                  // fetchProducts();
+                  fetchCategories();
                 }}
                 sx={{ ...searchButton }}
               >

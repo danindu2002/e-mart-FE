@@ -33,7 +33,6 @@ interface TransformedData {
 }
 
 export default function Dashboard() {
-  const [events, setEvent] = useState<any[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDrop, setOpenDrop] = useState<boolean>(false);

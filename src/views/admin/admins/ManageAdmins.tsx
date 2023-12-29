@@ -38,7 +38,7 @@ export default function ManageAdmins() {
   const fetchUsers = () => {
     setOpenDrop(true);
     axios
-      .get("/users/view-user-roles/2")
+      .get(`/users/view-user-roles/2/${userId}`)
       .then((response) => {
         console.log(response.data.responseList);
         setUsers(formatData(response.data.responseList));
@@ -53,10 +53,6 @@ export default function ManageAdmins() {
     fetchUsers();
     console.log("Users: ", users);
   }, []);
-
-  // useEffect(() => {
-  //   console.log("Context userId: ", userId);
-  // }, [userId]);
 
   const formatData = (data: Array<any>) => {
     console.log("Users: ", data);
@@ -89,7 +85,7 @@ export default function ManageAdmins() {
   const fetchSearchedUser = (data: any) => {
     setOpenDrop(true);
     axios
-      .get(`/users/search-users?keyword=${data.name}&role=2`)
+      .get(`/users/search-users/${userId}?keyword=${data.name}&role=2`)
       .then((response) => setUsers(formatData(response.data.responseList)))
       .catch((error) => setUsers(formatData([])));
     setOpenDrop(false);
