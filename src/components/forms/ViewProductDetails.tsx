@@ -101,7 +101,10 @@ export default function ProductDetails() {
       fetchDocumentDetails();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while deleting document"
+      );
     }
   };
 
@@ -121,7 +124,7 @@ export default function ProductDetails() {
       window.open(dataUrl, "_blank");
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
     }
   };
 

@@ -117,7 +117,7 @@ export default function ProductDetails() {
       console.log(response.data.responseList);
       fetchCartItems();
     } catch (error: any) {
-      toast.error(error.response.data.description);
+      toast.error(error.response.data.description ?? "An error occurred");
       console.error(error);
     }
   };

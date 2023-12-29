@@ -117,7 +117,7 @@ export default function ManageAdmins() {
       fetchProducts();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.data.description);
+      toast.error(error.data.description ?? "An error occurred");
     }
   };
 

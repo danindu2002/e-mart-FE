@@ -1,5 +1,6 @@
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import WarningIcon from "@mui/icons-material/ReportProblemRounded";
+import WarningIcon from "@mui/icons-material/WarningRounded";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Typography,
 } from "@mui/material";
 
 /**
@@ -46,8 +48,8 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
               justifyContent: "center",
             }}
           >
-            <WarningAmberOutlinedIcon
-              sx={{ color: "#FF313A", fontSize: "110px" }}
+            <ErrorOutlineOutlinedIcon
+              sx={{ color: "#dd3333", fontSize: "90px" }}
             />
           </Box>
         </DialogTitle>
@@ -61,7 +63,7 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
             This will be deleted permanently. You cannot undo this action.
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ pt: 0 }}>
           <Button
             type="button"
             sx={{
@@ -75,10 +77,11 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
           <Button
             onClick={handleDelete}
             autoFocus
-            variant="contained"
+            // variant="contained"
             sx={{
-              backgroundColor: "#FF313A",
-              "&:hover": { backgroundColor: "#A00" },
+              // backgroundColor: "#dd3333",
+              color: "#dd3333",
+              "&:hover": { color: "#A00" },
             }}
           >
             Delete

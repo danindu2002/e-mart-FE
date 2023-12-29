@@ -101,7 +101,10 @@ export default function ManageCategory() {
       toast.success(response.data.description);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while adding new category"
+      );
     }
   };
 
@@ -126,7 +129,10 @@ export default function ManageCategory() {
       toast.success(response.data.description);
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while updating category"
+      );
     }
   };
 
@@ -137,11 +143,11 @@ export default function ManageCategory() {
   };
 
   const handleDeleteDialog = () => {
-    deleteAdmin(selectedCategory?.categoryId);
+    deleteCategory(selectedCategory?.categoryId);
     setOpenDelete(false);
   };
 
-  const deleteAdmin = async (categoryId: any) => {
+  const deleteCategory = async (categoryId: any) => {
     try {
       const response = await axios.delete(
         `/categories/${categoryId}/${userId}`
@@ -151,7 +157,10 @@ export default function ManageCategory() {
       fetchCategories();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response.data.description);
+      toast.error(
+        error.response.data.description ??
+          "An error occurred while deleting category"
+      );
     }
   };
 

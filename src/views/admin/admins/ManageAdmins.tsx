@@ -110,7 +110,9 @@ export default function ManageAdmins() {
       fetchUsers();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.data.description);
+      toast.error(
+        error.data.description ?? "An error occurred while deleting admin"
+      );
     }
   };
 
