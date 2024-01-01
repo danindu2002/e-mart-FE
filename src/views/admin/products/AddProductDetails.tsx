@@ -71,7 +71,6 @@ const AddProductDetails = ({
             placeholder="Enter Price (Rs.)"
             fullWidth
             register={register}
-            // startAdornment="Rs."
             error={!!errors?.price}
             helperText={errors.price?.message}
             sx={{ mb: 2 }}

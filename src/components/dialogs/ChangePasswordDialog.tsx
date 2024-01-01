@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 import {
   Button,
   Dialog,
@@ -94,6 +95,11 @@ const ChangePasswordDialog = ({ open, onClose, onSubmit }: any) => {
             </List>
           </Typography>
         </DialogContent>
+        <DialogActions sx={{ position: "absolute", top: 5, right: 0 }}>
+          <Button onClick={handleCancel} size="small">
+            <ClearIcon />
+          </Button>
+        </DialogActions>
         <DialogActions>
           <Button
             variant="outlined"
@@ -101,9 +107,9 @@ const ChangePasswordDialog = ({ open, onClose, onSubmit }: any) => {
             sx={{
               mb: 2,
             }}
-            onClick={handleCancel}
+            onClick={() => reset()}
           >
-            Cancel
+            Clear
           </Button>
           <Button
             type="submit"

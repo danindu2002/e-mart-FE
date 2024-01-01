@@ -46,11 +46,15 @@ function DeleteDialog({ open, handleClose, handleDelete }: DeleteDialogProps) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              flexDirection: "column",
             }}
           >
             <ErrorOutlineOutlinedIcon
-              sx={{ color: "#dd3333", fontSize: "90px" }}
+              sx={{ color: "#dd3333", fontSize: "60px" }}
             />
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Warning!
+            </Typography>
           </Box>
         </DialogTitle>
         <DialogContent sx={{ color: "#666", p: 2 }}>

@@ -116,6 +116,7 @@ export default function AddEditEvent() {
         .then((response) => {
           console.log(response);
           toast.success(response.data.description);
+          navigate("/admin/admins");
           reset();
         })
         .catch((error) => {
@@ -125,7 +126,6 @@ export default function AddEditEvent() {
               "An error occurred while updating admin"
           );
         });
-      navigate("/admin/admins");
     } else {
       // Add Admin
       const { confirmPassword, ...formDataWithoutConfirmPassword } = data;
