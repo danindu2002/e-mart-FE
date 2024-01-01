@@ -32,7 +32,7 @@ interface FormTextFieldProps {
   value?: any;
   onChange?: any;
   disabled?: boolean;
-  startAdornment?: React.ReactNode; // New prop for start adornment
+  readOnly?: boolean;
 }
 
 export default function FormTextField({
@@ -48,7 +48,7 @@ export default function FormTextField({
   sx,
   onChange,
   disabled = false,
-  startAdornment, // New prop
+  readOnly = false,
 }: FormTextFieldProps) {
   return (
     <TextField
@@ -62,13 +62,15 @@ export default function FormTextField({
       error={error}
       helperText={helperText}
       onChange={onChange}
-      // autoComplete="off"
       disabled={disabled}
-      sx={sx}
+      sx={{
+        ...sx,
+        ...(readOnly && {
+          pointerEvents: "none",
+        }),
+      }}
       InputProps={{
-        startAdornment: startAdornment && (
-          <InputAdornment position="start">{startAdornment}</InputAdornment>
-        ),
+        readOnly: readOnly,
       }}
     />
   );

@@ -52,15 +52,8 @@ export default function App() {
   const [cartProducts, setCartProducts] = useState(0);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
-  useEffect(() => {
-    console.log("Updated cart length", cartProducts);
-    console.log("Search Term", searchTerm);
-    console.log("Selected Category", selectedCategory);
-    console.log("ContextProfile Photo", profilePhoto);
-  }, [cartProducts, searchTerm, selectedCategory]);
 
   useEffect(() => {
     if (profilePhoto) {
@@ -72,7 +65,6 @@ export default function App() {
           "loggedUserData",
           JSON.stringify(parsedUserData)
         );
-        console.log("profilePhoto", profilePhoto);
       }
     }
   }, [profilePhoto]);

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import ClearIcon from "@mui/icons-material/Clear";
 import * as yup from "yup";
 import axios from "../../api/apiConfig";
 import FormTextField from "../forms/FormTextField";
@@ -107,6 +108,11 @@ export default function CategoryDialog({
             sx={{ mb: 2 }}
           />
         </DialogContent>
+        <DialogActions sx={{ position: "absolute", top: 5, right: 0 }}>
+          <Button onClick={handleCancel} size="small">
+            <ClearIcon />
+          </Button>
+        </DialogActions>
         <DialogActions>
           <Button
             variant="outlined"
@@ -118,7 +124,7 @@ export default function CategoryDialog({
           >
             Clear
           </Button>
-          <Button
+          {/* <Button
             variant="outlined"
             color="info"
             sx={{
@@ -127,7 +133,7 @@ export default function CategoryDialog({
             onClick={handleCancel}
           >
             Cancel
-          </Button>
+          </Button> */}
           <Button
             type="submit"
             variant="contained"

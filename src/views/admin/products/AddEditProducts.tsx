@@ -74,7 +74,7 @@ export default function AddEditProduct() {
       .positive("Price must be a positive number")
       .required("Price is required"),
     size: yup.string(),
-    color: yup.string().matches(/\S/, "Color cannot be empty"),
+    color: yup.string(),
     category: yup.string().required("Category is required"),
   });
 

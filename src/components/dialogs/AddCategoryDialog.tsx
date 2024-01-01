@@ -81,6 +81,11 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
             sx={{ mb: 2 }}
           />
         </DialogContent>
+        <DialogActions sx={{ position: "absolute", top: 5, right: 0 }}>
+          <Button onClick={handleCancel} size="small">
+            <ClearIcon />
+          </Button>
+        </DialogActions>
         <DialogActions>
           <Button
             variant="outlined"
@@ -92,7 +97,7 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
           >
             Clear
           </Button>
-          <Button
+          {/* <Button
             variant="outlined"
             color="info"
             sx={{
@@ -101,7 +106,7 @@ export default function CategoryDialog({ open, onClose, onSubmit }: any) {
             onClick={handleCancel}
           >
             Cancel
-          </Button>
+          </Button> */}
           <Button
             type="submit"
             variant="contained"
