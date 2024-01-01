@@ -138,10 +138,14 @@ export default function AddEditProduct() {
 
   const handleDocumentChange = async (event: any) => {
     let files = event.target.files;
-    console.log(files);
     if (files && files.length > 0) {
       setOpenDrop(true);
       for (const file of files) {
+        // Check file size before proceeding
+        if (file.size > 1000000) {
+          toast.error("File size exceeds the limit of 1MB");
+          continue;
+        }
         const uploadDocument = await readFileAsBase64(file);
         let data = {
           documentName: file?.name.replace(/\.pdf$/, ""),
@@ -162,6 +166,7 @@ export default function AddEditProduct() {
             toast.error(error.response.data.description ?? "An error occurred");
           });
       }
+
       setOpenDrop(false);
       event.target.value = null;
     } else {
@@ -170,11 +175,15 @@ export default function AddEditProduct() {
   };
 
   const handleImageChange = async (event: any) => {
-    const files: any = event.target.files;
-    console.log(files);
+    const files = event.target.files;
     if (files && files.length > 0) {
       setOpenDrop(true);
       for (const file of files) {
+        // Check file size before proceeding
+        if (file.size > 1000000) {
+          toast.error("File size exceeds the limit of 1MB");
+          continue;
+        }
         const uploadImage = await readFileAsBase64(file);
         let data = {
           imageName: file?.name,
