@@ -52,7 +52,7 @@ export default function App() {
   const [cartProducts, setCartProducts] = useState(0);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
@@ -68,6 +68,20 @@ export default function App() {
       }
     }
   }, [profilePhoto]);
+
+  useEffect(() => {
+    if (userId) {
+      const storedUserData = sessionStorage.getItem("loggedUserData");
+      if (storedUserData) {
+        let parsedUserData = JSON.parse(storedUserData as string);
+        parsedUserData.userId = userId;
+        sessionStorage.setItem(
+          "loggedUserData",
+          JSON.stringify(parsedUserData)
+        );
+      }
+    }
+  }, [userId]);
 
   useEffect(() => {
     const storedUserData = sessionStorage.getItem("loggedUserData");
