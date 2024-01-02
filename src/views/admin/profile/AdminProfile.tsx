@@ -214,89 +214,75 @@ export default function AdminProfile() {
         <Container maxWidth="lg" sx={{ ...backgroundStyles }}>
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", mb: 1, color: "#444" }}
+            sx={{ fontWeight: "bold", mb: 1.5, color: "#444" }}
           >
             Admin Profile
           </Typography>
 
-          <Grid
-            container
-            spacing={2}
-            alignItems="center"
-            marginBottom="25px"
-            sx={{ mb: 5 }}
-          >
-            <Grid
-              item
-              xs={12}
-              md={6}
-              container
-              alignItems="center"
-              justifyContent="center"
-            >
-              {/* Avatar */}
+          <Grid container spacing={2} alignItems="center" marginBottom="25px">
+            <Grid item>
               <Avatar
                 src={`data:image/png;base64,${userData.profilePhoto}`}
-                sx={{ width: 120, height: 120 }}
+                sx={{ width: 100, height: 100 }}
               />
+            </Grid>
+            <Grid item>
               <Typography
-                sx={{
-                  marginLeft: 2,
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                }}
+                variant="h6"
+                sx={{ p: 0, fontSize: "25px", fontWeight: "bold" }}
               >
                 {fullName}
               </Typography>
-            </Grid>
-            <Grid item md={2}></Grid>
-            <Grid
-              item
-              xs={12}
-              md={4}
-              direction="column"
-              justifyContent="flex-end"
-            >
-              <Grid item xs={12} md={6}>
-                <Button
-                  component="label"
-                  color="primary"
-                  // size="small"
-                  sx={{ ...buttonStyles }}
-                  startIcon={<AddAPhotoIcon sx={{ color: "white" }} />}
-                >
-                  Change Profile Photo
-                  <Input
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    onChange={handleFileChange}
-                  />
-                </Button>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Button
-                  type="button"
-                  color="primary"
-                  size="small"
-                  sx={{ ...buttonStyles }}
-                  onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
-                  startIcon={<EditIcon sx={{ color: "white" }} />}
-                >
-                  Edit Your Profile
-                </Button>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Button
-                  type="button"
-                  color="primary"
-                  sx={{ ...buttonStyles }}
-                  onClick={() => setOpenUpdate(true)}
-                  startIcon={<KeyIcon sx={{ color: "white" }} />}
-                >
-                  Change Password
-                </Button>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item sx={{ padding: 0 }}>
+                  <Button
+                    component="label"
+                    color="primary"
+                    sx={{
+                      textTransform: "capitalize",
+                      fontSize: "15px",
+                      pt: 0,
+                    }}
+                    startIcon={<AddAPhotoIcon />}
+                  >
+                    Change Profile Photo
+                    <Input
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      onChange={handleFileChange}
+                    />
+                  </Button>
+                </Grid>
+                <Grid item sx={{ padding: 0 }}>
+                  <Button
+                    type="button"
+                    color="primary"
+                    sx={{
+                      textTransform: "capitalize",
+                      fontSize: "15px",
+                      pt: 0,
+                    }}
+                    onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
+                    startIcon={<EditIcon />}
+                  >
+                    Edit Profile
+                  </Button>
+                </Grid>
+                <Grid item sx={{ padding: 0 }}>
+                  <Button
+                    type="button"
+                    color="primary"
+                    sx={{
+                      textTransform: "capitalize",
+                      fontSize: "15px",
+                      pt: 0,
+                    }}
+                    onClick={() => setOpenUpdate(true)}
+                    startIcon={<KeyIcon />}
+                  >
+                    Change Password
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -312,7 +298,7 @@ export default function AdminProfile() {
                   register={register}
                   error={!!errors?.firstName}
                   helperText={errors.firstName?.message}
-                  disabled={!editMode}
+                  readOnly={!editMode}
                   sx={{ mb: 2 }}
                 />
               </Grid>
@@ -325,7 +311,7 @@ export default function AdminProfile() {
                   register={register}
                   error={!!errors?.lastName}
                   helperText={errors.lastName?.message}
-                  disabled={!editMode}
+                  readOnly={!editMode}
                   sx={{ mb: 3 }}
                 />
               </Grid>
@@ -341,7 +327,7 @@ export default function AdminProfile() {
                   register={register}
                   error={!!errors?.email}
                   helperText={errors.email?.message}
-                  disabled={!editMode}
+                  readOnly={!editMode}
                   sx={{ mb: 2 }}
                 />
               </Grid>
@@ -354,7 +340,7 @@ export default function AdminProfile() {
                   register={register}
                   error={!!errors?.contactNo}
                   helperText={errors.contactNo?.message}
-                  disabled={!editMode}
+                  readOnly={!editMode}
                   sx={{ mb: 3 }}
                 />
               </Grid>
@@ -370,7 +356,7 @@ export default function AdminProfile() {
                   register={register}
                   error={!!errors?.address}
                   helperText={errors.address?.message}
-                  disabled={!editMode}
+                  readOnly={!editMode}
                   sx={{ mb: 3 }}
                 />
               </Grid>

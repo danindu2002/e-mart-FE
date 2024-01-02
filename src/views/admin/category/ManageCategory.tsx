@@ -96,6 +96,7 @@ export default function ManageCategory() {
     try {
       const response = await axios.post(`/categories/${userId}`, data);
       console.log(response.data);
+      reset();
       setOpen(false);
       fetchCategories();
       toast.success(response.data.description);

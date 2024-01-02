@@ -330,7 +330,7 @@ export default function UserProfile() {
                     register={register}
                     error={!!errors?.firstName}
                     helperText={errors.firstName?.message}
-                    disabled={!editMode}
+                    readOnly={!editMode}
                     sx={{ mb: 2 }}
                   />
                 </Grid>
@@ -343,7 +343,7 @@ export default function UserProfile() {
                     register={register}
                     error={!!errors?.lastName}
                     helperText={errors.lastName?.message}
-                    disabled={!editMode}
+                    readOnly={!editMode}
                     sx={{ mb: 3 }}
                   />
                 </Grid>
@@ -359,7 +359,7 @@ export default function UserProfile() {
                     register={register}
                     error={!!errors?.email}
                     helperText={errors.email?.message}
-                    disabled={!editMode}
+                    readOnly={!editMode}
                     sx={{ mb: 2 }}
                   />
                 </Grid>
@@ -372,7 +372,7 @@ export default function UserProfile() {
                     register={register}
                     error={!!errors?.contactNo}
                     helperText={errors.contactNo?.message}
-                    disabled={!editMode}
+                    readOnly={!editMode}
                     sx={{ mb: 3 }}
                   />
                 </Grid>
@@ -388,7 +388,7 @@ export default function UserProfile() {
                     register={register}
                     error={!!errors?.address}
                     helperText={errors.address?.message}
-                    disabled={!editMode}
+                    readOnly={!editMode}
                     sx={{ mb: 3 }}
                   />
                 </Grid>

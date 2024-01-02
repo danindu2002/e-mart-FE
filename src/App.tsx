@@ -56,13 +56,6 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
-    console.log("Updated cart length", cartProducts);
-    console.log("Search Term", searchTerm);
-    console.log("Selected Category", selectedCategory);
-    console.log("ContextProfile Photo", profilePhoto);
-  }, [cartProducts, searchTerm, selectedCategory]);
-
-  useEffect(() => {
     if (profilePhoto) {
       const storedUserData = sessionStorage.getItem("loggedUserData");
       if (storedUserData) {
@@ -72,10 +65,23 @@ export default function App() {
           "loggedUserData",
           JSON.stringify(parsedUserData)
         );
-        console.log("profilePhoto", profilePhoto);
       }
     }
   }, [profilePhoto]);
+
+  useEffect(() => {
+    if (userId) {
+      const storedUserData = sessionStorage.getItem("loggedUserData");
+      if (storedUserData) {
+        let parsedUserData = JSON.parse(storedUserData as string);
+        parsedUserData.userId = userId;
+        sessionStorage.setItem(
+          "loggedUserData",
+          JSON.stringify(parsedUserData)
+        );
+      }
+    }
+  }, [userId]);
 
   useEffect(() => {
     const storedUserData = sessionStorage.getItem("loggedUserData");
